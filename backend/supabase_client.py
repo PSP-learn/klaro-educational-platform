@@ -10,7 +10,11 @@ import os
 import json
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
-from supabase import create_client, Client
+try:
+    from supabase import create_client, Client
+except ImportError:
+    # Fallback for older versions
+    from supabase_py import create_client, Client
 import asyncio
 from dataclasses import asdict
 
