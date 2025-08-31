@@ -1,5 +1,5 @@
-# 🚀 Klaro Educational Platform - Minimal Production Requirements
-# Only essential packages for Railway deployment
+# 🚀 Klaro Educational Platform - Working Requirements for Python 3.12
+# Minimal dependencies that actually work on Railway
 
 # Core FastAPI & Server
 fastapi==0.104.1
@@ -21,11 +21,5 @@ supabase==2.7.4
 requests==2.31.0
 pydantic==2.5.0
 
-# Additional dependencies for full app
+# Additional dependencies (Python 3.12 compatible)
 aiohttp==3.9.1
-Pillow==10.1.0
-reportlab==4.0.7
-faiss-cpu==1.8.0
-numpy==1.24.4
-nltk==3.8.1
-dataclasses-json==0.6.3

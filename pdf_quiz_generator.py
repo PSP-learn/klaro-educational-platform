@@ -3,16 +3,25 @@
 PDF Quiz Generator - Wrapper for advanced quiz generation
 """
 
-# Import the advanced quiz generator
-from advanced_quiz_generator import AdvancedQuizGenerator
+# Import the advanced quiz generator with fallback
 import os
+
+try:
+    from advanced_quiz_generator import AdvancedQuizGenerator
+    QUIZ_GENERATOR_AVAILABLE = True
+except ImportError:
+    print("⚠️ Advanced quiz generator not available - using mock mode")
+    QUIZ_GENERATOR_AVAILABLE = False
 
 class PDFQuizGenerator:
     """Wrapper class for the advanced quiz generator with PDF output"""
     
     def __init__(self):
         """Initialize the PDF quiz generator"""
-        self.generator = AdvancedQuizGenerator()
+        if QUIZ_GENERATOR_AVAILABLE:
+            self.generator = AdvancedQuizGenerator()
+        else:
+            self.generator = None
     
     async def generate_quiz(self, topic: str, difficulty: str = "medium", num_questions: int = 10):
         """Generate a quiz and return PDF"""

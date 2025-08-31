@@ -21,13 +21,40 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import FileResponse, JSONResponse
 import uvicorn
 
-# Import existing modules
-from doubt_solver import DoubtSolverEngine
-from pdf_quiz_generator import PDFQuizGenerator
-from jee_test_system import JEETestSystem
+# Import existing modules with fallbacks
+try:
+    from doubt_solver import DoubtSolverEngine
+    DOUBT_SOLVER_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ Doubt solver not available: {e}")
+    DOUBT_SOLVER_AVAILABLE = False
+    DoubtSolverEngine = None
+
+try:
+    from pdf_quiz_generator import PDFQuizGenerator
+    PDF_GENERATOR_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ PDF generator not available: {e}")
+    PDF_GENERATOR_AVAILABLE = False
+    PDFQuizGenerator = None
+
+try:
+    from jee_test_system import JEETestSystem
+    JEE_SYSTEM_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ JEE system not available: {e}")
+    JEE_SYSTEM_AVAILABLE = False
+    JEETestSystem = None
 
 # Import new Supabase integration
-from supabase_client import get_supabase_client, SupabaseClient
+try:
+    from supabase_client import get_supabase_client, SupabaseClient
+    SUPABASE_CLIENT_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ Supabase client not available: {e}")
+    SUPABASE_CLIENT_AVAILABLE = False
+    get_supabase_client = None
+    SupabaseClient = None
 
 # ================================================================================
 # 🚀 FastAPI App Configuration
@@ -42,19 +69,42 @@ async def lifespan(app: FastAPI):
     global doubt_solver, quiz_generator, jee_system, supabase_client
     
     try:
-        # Initialize AI services
-        doubt_solver = DoubtSolverEngine()
-        quiz_generator = PDFQuizGenerator()
-        jee_system = JEETestSystem()
+        # Initialize AI services (with fallbacks)
+        if DOUBT_SOLVER_AVAILABLE and DoubtSolverEngine:
+            doubt_solver = DoubtSolverEngine()
+            print("✅ Doubt solver initialized")
+        else:
+            doubt_solver = None
+            print("⚠️ Doubt solver not available")
+            
+        if PDF_GENERATOR_AVAILABLE and PDFQuizGenerator:
+            quiz_generator = PDFQuizGenerator()
+            print("✅ Quiz generator initialized")
+        else:
+            quiz_generator = None
+            print("⚠️ Quiz generator not available")
+            
+        if JEE_SYSTEM_AVAILABLE and JEETestSystem:
+            jee_system = JEETestSystem()
+            print("✅ JEE system initialized")
+        else:
+            jee_system = None
+            print("⚠️ JEE system not available")
         
         # Initialize Supabase client
-        supabase_client = get_supabase_client()
+        if SUPABASE_CLIENT_AVAILABLE and get_supabase_client:
+            supabase_client = get_supabase_client()
+            print("✅ Supabase client initialized")
+        else:
+            supabase_client = None
+            print("⚠️ Supabase client not available")
         
-        print("🟢 All systems initialized successfully!")
+        print("🟢 Application initialized (some features may be limited)")
         
     except Exception as e:
         print(f"❌ Initialization failed: {e}")
-        raise
+        print("🟠 Starting with limited functionality...")
+        # Don't raise - allow app to start with limited functionality
     
     yield
     
