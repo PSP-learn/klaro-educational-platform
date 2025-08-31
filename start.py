@@ -15,11 +15,12 @@ def main():
     port = int(os.environ.get("PORT", 8000))
     host = "0.0.0.0"
     
-    print(f"🟢 Starting Klaro Educational Platform")
+    print(f"🟢 Starting Klaro Educational Platform (Full AI Version)")
     print(f"🌐 Host: {host}")
     print(f"🔌 Port: {port}")
     print(f"📁 Working Directory: {os.getcwd()}")
     print(f"🐍 Python Version: {sys.version}")
+    print(f"🚀 Deployed: 2025-08-31T10:02:00Z - Full AI Features Enabled")
     
     # Start uvicorn with full-featured app
     uvicorn.run(
