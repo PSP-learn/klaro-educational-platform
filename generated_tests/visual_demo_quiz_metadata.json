@@ -1,0 +1,111 @@
+{
+  "title": "Mathematics Test - circles, triangles",
+  "subject": "Mathematics",
+  "topics": [
+    "circles",
+    "triangles"
+  ],
+  "questions": [
+    {
+      "question_text": "What is the formula for circle?",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "geometry",
+      "subtopic": "circle",
+      "options": [
+        "The correct answer related to circle",
+        "An answer that confuses circle with another term",
+        "An incorrect but plausible answer about circle",
+        "A concept from a different mathematical area"
+      ],
+      "correct_answer": "A",
+      "explanation": "Based on content from Chap\u201310 (11th Nov.), page 10",
+      "source_content": "CIRCLES 153 10.4 Summary In this chapter, you have studied the following points : 1. The meaning of a tangent to a circle. 2. The tangent to a circle is perpendicular to the radius through the point o...",
+      "source_book": "Chap\u201310 (11th Nov.)",
+      "source_page": 10,
+      "points": 1,
+      "keywords": [
+        "CIRCLES",
+        "perpendicular",
+        "circle"
+      ],
+      "formula_used": "tangent to a circle"
+    },
+    {
+      "question_text": "Outline the procedure for angle.",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "geometry",
+      "subtopic": "angle",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of angle with proper mathematical reasoning",
+      "explanation": "Refer to NCERT Mathematics Class 10 Exemplar Complete 2023, page 132",
+      "source_content": "CONSTRUCTION 115 (C) Short Answer Questions with Reasoning Write True or False and give reasons for your answer. Sample Questions 1 : By geometrical construction, it is possible to divide a line segment in the ratio 2 3: 2 3 . Solution : False. As 2 3: 2 3 can be simplified as 7 4 3:1 and 7 4 3 is n...",
+      "source_book": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+      "source_page": 132,
+      "points": 3,
+      "keywords": [
+        "circle",
+        "angle",
+        "triangle",
+        "parallel"
+      ],
+      "formula_used": "tances on BX, B3 is joined to C and then a line segment B6C' is drawn parallel to B3C where C' lies on BC produced"
+    },
+    {
+      "question_text": "What is the formula for angle?",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "geometry",
+      "subtopic": "angle",
+      "options": [
+        "The correct answer related to angle",
+        "A concept from a different mathematical area",
+        "An incorrect but plausible answer about angle",
+        "An answer that confuses angle with another term"
+      ],
+      "correct_answer": "A",
+      "explanation": "Based on content from NCERT Mathematics Class 10 Exemplar Complete 2023, page 136",
+      "source_content": "AREA RELATED TO CIRCLES CHAPTER 11 (A) Main Concepts and Results Perimeters and areas of simple closed figures. Circumference and area of a circle. Area of a circular path (i.e., ring). Sector of a ci...",
+      "source_book": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+      "source_page": 136,
+      "points": 1,
+      "keywords": [
+        "angle",
+        "circle",
+        "areas",
+        "AREA",
+        "circles"
+      ],
+      "formula_used": "e = 2 \u03c0 r and area of a circle = \u03c0 r2, where r is the radius of the circle"
+    },
+    {
+      "question_text": "How do you approach geometry problems?",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "geometry",
+      "subtopic": "triangles",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of triangles with proper mathematical reasoning",
+      "explanation": "Refer to NCERT Mathematics Class 10 Exemplar Complete 2023, page 79",
+      "source_content": "62 EXEMPLAR PROBLEMS (C) DE DF QR PQ \uf03d (D) EF DE RP QR \uf03d 7. In triangles ABC and DEF, \uf0d0B = \uf0d0E, \uf0d0F = \uf0d0C and AB = 3 DE. Then, the two triangles are (A) congruent but not similar (B) similar but not congruent (C) neither congruent nor similar (D) congruent as well as similar 8. It is given that \uf044\uf020ABC ~...",
+      "source_book": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+      "source_page": 79,
+      "points": 3,
+      "keywords": [
+        "triangles"
+      ],
+      "formula_used": "B = \uf0d0E, \uf0d0F = \uf0d0C and AB = 3 DE"
+    }
+  ],
+  "total_questions": 4,
+  "total_points": 8,
+  "duration_minutes": 30,
+  "difficulty_distribution": {
+    "easy": 4
+  },
+  "topic_distribution": {
+    "geometry": 4
+  },
+  "created_at": "2025-08-30T03:40:28.823345"
+}

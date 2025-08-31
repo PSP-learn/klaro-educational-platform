@@ -1,0 +1,97 @@
+{
+  "books": [
+    {
+      "id": "ncert_math_09",
+      "publisher": "NCERT",
+      "subject": "Mathematics",
+      "grade": "Class 9",
+      "title": "Mathematics Textbook for Class IX",
+      "path": "data/textbooks/ncert/mathematics/class_09/",
+      "chapters": [
+        {"ch": 1, "title": "Number Systems", "topics": ["Real Numbers", "Rational Numbers", "Irrational Numbers"]},
+        {"ch": 2, "title": "Polynomials", "topics": ["Polynomial Definition", "Factorization", "Algebraic Identities"]},
+        {"ch": 3, "title": "Coordinate Geometry", "topics": ["Cartesian Plane", "Plotting Points", "Distance Formula"]},
+        {"ch": 4, "title": "Linear Equations in Two Variables", "topics": ["Linear Equations", "Graphical Method", "Applications"]},
+        {"ch": 5, "title": "Introduction to Euclid's Geometry", "topics": ["Euclid's Postulates", "Geometric Proofs"]},
+        {"ch": 6, "title": "Lines and Angles", "topics": ["Types of Angles", "Parallel Lines", "Transversals"]},
+        {"ch": 7, "title": "Triangles", "topics": ["Congruence", "Triangle Properties", "Inequalities"]},
+        {"ch": 8, "title": "Quadrilaterals", "topics": ["Properties", "Parallelograms", "Rhombus", "Trapezium"]},
+        {"ch": 9, "title": "Areas of Parallelograms and Triangles", "topics": ["Area Calculations", "Theorems"]},
+        {"ch": 10, "title": "Circles", "topics": ["Circle Properties", "Chords", "Tangents"]},
+        {"ch": 11, "title": "Constructions", "topics": ["Geometric Constructions", "Angle Bisectors"]},
+        {"ch": 12, "title": "Heron's Formula", "topics": ["Area of Triangle", "Semi-perimeter"]}
+      ]
+    },
+    {
+      "id": "ncert_math_10",
+      "publisher": "NCERT",
+      "subject": "Mathematics", 
+      "grade": "Class 10",
+      "title": "Mathematics Textbook for Class X",
+      "path": "data/textbooks/ncert/mathematics/class_10/",
+      "chapters": [
+        {"ch": 1, "title": "Real Numbers", "topics": ["HCF", "LCM", "Fundamental Theorem of Arithmetic"]},
+        {"ch": 2, "title": "Polynomials", "topics": ["Quadratic Polynomials", "Relationship between Zeros and Coefficients"]},
+        {"ch": 3, "title": "Pair of Linear Equations in Two Variables", "topics": ["Graphical Method", "Algebraic Methods", "Applications"]},
+        {"ch": 4, "title": "Quadratic Equations", "topics": ["Quadratic Formula", "Nature of Roots", "Applications"]},
+        {"ch": 5, "title": "Arithmetic Progressions", "topics": ["AP Formula", "Sum of n Terms", "Applications"]},
+        {"ch": 6, "title": "Triangles", "topics": ["Similarity", "Pythagoras Theorem", "Areas"]},
+        {"ch": 7, "title": "Coordinate Geometry", "topics": ["Distance Formula", "Section Formula", "Area of Triangle"]},
+        {"ch": 8, "title": "Introduction to Trigonometry", "topics": ["Trigonometric Ratios", "Trigonometric Identities"]},
+        {"ch": 9, "title": "Some Applications of Trigonometry", "topics": ["Heights and Distances", "Angles of Elevation"]},
+        {"ch": 10, "title": "Circles", "topics": ["Tangent to Circle", "Number of Tangents"]},
+        {"ch": 11, "title": "Constructions", "topics": ["Division of Line Segment", "Tangent to Circle"]},
+        {"ch": 12, "title": "Areas Related to Circles", "topics": ["Area of Circle", "Area of Sectors", "Area of Segments"]},
+        {"ch": 13, "title": "Surface Areas and Volumes", "topics": ["Combination of Solids", "Frustum of Cone"]},
+        {"ch": 14, "title": "Statistics", "topics": ["Mean of Grouped Data", "Mode", "Median", "Cumulative Frequency", "Classical Probability", "Complementary Events"]}
+      ]
+    },
+    {
+      "id": "ncert_math_11",
+      "publisher": "NCERT",
+      "subject": "Mathematics",
+      "grade": "Class 11", 
+      "title": "Mathematics Textbook for Class XI",
+      "path": "data/textbooks/ncert/mathematics/class_11/",
+      "chapters": [
+        {"ch": 1, "title": "Sets", "topics": ["Set Operations", "Venn Diagrams", "De Morgan's Laws"]},
+        {"ch": 2, "title": "Relations and Functions", "topics": ["Types of Relations", "Functions", "Domain and Range"]},
+        {"ch": 3, "title": "Trigonometric Functions", "topics": ["Trigonometric Functions", "Identities", "Equations"]},
+        {"ch": 4, "title": "Mathematical Induction", "topics": ["Principle of Mathematical Induction", "Applications"]},
+        {"ch": 5, "title": "Complex Numbers and Quadratic Equations", "topics": ["Algebra of Complex Numbers", "Argand Plane", "Quadratic Equations"]},
+        {"ch": 6, "title": "Linear Inequalities", "topics": ["Algebraic Solutions", "Graphical Solutions"]},
+        {"ch": 7, "title": "Permutations and Combinations", "topics": ["Fundamental Principle", "Permutations", "Combinations"]},
+        {"ch": 8, "title": "Binomial Theorem", "topics": ["Binomial Expansion", "General and Middle Terms"]},
+        {"ch": 9, "title": "Sequences and Series", "topics": ["Arithmetic Progression", "Geometric Progression", "Special Series"]},
+        {"ch": 10, "title": "Straight Lines", "topics": ["Slope", "Equations of Line", "Distance from Point to Line"]},
+        {"ch": 11, "title": "Conic Sections", "topics": ["Parabola", "Ellipse", "Hyperbola"]},
+        {"ch": 12, "title": "Introduction to Three Dimensional Geometry", "topics": ["Coordinate System", "Distance Formula", "Section Formula"]},
+        {"ch": 13, "title": "Limits and Derivatives", "topics": ["Limits", "Derivatives", "Applications"]},
+        {"ch": 14, "title": "Statistics", "topics": ["Measures of Dispersion", "Analysis of Frequency Distributions", "Probability"]}
+      ]
+    },
+    {
+      "id": "ncert_math_12",
+      "publisher": "NCERT",
+      "subject": "Mathematics",
+      "grade": "Class 12",
+      "title": "Mathematics Textbook for Class XII", 
+      "path": "data/textbooks/ncert/mathematics/class_12/",
+      "chapters": [
+        {"ch": 1, "title": "Relations and Functions", "topics": ["Types of Functions", "Composition", "Invertible Functions"]},
+        {"ch": 2, "title": "Inverse Trigonometric Functions", "topics": ["Properties", "Graphs", "Elementary Properties"]},
+        {"ch": 3, "title": "Matrices", "topics": ["Operations", "Transpose", "Symmetric and Skew Symmetric"]},
+        {"ch": 4, "title": "Determinants", "topics": ["Properties", "Applications", "Adjoint and Inverse"]},
+        {"ch": 5, "title": "Continuity and Differentiability", "topics": ["Continuity", "Differentiability", "Logarithmic Differentiation"]},
+        {"ch": 6, "title": "Applications of Derivatives", "topics": ["Rate of Change", "Tangent and Normal", "Increasing and Decreasing Functions", "Maxima and Minima"]},
+        {"ch": 7, "title": "Integrals", "topics": ["Integration Methods", "Integration by Parts", "Partial Fractions", "Definite Integrals"]},
+        {"ch": 8, "title": "Applications of Integrals", "topics": ["Area under Curves", "Area between Two Curves", "Volume of Solids"]},
+        {"ch": 9, "title": "Differential Equations", "topics": ["Order and Degree", "General and Particular Solutions", "Formation of Differential Equations"]},
+        {"ch": 10, "title": "Vector Algebra", "topics": ["Vector Operations", "Scalar and Vector Products", "Scalar Triple Product"]},
+        {"ch": 11, "title": "Three Dimensional Geometry", "topics": ["Direction Cosines", "Equation of Line and Plane", "Angle between Lines and Planes"]},
+        {"ch": 12, "title": "Linear Programming", "topics": ["Mathematical Formulation", "Graphical Method", "Different Types of Solutions"]},
+        {"ch": 13, "title": "Probability", "topics": ["Conditional Probability", "Multiplication Rule", "Independence", "Bayes' Theorem", "Random Variables", "Probability Distributions"]}
+      ]
+    }
+  ]
+}

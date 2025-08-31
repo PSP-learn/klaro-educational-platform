@@ -1,0 +1,39 @@
+================================================================================
+📚 ANSWER KEY - Mathematics Test - circles, triangles
+================================================================================
+
+Q1. A
+     📖 Explanation: Based on content from Chap–10 (11th Nov.), page 10
+     📍 Source: Chap–10 (11th Nov.), Page 10
+     📐 Formula: tangent to a circle
+     💯 Points: 1
+
+Q2. Answer should demonstrate understanding of angle with proper mathematical reasoning
+     📖 Explanation: Refer to NCERT Mathematics Class 10 Exemplar Complete 2023, page 132
+     📍 Source: NCERT Mathematics Class 10 Exemplar Complete 2023, Page 132
+     📐 Formula: tances on BX, B3 is joined to C and then a line segment B6C' is drawn parallel to B3C where C' lies on BC produced
+     💯 Points: 3
+
+Q3. A
+     📖 Explanation: Based on content from NCERT Mathematics Class 10 Exemplar Complete 2023, page 136
+     📍 Source: NCERT Mathematics Class 10 Exemplar Complete 2023, Page 136
+     📐 Formula: e = 2 π r and area of a circle = π r2, where r is the radius of the circle
+     💯 Points: 1
+
+Q4. Answer should demonstrate understanding of triangles with proper mathematical reasoning
+     📖 Explanation: Refer to NCERT Mathematics Class 10 Exemplar Complete 2023, page 79
+     📍 Source: NCERT Mathematics Class 10 Exemplar Complete 2023, Page 79
+     📐 Formula: B = E, F = C and AB = 3 DE
+     💯 Points: 3
+
+================================================================================
+📊 TEST STATISTICS
+================================================================================
+Total Questions: 4
+Total Points: 8
+
+Difficulty Distribution:
+  Easy: 4 questions
+
+Topic Distribution:
+  Geometry: 4 questions

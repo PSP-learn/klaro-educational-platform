@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Main 2024 - Online Test</title>
+    <style>
+        /* NTA Abhyas Interface Matching */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            color: #212121;
+            overflow: hidden;
+        }
+
+        /* Header with Timer and Info */
+        .test-header {
+            background-color: #1976D2;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .test-info {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .timer {
+            background-color: #D32F2F;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .question-counter {
+            font-size: 16px;
+        }
+
+        /* Subject Tabs */
+        .subject-tabs {
+            background-color: #42A5F5;
+            display: flex;
+            padding: 0;
+        }
+
+        .subject-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .subject-tab.active {
+            background-color: #1976D2;
+        }
+
+        .subject-tab:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Main Test Interface */
+        .test-container {
+            display: flex;
+            height: calc(100vh - 140px);
+        }
+
+        /* Question Panel (70%) */
+        .question-panel {
+            width: 70%;
+            background-color: white;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 2px solid #E0E0E0;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .question-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1976D2;
+        }
+
+        .question-type {
+            background-color: #E3F2FD;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #1976D2;
+        }
+
+        .question-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            min-height: 100px;
+        }
+
+        .options-container {
+            margin-bottom: 30px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #FAFAFA;
+        }
+
+        .option:hover {
+            border-color: #1976D2;
+            background-color: #E3F2FD;
+        }
+
+        .option.selected {
+            border-color: #1976D2;
+            background-color: #E3F2FD;
+            font-weight: bold;
+        }
+
+        .option-label {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #1976D2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .numerical-input {
+            width: 200px;
+            padding: 12px;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .numerical-input:focus {
+            border-color: #1976D2;
+            outline: none;
+        }
+
+        /* OMR Panel (30%) */
+        .omr-panel {
+            width: 30%;
+            background-color: #FAFAFA;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .omr-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1976D2;
+        }
+
+        .omr-legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .omr-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .omr-question {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .omr-question.not-answered {
+            background-color: #E0E0E0;
+            color: #757575;
+        }
+
+        .omr-question.answered {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .omr-question.marked {
+            background-color: #FF9800;
+            color: white;
+        }
+
+        .omr-question.marked-answered {
+            background-color: #9C27B0;
+            color: white;
+        }
+
+        .omr-question.current {
+            border-color: #1976D2;
+            box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+        }
+
+        /* Navigation Bar */
+        .navigation-bar {
+            background-color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #E0E0E0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            border: 2px solid #1976D2;
+            background-color: white;
+            color: #1976D2;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover {
+            background-color: #1976D2;
+            color: white;
+        }
+
+        .nav-button.primary {
+            background-color: #1976D2;
+            color: white;
+        }
+
+        .nav-button.primary:hover {
+            background-color: #1565C0;
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .mark-button {
+            background-color: #FF9800;
+            border-color: #FF9800;
+            color: white;
+        }
+
+        .clear-button {
+            background-color: #F44336;
+            border-color: #F44336;
+            color: white;
+        }
+
+        /* Calculator Button */
+        .calculator-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .test-container {
+                flex-direction: column;
+            }
+            
+            .question-panel, .omr-panel {
+                width: 100%;
+            }
+            
+            .omr-panel {
+                height: 200px;
+            }
+            
+            .omr-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+
+        /* Modal for Submit Confirmation */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Test Header -->
+    <div class="test-header">
+        <div class="test-title">🎓 JEE Main 2024 - Mock Test</div>
+        <div class="test-info">
+            <div class="question-counter">Question <span id="current-q">1</span> of <span id="total-q">75</span></div>
+            <div class="timer" id="timer">02:59:45</div>
+        </div>
+    </div>
+
+    <!-- Subject Tabs -->
+    <div class="subject-tabs">
+        <button class="subject-tab active" onclick="switchSubject('physics')">⚛️ Physics</button>
+        <button class="subject-tab" onclick="switchSubject('chemistry')">🧪 Chemistry</button>
+        <button class="subject-tab" onclick="switchSubject('mathematics')">📐 Mathematics</button>
+    </div>
+
+    <!-- Main Test Interface -->
+    <div class="test-container">
+        <!-- Question Panel -->
+        <div class="question-panel">
+            <div class="question-header">
+                <div class="question-number">Question 15</div>
+                <div class="question-type">MCQ</div>
+            </div>
+
+            <div class="question-text" id="question-text">
+                <strong>[Physics]</strong> A particle of mass 2 kg moves with initial velocity 10 m/s. 
+                If a constant force of 8 N acts on it for 5 seconds, what is the final velocity of the particle?
+            </div>
+
+            <div class="options-container" id="options-container">
+                <!-- MCQ Options -->
+                <div class="option" onclick="selectOption('A')">
+                    <div class="option-label">A</div>
+                    <div>30 m/s</div>
+                </div>
+                <div class="option selected" onclick="selectOption('B')">
+                    <div class="option-label">B</div>
+                    <div>25 m/s</div>
+                </div>
+                <div class="option" onclick="selectOption('C')">
+                    <div class="option-label">C</div>
+                    <div>20 m/s</div>
+                </div>
+                <div class="option" onclick="selectOption('D')">
+                    <div class="option-label">D</div>
+                    <div>15 m/s</div>
+                </div>
+            </div>
+
+            <!-- Numerical Input (hidden by default) -->
+            <div style="display: none;" id="numerical-container">
+                <p style="margin-bottom: 15px;">Enter your answer (up to 2 decimal places):</p>
+                <input type="number" class="numerical-input" placeholder="00.00" step="0.01" min="0" max="9999">
+            </div>
+        </div>
+
+        <!-- OMR Panel -->
+        <div class="omr-panel">
+            <div class="omr-title">📊 OMR Sheet</div>
+            
+            <!-- Legend -->
+            <div class="omr-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #4CAF50;"></div>
+                    <span>Answered</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #FF9800;"></div>
+                    <span>Marked</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #9C27B0;"></div>
+                    <span>Mark + Ans</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #E0E0E0;"></div>
+                    <span>Not Attempted</span>
+                </div>
+            </div>
+
+            <!-- OMR Grid -->
+            <div class="omr-grid" id="omr-grid">
+                <!-- Generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="navigation-bar">
+        <div style="display: flex; gap: 10px;">
+            <button class="nav-button" onclick="previousQuestion()" id="prev-btn">⬅️ Previous</button>
+            <button class="nav-button mark-button" onclick="markForReview()">🏃 Mark for Review</button>
+            <button class="nav-button clear-button" onclick="clearAnswer()">🗑️ Clear Response</button>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <button class="nav-button" onclick="nextQuestion()" id="next-btn">Next ➡️</button>
+            <button class="nav-button primary" onclick="submitTest()">✅ Submit Test</button>
+        </div>
+    </div>
+
+    <!-- Calculator Button -->
+    <button class="calculator-btn" onclick="openCalculator()" title="Calculator">🔢</button>
+
+    <!-- Submit Confirmation Modal -->
+    <div class="modal" id="submit-modal">
+        <div class="modal-content">
+            <h3>🎯 Submit Test?</h3>
+            <p style="margin: 15px 0;">Are you sure you want to submit your test?</p>
+            <div id="summary-info">
+                <p><strong>Answered:</strong> <span id="answered-count">0</span>/75</p>
+                <p><strong>Marked for Review:</strong> <span id="marked-count">0</span></p>
+            </div>
+            <div class="modal-buttons">
+                <button class="nav-button" onclick="closeSubmitModal()">Cancel</button>
+                <button class="nav-button primary" onclick="confirmSubmit()">Submit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JEE Test State Management
+        class JEETestManager {
+            constructor() {
+                this.currentQuestion = 15; // Demo: Starting at question 15
+                this.totalQuestions = 75;
+                this.timeRemaining = 10785; // 2:59:45 in seconds
+                this.answers = {};
+                this.markedForReview = new Set();
+                this.currentSubject = 'physics';
+                
+                // Demo question data
+                this.questions = this.generateDemoQuestions();
+                
+                this.initializeInterface();
+                this.startTimer();
+            }
+
+            generateDemoQuestions() {
+                const questions = [];
+                const subjects = ['Physics', 'Chemistry', 'Mathematics'];
+                
+                for (let i = 1; i <= 75; i++) {
+                    const subjectIndex = Math.floor((i - 1) / 25);
+                    const questionInSubject = ((i - 1) % 25) + 1;
+                    const isNumerical = questionInSubject > 20; // Last 5 are numerical
+                    
+                    questions.push({
+                        id: i,
+                        subject: subjects[subjectIndex],
+                        type: isNumerical ? 'NUMERICAL' : 'MCQ',
+                        text: `Sample ${subjects[subjectIndex]} question ${questionInSubject}`,
+                        options: isNumerical ? null : ['Option A', 'Option B', 'Option C', 'Option D'],
+                        correct: isNumerical ? '42.5' : 'A'
+                    });
+                }
+                return questions;
+            }
+
+            initializeInterface() {
+                this.createOMRGrid();
+                this.displayCurrentQuestion();
+                this.updateQuestionCounter();
+            }
+
+            createOMRGrid() {
+                const grid = document.getElementById('omr-grid');
+                grid.innerHTML = '';
+                
+                for (let i = 1; i <= this.totalQuestions; i++) {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'omr-question not-answered';
+                    questionDiv.textContent = i;
+                    questionDiv.onclick = () => this.goToQuestion(i);
+                    
+                    if (i === this.currentQuestion) {
+                        questionDiv.classList.add('current');
+                    }
+                    
+                    grid.appendChild(questionDiv);
+                }
+            }
+
+            displayCurrentQuestion() {
+                const question = this.questions[this.currentQuestion - 1];
+                document.getElementById('question-text').innerHTML = 
+                    `<strong>[${question.subject}]</strong> ${question.text}`;
+                
+                const optionsContainer = document.getElementById('options-container');
+                const numericalContainer = document.getElementById('numerical-container');
+                
+                if (question.type === 'MCQ') {
+                    optionsContainer.style.display = 'block';
+                    numericalContainer.style.display = 'none';
+                    
+                    optionsContainer.innerHTML = question.options.map((option, index) => 
+                        `<div class="option" onclick="selectOption('${String.fromCharCode(65 + index)}')">
+                            <div class="option-label">${String.fromCharCode(65 + index)}</div>
+                            <div>${option}</div>
+                        </div>`
+                    ).join('');
+                } else {
+                    optionsContainer.style.display = 'none';
+                    numericalContainer.style.display = 'block';
+                }
+                
+                // Update question type indicator
+                document.querySelector('.question-type').textContent = question.type;
+                document.querySelector('.question-number').textContent = `Question ${this.currentQuestion}`;
+            }
+
+            updateQuestionCounter() {
+                document.getElementById('current-q').textContent = this.currentQuestion;
+                document.getElementById('total-q').textContent = this.totalQuestions;
+            }
+
+            startTimer() {
+                const timerElement = document.getElementById('timer');
+                
+                setInterval(() => {
+                    if (this.timeRemaining > 0) {
+                        this.timeRemaining--;
+                        const hours = Math.floor(this.timeRemaining / 3600);
+                        const minutes = Math.floor((this.timeRemaining % 3600) / 60);
+                        const seconds = this.timeRemaining % 60;
+                        
+                        const display = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        timerElement.textContent = display;
+                        
+                        // Warning colors
+                        if (this.timeRemaining <= 300) { // 5 minutes
+                            timerElement.style.backgroundColor = '#FF5722';
+                        } else if (this.timeRemaining <= 600) { // 10 minutes
+                            timerElement.style.backgroundColor = '#FF9800';
+                        }
+                    } else {
+                        this.autoSubmitTest();
+                    }
+                }, 1000);
+            }
+
+            goToQuestion(questionNum) {
+                this.currentQuestion = questionNum;
+                this.displayCurrentQuestion();
+                this.updateQuestionCounter();
+                this.updateOMRGrid();
+            }
+
+            nextQuestion() {
+                if (this.currentQuestion < this.totalQuestions) {
+                    this.currentQuestion++;
+                    this.displayCurrentQuestion();
+                    this.updateQuestionCounter();
+                    this.updateOMRGrid();
+                }
+            }
+
+            previousQuestion() {
+                if (this.currentQuestion > 1) {
+                    this.currentQuestion--;
+                    this.displayCurrentQuestion();
+                    this.updateQuestionCounter();
+                    this.updateOMRGrid();
+                }
+            }
+
+            updateOMRGrid() {
+                const questions = document.querySelectorAll('.omr-question');
+                questions.forEach((q, index) => {
+                    q.classList.remove('current');
+                    if (index + 1 === this.currentQuestion) {
+                        q.classList.add('current');
+                    }
+                });
+            }
+        }
+
+        // Global functions for HTML onclick events
+        let testManager;
+
+        function initializeTest() {
+            testManager = new JEETestManager();
+        }
+
+        function selectOption(option) {
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            event.target.closest('.option').classList.add('selected');
+            
+            // Update OMR status
+            const omrQuestion = document.querySelector(`.omr-question:nth-child(${testManager.currentQuestion})`);
+            omrQuestion.className = 'omr-question answered';
+            if (testManager.markedForReview.has(testManager.currentQuestion)) {
+                omrQuestion.className = 'omr-question marked-answered';
+            }
+        }
+
+        function nextQuestion() {
+            testManager.nextQuestion();
+        }
+
+        function previousQuestion() {
+            testManager.previousQuestion();
+        }
+
+        function markForReview() {
+            const questionNum = testManager.currentQuestion;
+            testManager.markedForReview.add(questionNum);
+            
+            const omrQuestion = document.querySelector(`.omr-question:nth-child(${questionNum})`);
+            if (omrQuestion.classList.contains('answered')) {
+                omrQuestion.className = 'omr-question marked-answered';
+            } else {
+                omrQuestion.className = 'omr-question marked';
+            }
+        }
+
+        function clearAnswer() {
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelector('.numerical-input').value = '';
+            
+            const omrQuestion = document.querySelector(`.omr-question:nth-child(${testManager.currentQuestion})`);
+            omrQuestion.className = 'omr-question not-answered';
+        }
+
+        function switchSubject(subject) {
+            document.querySelectorAll('.subject-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Jump to first question of selected subject
+            const subjectMap = {
+                'physics': 1,
+                'chemistry': 26,
+                'mathematics': 51
+            };
+            testManager.goToQuestion(subjectMap[subject]);
+        }
+
+        function submitTest() {
+            // Count answered and marked questions
+            const answered = document.querySelectorAll('.omr-question.answered, .omr-question.marked-answered').length;
+            const marked = testManager.markedForReview.size;
+            
+            document.getElementById('answered-count').textContent = answered;
+            document.getElementById('marked-count').textContent = marked;
+            document.getElementById('submit-modal').style.display = 'block';
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submit-modal').style.display = 'none';
+        }
+
+        function confirmSubmit() {
+            alert('🎉 Test submitted successfully! Redirecting to results...');
+            // TODO: Process results and show analytics
+        }
+
+        function openCalculator() {
+            alert('🔢 Calculator opened (This would open a scientific calculator)');
+        }
+
+        function autoSubmitTest() {
+            alert('⏰ Time up! Test auto-submitted.');
+            confirmSubmit();
+        }
+
+        // Initialize when page loads
+        window.onload = initializeTest;
+    </script>
+</body>
+</html>

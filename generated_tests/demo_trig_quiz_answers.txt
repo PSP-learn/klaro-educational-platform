@@ -1,0 +1,33 @@
+================================================================================
+📚 ANSWER KEY - Mathematics Test - trigonometry
+================================================================================
+
+Q1. C
+     📖 Explanation: Based on content from Chap–8 (11th Nov.), page 13
+     📍 Source: Chap–8 (11th Nov.), Page 13
+     📐 Formula: B = 5 cm and  ACB = 30° (see Fig
+     💯 Points: 1
+
+Q2. Answer should demonstrate understanding of ratio with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–9 (11th Nov.), page 4
+     📍 Source: Chap–9 (11th Nov.), Page 4
+     📐 Formula: m = 3
+     💯 Points: 3
+
+Q3. Answer should demonstrate understanding of angled with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–9 (11th Nov.), page 3
+     📍 Source: Chap–9 (11th Nov.), Page 3
+     📐 Formula: D = CB + BD
+     💯 Points: 3
+
+================================================================================
+📊 TEST STATISTICS
+================================================================================
+Total Questions: 3
+Total Points: 7
+
+Difficulty Distribution:
+  Easy: 3 questions
+
+Topic Distribution:
+  Trigonometry: 3 questions

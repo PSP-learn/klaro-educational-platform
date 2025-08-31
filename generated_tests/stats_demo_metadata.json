@@ -1,0 +1,93 @@
+{
+  "title": "Mathematics Test - statistics",
+  "subject": "Mathematics",
+  "topics": [
+    "statistics"
+  ],
+  "questions": [
+    {
+      "question_text": "The mathematical expression for Frequency is:",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "statistics",
+      "subtopic": "Frequency",
+      "options": [
+        "An answer that confuses Frequency with another term",
+        "The correct answer related to Frequency",
+        "An incorrect but plausible answer about Frequency",
+        "A concept from a different mathematical area"
+      ],
+      "correct_answer": "B",
+      "explanation": "Based on content from Chap-13 (14th Nov.), page 17",
+      "source_content": "STATISTICS 187 4. The following distribution gives the state-wise teacher-student ratio in higher secondary schools of India. Find the mode and mean of this data. Interpret the two measures. Number of...",
+      "source_book": "Chap-13 (14th Nov.)",
+      "source_page": 17,
+      "points": 1,
+      "keywords": [
+        "mean",
+        "mode",
+        "distribution",
+        "data",
+        "Frequency"
+      ],
+      "formula_used": "sin"
+    },
+    {
+      "question_text": "The mathematical expression for median is:",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "statistics",
+      "subtopic": "median",
+      "options": [
+        "A concept from a different mathematical area",
+        "An incorrect but plausible answer about median",
+        "The correct answer related to median",
+        "An answer that confuses median with another term"
+      ],
+      "correct_answer": "C",
+      "explanation": "Based on content from Chap-13 (14th Nov.), page 29",
+      "source_content": "STATISTICS 199 Age (in years) Number of policy holders Below 20 2 Below 25 6 Below 30 24 Below 35 45 Below 40 78 Below 45 89 Below 50 92 Below 55 98 Below 60 100 4. The lengths of 40 leaves of a plant...",
+      "source_book": "Chap-13 (14th Nov.)",
+      "source_page": 29,
+      "points": 1,
+      "keywords": [
+        "median",
+        "data"
+      ],
+      "formula_used": "sin"
+    },
+    {
+      "question_text": "What steps are involved in solving distribution?",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "statistics",
+      "subtopic": "distribution",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of distribution with proper mathematical reasoning",
+      "explanation": "Refer to Chap-13 (14th Nov.), page 30",
+      "source_content": "200 MATHEMATICS 5. The following table gives the distribution of the life time of 400 neon lamps : Life time (in hours) Number of lamps 1500 - 2000 14 2000 - 2500 56 2500 - 3000 60 3000 - 3500 86 3500 - 4000 74 4000 - 4500 62 4500 - 5000 48 Find the median life time of a lamp. 6. 100 surnames were r...",
+      "source_book": "Chap-13 (14th Nov.)",
+      "source_page": 30,
+      "points": 3,
+      "keywords": [
+        "mean",
+        "frequency",
+        "median",
+        "distribution",
+        "data"
+      ],
+      "formula_used": "1500 - 2000"
+    }
+  ],
+  "total_questions": 3,
+  "total_points": 5,
+  "duration_minutes": 30,
+  "difficulty_distribution": {
+    "easy": 2,
+    "medium": 1
+  },
+  "topic_distribution": {
+    "statistics": 3
+  },
+  "created_at": "2025-08-30T03:41:40.408222"
+}

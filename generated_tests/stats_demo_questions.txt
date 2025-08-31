@@ -1,0 +1,43 @@
+================================================================================
+📝 Mathematics Test - statistics
+================================================================================
+Subject: Mathematics
+Topics: statistics
+Duration: 30 minutes
+Total Points: 5
+Total Questions: 3
+
+📋 INSTRUCTIONS:
+• Read all questions carefully before starting
+• Show all your work for mathematical calculations
+• For MCQs, choose the BEST answer
+• Write clearly and legibly
+• Manage your time effectively
+
+================================================================================
+
+Q1. The mathematical expression for Frequency is:
+     [Topic: Statistics, Difficulty: Easy, Points: 1]
+     A. An answer that confuses Frequency with another term
+     B. The correct answer related to Frequency
+     C. An incorrect but plausible answer about Frequency
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
+
+Q2. The mathematical expression for median is:
+     [Topic: Statistics, Difficulty: Medium, Points: 1]
+     A. A concept from a different mathematical area
+     B. An incorrect but plausible answer about median
+     C. The correct answer related to median
+     D. An answer that confuses median with another term
+
+     Answer:
+     __________________________________________________
+
+Q3. What steps are involved in solving distribution?
+     [Topic: Statistics, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________

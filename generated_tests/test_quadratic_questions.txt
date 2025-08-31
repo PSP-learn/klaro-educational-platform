@@ -1,0 +1,54 @@
+================================================================================
+📝 Mathematics Test - quadratic equations
+================================================================================
+Subject: Mathematics
+Topics: quadratic equations
+Duration: 60 minutes
+Total Points: 11
+Created: 2025-08-30T01:09:54.738757
+
+
+TEST INSTRUCTIONS:
+
+• Total Questions: 5
+• Multiple Choice Questions: 3 (Choose the best answer)
+• Short Answer Questions: 2 (2-3 sentences)
+
+• Write clearly and legibly
+• Show your work for mathematical problems
+• Read each question carefully before answering
+
+
+================================================================================
+
+Q1. What is the significance of On in Chap–4 (8th Nov.) fian?
+    [Difficulty: Medium, Points: 4]
+
+
+Q2. Explain If in your own words.
+    [Difficulty: Easy, Points: 2]
+
+
+Q3. The primary characteristic of Equation is:
+    [Difficulty: Easy, Points: 1]
+    A. The correct definition/explanation of Equation
+    B. A related but different concept from Equation
+    C. A completely unrelated concept
+    D. An incorrect but plausible definition of Equation
+
+
+Q4. Which statement about Values is correct?
+    [Difficulty: Medium, Points: 2]
+    A. An incorrect but plausible definition of Values
+    B. A completely unrelated concept
+    C. A related but different concept from Values
+    D. The correct definition/explanation of Values
+
+
+Q5. Which statement about Now is correct?
+    [Difficulty: Medium, Points: 2]
+    A. A completely unrelated concept
+    B. An incorrect but plausible definition of Now
+    C. The correct definition/explanation of Now
+    D. A related but different concept from Now
+

@@ -1,0 +1,254 @@
+{
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf",
+    "title": "Introduction to Machine Learning",
+    "author": "Jane Smith",
+    "page_count": 1,
+    "file_size": 1874,
+    "last_modified": "2025-08-30T00:14:12.001921",
+    "chunks_count": 1
+  },
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf",
+    "title": "Business Strategy in Digital Age",
+    "author": "Sarah Johnson",
+    "page_count": 1,
+    "file_size": 1834,
+    "last_modified": "2025-08-30T00:14:12.002980",
+    "chunks_count": 1
+  },
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/programming/John_Doe/Python_Programming_Guide.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/programming/John_Doe/Python_Programming_Guide.pdf",
+    "title": "Python Programming Guide",
+    "author": "John Doe",
+    "page_count": 1,
+    "file_size": 1843,
+    "last_modified": "2025-08-30T00:14:12.002476",
+    "chunks_count": 1
+  },
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf",
+    "title": "Introduction to Machine Learning",
+    "author": "Jane Smith",
+    "page_count": 1,
+    "file_size": 1874,
+    "last_modified": "2025-08-30T00:16:14.473926",
+    "chunks_count": 1
+  },
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf",
+    "title": "Business Strategy in Digital Age",
+    "author": "Sarah Johnson",
+    "page_count": 1,
+    "file_size": 1834,
+    "last_modified": "2025-08-30T00:16:14.474970",
+    "chunks_count": 1
+  },
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/programming/John_Doe/Python_Programming_Guide.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/programming/John_Doe/Python_Programming_Guide.pdf",
+    "title": "Python Programming Guide",
+    "author": "John Doe",
+    "page_count": 1,
+    "file_size": 1843,
+    "last_modified": "2025-08-30T00:16:14.474468",
+    "chunks_count": 1
+  },
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf",
+    "title": "Introduction to Machine Learning",
+    "author": "Jane Smith",
+    "page_count": 1,
+    "file_size": 1874,
+    "last_modified": "2025-08-30T00:49:24.169632",
+    "chunks_count": 1
+  },
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf",
+    "title": "Business Strategy in Digital Age",
+    "author": "Sarah Johnson",
+    "page_count": 1,
+    "file_size": 1834,
+    "last_modified": "2025-08-30T00:49:24.170677",
+    "chunks_count": 1
+  },
+  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/programming/John_Doe/Python_Programming_Guide.pdf": {
+    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/programming/John_Doe/Python_Programming_Guide.pdf",
+    "title": "Python Programming Guide",
+    "author": "John Doe",
+    "page_count": 1,
+    "file_size": 1843,
+    "last_modified": "2025-08-30T00:49:24.170178",
+    "chunks_count": 1
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh103.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh103.pdf",
+    "title": "Chap-3 (8th Nov.)",
+    "author": "admin",
+    "page_count": 14,
+    "file_size": 1125871,
+    "last_modified": "2025-08-29T23:45:05.091054",
+    "chunks_count": 14
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh102.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh102.pdf",
+    "title": "Chap-2 (8th Nov.)",
+    "author": "admin",
+    "page_count": 14,
+    "file_size": 1100070,
+    "last_modified": "2025-08-29T23:45:05.089666",
+    "chunks_count": 15
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh114.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh114.pdf",
+    "title": "Chap\u201314 (14th Nov.)",
+    "author": "admin",
+    "page_count": 16,
+    "file_size": 1198331,
+    "last_modified": "2025-08-29T23:45:05.093494",
+    "chunks_count": 17
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh101.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh101.pdf",
+    "title": "Chap-1 (8th Nov.)",
+    "author": "admin",
+    "page_count": 9,
+    "file_size": 923235,
+    "last_modified": "2025-08-29T23:45:05.092074",
+    "chunks_count": 10
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh105.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh105.pdf",
+    "title": "Chap-5 (8th Nov.)",
+    "author": "admin",
+    "page_count": 24,
+    "file_size": 1726859,
+    "last_modified": "2025-08-29T23:45:05.078865",
+    "chunks_count": 27
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh111.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh111.pdf",
+    "title": "Chap-11 (11th Nov.)",
+    "author": "admin",
+    "page_count": 7,
+    "file_size": 643663,
+    "last_modified": "2025-08-29T23:45:05.077121",
+    "chunks_count": 7
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh110.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh110.pdf",
+    "title": "Chap\u201310 (11th Nov.)",
+    "author": "admin",
+    "page_count": 10,
+    "file_size": 764838,
+    "last_modified": "2025-08-29T23:45:05.076145",
+    "chunks_count": 11
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh104.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh104.pdf",
+    "title": "Chap\u20134 (8th Nov.) fian",
+    "author": "admin",
+    "page_count": 11,
+    "file_size": 886774,
+    "last_modified": "2025-08-29T23:45:05.075118",
+    "chunks_count": 12
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh112.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh112.pdf",
+    "title": "Chap-12 (14th Nov.)",
+    "author": "admin",
+    "page_count": 10,
+    "file_size": 1003336,
+    "last_modified": "2025-08-29T23:45:05.088407",
+    "chunks_count": 10
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh106.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh106.pdf",
+    "title": "Chap\u20136 (10th Nov.)",
+    "author": "admin",
+    "page_count": 26,
+    "file_size": 2129422,
+    "last_modified": "2025-08-29T23:45:05.087357",
+    "chunks_count": 26
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh107.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh107.pdf",
+    "title": "Chap\u20137 (10th Nov.)",
+    "author": "admin",
+    "page_count": 14,
+    "file_size": 1459849,
+    "last_modified": "2025-08-29T23:45:05.084019",
+    "chunks_count": 14
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh113.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh113.pdf",
+    "title": "Chap-13 (14th Nov.)",
+    "author": "admin",
+    "page_count": 31,
+    "file_size": 2163240,
+    "last_modified": "2025-08-29T23:45:05.081361",
+    "chunks_count": 31
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1a2.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1a2.pdf",
+    "title": "Appendix-2 (15th Nov.)",
+    "author": "admin",
+    "page_count": 11,
+    "file_size": 867350,
+    "last_modified": "2025-08-29T23:45:05.072655",
+    "chunks_count": 11
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1a1.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1a1.pdf",
+    "title": "Appendix-1 (15th Nov.)",
+    "author": "admin",
+    "page_count": 21,
+    "file_size": 1435110,
+    "last_modified": "2025-08-29T23:45:05.074166",
+    "chunks_count": 21
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1an.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1an.pdf",
+    "title": "Answers.pmd",
+    "author": "admin",
+    "page_count": 13,
+    "file_size": 946266,
+    "last_modified": "2025-08-29T23:45:05.071628",
+    "chunks_count": 14
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh109.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh109.pdf",
+    "title": "Chap\u20139 (11th Nov.)",
+    "author": "admin",
+    "page_count": 11,
+    "file_size": 1183045,
+    "last_modified": "2025-08-29T23:45:05.067668",
+    "chunks_count": 11
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh108.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh108.pdf",
+    "title": "Chap\u20138 (11th Nov.)",
+    "author": "admin",
+    "page_count": 20,
+    "file_size": 1598569,
+    "last_modified": "2025-08-29T23:45:05.063719",
+    "chunks_count": 20
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1ps.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1ps.pdf",
+    "title": "Prelims.pmd",
+    "author": "admin",
+    "page_count": 14,
+    "file_size": 1253874,
+    "last_modified": "2025-08-29T23:45:05.065731",
+    "chunks_count": 14
+  },
+  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Exemplar_Complete_2023.pdf": {
+    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Exemplar_Complete_2023.pdf",
+    "title": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+    "author": "",
+    "page_count": 196,
+    "file_size": 1651870,
+    "last_modified": "2025-08-29T23:41:58.802280",
+    "chunks_count": 200
+  }
+}

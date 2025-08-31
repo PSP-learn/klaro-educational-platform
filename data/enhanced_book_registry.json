@@ -1,0 +1,353 @@
+{
+  "version": "3.0.0",
+  "last_updated": "2025-08-29",
+  "organization_strategy": "multi_dimensional",
+  "metadata": {
+    "total_books": 0,
+    "total_chapters": 0,
+    "supported_exams": ["jee_main", "jee_advanced", "neet", "board_exams", "ssc", "nda"],
+    "supported_subjects": ["mathematics", "physics", "chemistry", "biology", "reasoning", "english"]
+  },
+  
+  "books": {
+    "ncert_math_09": {
+      "id": "ncert_math_09",
+      "title": "NCERT Mathematics Class 9",
+      "publisher": "NCERT",
+      "subject": "mathematics",
+      "path": "textbooks/ncert/mathematics/class_09",
+      "primary_classification": {
+        "type": "class_textbook",
+        "grade": "9",
+        "curriculum": "cbse"
+      },
+      "exam_relevance": [
+        {"exam": "board_exams", "relevance": 1.0, "priority": "essential"},
+        {"exam": "jee_main", "relevance": 0.7, "priority": "foundation"},
+        {"exam": "ssc", "relevance": 0.8, "priority": "high"}
+      ],
+      "chapters": {
+        "number_systems": {
+          "number": 1,
+          "title": "Number Systems",
+          "exam_tags": ["board_exams", "jee_main", "ssc"],
+          "difficulty": "foundation",
+          "topics": ["real_numbers", "irrational_numbers", "rationalization"],
+          "weightage": {"board_exams": 8, "jee_main": 5, "ssc": 10}
+        },
+        "polynomials": {
+          "number": 2,
+          "title": "Polynomials",
+          "exam_tags": ["board_exams", "jee_main"],
+          "difficulty": "foundation",
+          "topics": ["polynomial_operations", "remainder_theorem", "factorization"],
+          "weightage": {"board_exams": 10, "jee_main": 8}
+        }
+      },
+      "status": "active"
+    },
+    
+    "ncert_math_11": {
+      "id": "ncert_math_11",
+      "title": "NCERT Mathematics Class 11",
+      "publisher": "NCERT",
+      "subject": "mathematics",
+      "path": "textbooks/ncert/mathematics/class_11",
+      "primary_classification": {
+        "type": "class_textbook",
+        "grade": "11",
+        "curriculum": "cbse"
+      },
+      "exam_relevance": [
+        {"exam": "board_exams", "relevance": 1.0, "priority": "essential"},
+        {"exam": "jee_main", "relevance": 0.95, "priority": "essential"},
+        {"exam": "jee_advanced", "relevance": 0.80, "priority": "foundation"}
+      ],
+      "chapters": {
+        "sets": {
+          "number": 1,
+          "title": "Sets",
+          "exam_tags": ["board_exams", "jee_main", "jee_advanced"],
+          "difficulty": "foundation",
+          "topics": ["set_operations", "venn_diagrams", "relations"],
+          "weightage": {"board_exams": 8, "jee_main": 6, "jee_advanced": 4}
+        },
+        "limits_and_derivatives": {
+          "number": 13,
+          "title": "Limits and Derivatives",
+          "exam_tags": ["board_exams", "jee_main", "jee_advanced"],
+          "difficulty": "intermediate",
+          "topics": ["limits", "derivatives", "applications_of_derivatives"],
+          "weightage": {"board_exams": 12, "jee_main": 15, "jee_advanced": 18}
+        }
+      },
+      "status": "active"
+    },
+    
+    "rd_sharma_math_11": {
+      "id": "rd_sharma_math_11",
+      "title": "RD Sharma Mathematics Class 11",
+      "publisher": "RD Sharma",
+      "subject": "mathematics",
+      "path": "textbooks/rd_sharma/mathematics/class_11",
+      "primary_classification": {
+        "type": "practice_book",
+        "grade": "11",
+        "curriculum": "cbse"
+      },
+      "exam_relevance": [
+        {"exam": "board_exams", "relevance": 0.9, "priority": "high"},
+        {"exam": "jee_main", "relevance": 0.95, "priority": "essential"},
+        {"exam": "jee_advanced", "relevance": 0.85, "priority": "high"}
+      ],
+      "complements": ["ncert_math_11"],
+      "focus": "extensive_practice",
+      "status": "pending"
+    },
+    
+    "hc_verma_physics_vol1": {
+      "id": "hc_verma_physics_vol1",
+      "title": "Concepts of Physics Volume 1",
+      "publisher": "HC Verma",
+      "subject": "physics",
+      "path": "textbooks/hc_verma/physics/volume_1",
+      "primary_classification": {
+        "type": "advanced_practice",
+        "grade_range": ["11", "12"],
+        "curriculum": "competitive"
+      },
+      "exam_relevance": [
+        {"exam": "jee_main", "relevance": 0.90, "priority": "high"},
+        {"exam": "jee_advanced", "relevance": 0.95, "priority": "essential"},
+        {"exam": "neet", "relevance": 0.85, "priority": "high"}
+      ],
+      "covers_topics": ["mechanics", "thermodynamics", "waves"],
+      "difficulty_level": "advanced",
+      "status": "pending"
+    }
+  },
+  
+  "exam_profiles": {
+    "jee_main": {
+      "name": "JEE Main",
+      "full_name": "Joint Entrance Examination Main",
+      "subjects": ["mathematics", "physics", "chemistry"],
+      "grade_levels": ["11", "12"],
+      "total_questions": 90,
+      "subject_distribution": {"mathematics": 30, "physics": 30, "chemistry": 30},
+      "book_recommendations": {
+        "essential": {
+          "mathematics": ["ncert_math_11", "ncert_math_12"],
+          "physics": ["ncert_physics_11", "ncert_physics_12"],
+          "chemistry": ["ncert_chemistry_11", "ncert_chemistry_12"]
+        },
+        "practice": {
+          "mathematics": ["rd_sharma_math_11", "rd_sharma_math_12"],
+          "physics": ["hc_verma_physics_vol1", "hc_verma_physics_vol2"],
+          "chemistry": ["ncert_exemplar_chemistry_11", "ncert_exemplar_chemistry_12"]
+        },
+        "advanced": {
+          "mathematics": ["cengage_algebra", "cengage_calculus"],
+          "physics": ["dc_pandey_mechanics", "dc_pandey_electricity"],
+          "chemistry": ["op_tandon_organic", "jd_lee_inorganic"]
+        }
+      },
+      "topic_priorities": {
+        "mathematics": {
+          "high": ["calculus", "coordinate_geometry", "algebra", "trigonometry"],
+          "medium": ["probability", "statistics", "mathematical_reasoning"],
+          "low": ["sets", "relations"]
+        },
+        "physics": {
+          "high": ["mechanics", "electricity", "optics"],
+          "medium": ["thermodynamics", "modern_physics"],
+          "low": ["physical_world", "units_measurements"]
+        },
+        "chemistry": {
+          "high": ["organic_chemistry", "physical_chemistry"],
+          "medium": ["inorganic_chemistry"],
+          "low": ["environmental_chemistry"]
+        }
+      }
+    },
+    
+    "jee_advanced": {
+      "name": "JEE Advanced",
+      "subjects": ["mathematics", "physics", "chemistry"],
+      "grade_levels": ["11", "12"],
+      "book_recommendations": {
+        "essential": {
+          "mathematics": ["cengage_algebra", "cengage_calculus", "rd_sharma_math_12"],
+          "physics": ["hc_verma_physics_vol1", "hc_verma_physics_vol2"],
+          "chemistry": ["ncert_chemistry_11", "ncert_chemistry_12"]
+        },
+        "advanced": {
+          "mathematics": ["tata_mcgraw_hill", "arihant_skills"],
+          "physics": ["irodov_problems", "dc_pandey_advanced"],
+          "chemistry": ["morrison_boyd", "atkins_physical"]
+        }
+      },
+      "difficulty_level": "very_high"
+    },
+    
+    "neet": {
+      "name": "NEET",
+      "full_name": "National Eligibility cum Entrance Test",
+      "subjects": ["physics", "chemistry", "biology"],
+      "grade_levels": ["11", "12"],
+      "book_recommendations": {
+        "essential": {
+          "physics": ["ncert_physics_11", "ncert_physics_12"],
+          "chemistry": ["ncert_chemistry_11", "ncert_chemistry_12"],
+          "biology": ["ncert_biology_11", "ncert_biology_12"]
+        },
+        "practice": {
+          "physics": ["dc_pandey_neet", "hc_verma_selected"],
+          "chemistry": ["dinesh_chemistry", "op_tandon_physical"],
+          "biology": ["dinesh_biology", "trueman_biology"]
+        }
+      }
+    },
+    
+    "board_exams": {
+      "name": "Board Exams",
+      "subjects": ["mathematics", "physics", "chemistry", "biology"],
+      "grade_levels": ["9", "10", "11", "12"],
+      "book_recommendations": {
+        "essential": {
+          "mathematics": ["ncert_math_09", "ncert_math_10", "ncert_math_11", "ncert_math_12"],
+          "physics": ["ncert_physics_11", "ncert_physics_12"],
+          "chemistry": ["ncert_chemistry_11", "ncert_chemistry_12"]
+        },
+        "practice": {
+          "mathematics": ["rd_sharma_math_09", "rd_sharma_math_10"],
+          "physics": ["lakhmir_singh_physics"],
+          "chemistry": ["lakhmir_singh_chemistry"]
+        }
+      }
+    }
+  },
+  
+  "topic_taxonomy": {
+    "mathematics": {
+      "algebra": {
+        "subtopics": ["quadratic_equations", "polynomials", "sequences", "series"],
+        "grade_introduction": "9",
+        "grade_completion": "12",
+        "exam_weightage": {
+          "jee_main": 25,
+          "jee_advanced": 20,
+          "board_exams": 30,
+          "ssc": 35
+        },
+        "difficulty_progression": ["ncert", "rd_sharma", "cengage", "advanced_books"]
+      },
+      "calculus": {
+        "subtopics": ["limits", "derivatives", "integrals", "differential_equations"],
+        "grade_introduction": "11",
+        "grade_completion": "12",
+        "exam_weightage": {
+          "jee_main": 30,
+          "jee_advanced": 35,
+          "board_exams": 25
+        },
+        "difficulty_progression": ["ncert", "rd_sharma", "cengage", "tata_mcgraw"]
+      },
+      "coordinate_geometry": {
+        "subtopics": ["straight_lines", "circles", "parabola", "ellipse", "hyperbola"],
+        "grade_introduction": "9",
+        "grade_completion": "12",
+        "exam_weightage": {
+          "jee_main": 20,
+          "jee_advanced": 25,
+          "board_exams": 20
+        }
+      }
+    },
+    "physics": {
+      "mechanics": {
+        "subtopics": ["kinematics", "dynamics", "work_energy", "rotational_motion"],
+        "grade_introduction": "11",
+        "exam_weightage": {
+          "jee_main": 25,
+          "jee_advanced": 30,
+          "neet": 20
+        },
+        "difficulty_progression": ["ncert", "hc_verma", "dc_pandey", "irodov"]
+      },
+      "electricity": {
+        "subtopics": ["electrostatics", "current_electricity", "magnetism"],
+        "grade_introduction": "12",
+        "exam_weightage": {
+          "jee_main": 30,
+          "jee_advanced": 25,
+          "neet": 25
+        }
+      }
+    },
+    "chemistry": {
+      "organic_chemistry": {
+        "subtopics": ["hydrocarbons", "functional_groups", "reactions"],
+        "grade_introduction": "11",
+        "exam_weightage": {
+          "jee_main": 35,
+          "jee_advanced": 40,
+          "neet": 45
+        },
+        "difficulty_progression": ["ncert", "ncert_exemplar", "op_tandon", "morrison_boyd"]
+      }
+    }
+  },
+  
+  "content_cross_references": {
+    "calculus_limits": {
+      "primary_sources": ["ncert_math_11_ch13"],
+      "practice_sources": ["rd_sharma_math_11_ch13", "cengage_calculus_ch1"],
+      "related_pyqs": ["jee_main_2024_math_q15", "jee_adv_2023_math_q8"],
+      "prerequisite_topics": ["functions", "real_numbers"],
+      "follow_up_topics": ["derivatives", "applications_of_derivatives"],
+      "difficulty_progression": [
+        {"book": "ncert_math_11", "difficulty": "foundation"},
+        {"book": "rd_sharma_math_11", "difficulty": "intermediate"},
+        {"book": "cengage_calculus", "difficulty": "advanced"},
+        {"book": "tata_mcgraw_hill", "difficulty": "expert"}
+      ]
+    },
+    
+    "quadratic_equations": {
+      "primary_sources": ["ncert_math_10_ch4"],
+      "practice_sources": ["rd_sharma_math_10_ch4"],
+      "related_pyqs": ["jee_main_algebra", "ssc_algebra"],
+      "cross_subject_links": {
+        "physics": ["projectile_motion", "shm"],
+        "chemistry": ["rate_equations"]
+      }
+    }
+  },
+  
+  "smart_recommendations": {
+    "learning_pathways": {
+      "jee_main_mathematics": {
+        "foundation": ["ncert_math_11", "ncert_math_12"],
+        "practice": ["rd_sharma_math_11", "rd_sharma_math_12", "ncert_exemplar_math_11"],
+        "advanced": ["cengage_algebra", "cengage_calculus"],
+        "mastery": ["arihant_skills", "tata_mcgraw_hill"]
+      },
+      "board_exam_mathematics": {
+        "foundation": ["ncert_math_grade"],
+        "practice": ["rd_sharma_grade", "rs_aggarwal_grade"],
+        "revision": ["ncert_exemplar_grade"]
+      }
+    },
+    
+    "topic_based_suggestions": {
+      "when_student_struggles_with": {
+        "calculus": {
+          "step_down": ["ncert_math_11_limits", "rd_sharma_math_10_polynomial"],
+          "practice_more": ["rd_sharma_math_11_calculus", "cengage_differential_calculus"],
+          "visual_aids": ["khan_academy_calculus", "3d_geometry_models"]
+        }
+      }
+    }
+  }
+}

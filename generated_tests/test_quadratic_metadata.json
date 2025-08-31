@@ -1,0 +1,97 @@
+{
+  "title": "Mathematics Test - quadratic equations",
+  "subject": "Mathematics",
+  "topics": [
+    "quadratic equations"
+  ],
+  "questions": [
+    {
+      "question_text": "What is the significance of On in Chap\u20134 (8th Nov.) fian?",
+      "question_type": "short",
+      "difficulty": "medium",
+      "options": null,
+      "correct_answer": "Answer should include key points about On from the textbook",
+      "explanation": "Refer to Chap\u20134 (8th Nov.) fian, page 2",
+      "source_chunk": "QUADRATIC EQUATIONS 39 Sridharacharya (C.E. 1025) derived a formula, now known as the quadratic formula, (as quoted by Bhaskara II) for solving a quadratic equation by the method of completing the square. An Arab mathematician Al-Khwarizmi (about C.E. 800) also studied quadratic equations of differe...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 2,
+      "points": 4,
+      "topic": "On"
+    },
+    {
+      "question_text": "Explain If in your own words.",
+      "question_type": "short",
+      "difficulty": "easy",
+      "options": null,
+      "correct_answer": "Answer should include key points about If from the textbook",
+      "explanation": "Refer to Chap\u20134 (8th Nov.) fian, page 8",
+      "source_chunk": "QUADRATIC EQUATIONS 45 If b2 \u2013 4ac = 0, then x = 0 2 b a \uf02d \uf0b1 , i.e., or \u2013 2 2 b b x a a \uf03d\uf02d \uf0d7 So, the roots of the equation ax2 + bx + c = 0 are both 2 b a \uf02d\uf0d7 Therefore, we say that the quadratic equation ax2 + bx + c = 0 has two equal real roots in this case. If b2 \u2013 4ac < 0, then there is no real n...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 8,
+      "points": 2,
+      "topic": "If"
+    },
+    {
+      "question_text": "The primary characteristic of Equation is:",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "options": [
+        "The correct definition/explanation of Equation",
+        "A related but different concept from Equation",
+        "A completely unrelated concept",
+        "An incorrect but plausible definition of Equation"
+      ],
+      "correct_answer": "A",
+      "explanation": "Based on the content from NCERT Mathematics Class 10 Exemplar Complete 2023, page 52",
+      "source_chunk": "(A) Main Concepts and Results \u2022 Quadratic equation : A quadratic equation in the variable x is of the form ax2 + bx + c = 0, where a, b, c are real numbers and a \u2260 0. \u2022 Roots of a quadratic equation :...",
+      "source_book": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+      "source_page": 52,
+      "points": 1,
+      "topic": "Equation"
+    },
+    {
+      "question_text": "Which statement about Values is correct?",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "options": [
+        "An incorrect but plausible definition of Values",
+        "A completely unrelated concept",
+        "A related but different concept from Values",
+        "The correct definition/explanation of Values"
+      ],
+      "correct_answer": "D",
+      "explanation": "Based on the content from NCERT Mathematics Class 10 Exemplar Complete 2023, page 54",
+      "source_chunk": "QUADRATIC EQUATIONS 37 4. If 1 2 is a root of the equation x2 + kx \u2013 5 4 = 0, then the value of k is (A) 2 (B) \u2013 2 (C) 1 4 (D) 1 2 5. Which of the following equations has the sum of its roots as 3? (A...",
+      "source_book": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+      "source_page": 54,
+      "points": 2,
+      "topic": "Values"
+    },
+    {
+      "question_text": "Which statement about Now is correct?",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "options": [
+        "A completely unrelated concept",
+        "An incorrect but plausible definition of Now",
+        "The correct definition/explanation of Now",
+        "A related but different concept from Now"
+      ],
+      "correct_answer": "C",
+      "explanation": "Based on the content from NCERT Mathematics Class 10 Exemplar Complete 2023, page 56",
+      "source_chunk": "QUADRATIC EQUATIONS 39 (vi) If the coefficient of x2 and the constant term have the same sign and if the coefficient of x term is zero, then the quadratic equation has no real roots. 3. A quadratic eq...",
+      "source_book": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+      "source_page": 56,
+      "points": 2,
+      "topic": "Now"
+    }
+  ],
+  "total_points": 11,
+  "duration_minutes": 60,
+  "instructions": "TEST INSTRUCTIONS:\n\n\u2022 Total Questions: 5\n\u2022 Multiple Choice Questions: 3 (Choose the best answer)\n\u2022 Short Answer Questions: 2 (2-3 sentences)\n\n\u2022 Write clearly and legibly\n\u2022 Show your work for mathematical problems\n\u2022 Read each question carefully before answering\n",
+  "created_at": "2025-08-30T01:09:54.738757",
+  "difficulty_distribution": {
+    "medium": 3,
+    "easy": 2
+  }
+}

@@ -1,0 +1,344 @@
+{
+  "version": "2.0.0",
+  "last_updated": "2025-08-29",
+  "subjects": {
+    "mathematics": {
+      "name": "Mathematics",
+      "levels": {
+        "9": {
+          "name": "Class 9",
+          "books": {
+            "ncert": {
+              "title": "NCERT Mathematics Class 9",
+              "publisher": "NCERT",
+              "type": "textbook",
+              "path": "textbooks/ncert/mathematics/class_09",
+              "chapters": [
+                "Number Systems",
+                "Polynomials",
+                "Coordinate Geometry",
+                "Linear Equations in Two Variables",
+                "Introduction to Euclid's Geometry",
+                "Lines and Angles",
+                "Triangles",
+                "Quadrilaterals",
+                "Areas of Parallelograms and Triangles",
+                "Circles",
+                "Constructions",
+                "Heron's Formula",
+                "Surface Areas and Volumes",
+                "Statistics",
+                "Probability"
+              ]
+            },
+            "rd_sharma": {
+              "title": "RD Sharma Mathematics Class 9",
+              "publisher": "Dhanpat Rai Publications",
+              "type": "practice",
+              "path": "textbooks/rd_sharma/class_09",
+              "status": "pending"
+            }
+          }
+        },
+        "10": {
+          "name": "Class 10",
+          "books": {
+            "ncert": {
+              "title": "NCERT Mathematics Class 10",
+              "publisher": "NCERT",
+              "type": "textbook",
+              "path": "textbooks/ncert/mathematics/class_10",
+              "chapters": [
+                "Real Numbers",
+                "Polynomials",
+                "Pair of Linear Equations in Two Variables",
+                "Quadratic Equations",
+                "Arithmetic Progressions",
+                "Triangles",
+                "Coordinate Geometry",
+                "Introduction to Trigonometry",
+                "Some Applications of Trigonometry",
+                "Circles",
+                "Constructions",
+                "Areas Related to Circles",
+                "Surface Areas and Volumes",
+                "Statistics",
+                "Probability"
+              ]
+            },
+            "rd_sharma": {
+              "title": "RD Sharma Mathematics Class 10",
+              "publisher": "Dhanpat Rai Publications",
+              "type": "practice",
+              "path": "textbooks/rd_sharma/class_10",
+              "status": "pending"
+            }
+          }
+        },
+        "11": {
+          "name": "Class 11",
+          "books": {
+            "ncert": {
+              "title": "NCERT Mathematics Class 11",
+              "publisher": "NCERT",
+              "type": "textbook",
+              "path": "textbooks/ncert/mathematics/class_11",
+              "chapters": [
+                "Sets",
+                "Relations and Functions",
+                "Trigonometric Functions",
+                "Principle of Mathematical Induction",
+                "Complex Numbers and Quadratic Equations",
+                "Linear Inequalities",
+                "Permutations and Combinations",
+                "Binomial Theorem",
+                "Sequences and Series",
+                "Straight Lines",
+                "Conic Sections",
+                "Introduction to Three-dimensional Geometry",
+                "Limits and Derivatives",
+                "Mathematical Reasoning",
+                "Statistics",
+                "Probability"
+              ]
+            },
+            "cengage": {
+              "title": "Cengage Mathematics Class 11",
+              "publisher": "Cengage Learning",
+              "type": "advanced",
+              "path": "textbooks/cengage/class_11",
+              "status": "pending"
+            }
+          }
+        },
+        "12": {
+          "name": "Class 12",
+          "books": {
+            "ncert": {
+              "title": "NCERT Mathematics Class 12",
+              "publisher": "NCERT",
+              "type": "textbook",
+              "path": "textbooks/ncert/mathematics/class_12",
+              "chapters": [
+                "Relations and Functions",
+                "Inverse Trigonometric Functions",
+                "Matrices",
+                "Determinants",
+                "Continuity and Differentiability",
+                "Applications of Derivatives",
+                "Integrals",
+                "Applications of Integrals",
+                "Differential Equations",
+                "Vector Algebra",
+                "Three Dimensional Geometry",
+                "Linear Programming",
+                "Probability"
+              ]
+            },
+            "cengage": {
+              "title": "Cengage Mathematics Class 12",
+              "publisher": "Cengage Learning",
+              "type": "advanced",
+              "path": "textbooks/cengage/class_12",
+              "status": "pending"
+            }
+          }
+        }
+      }
+    },
+    "physics": {
+      "name": "Physics",
+      "levels": {
+        "11": {
+          "name": "Class 11",
+          "books": {
+            "ncert": {
+              "title": "NCERT Physics Class 11",
+              "publisher": "NCERT",
+              "type": "textbook",
+              "path": "textbooks/ncert/physics/class_11",
+              "status": "pending",
+              "chapters": [
+                "Physical World",
+                "Units and Measurements",
+                "Motion in a Straight Line",
+                "Motion in a Plane",
+                "Laws of Motion",
+                "Work, Energy and Power",
+                "System of Particles and Rotational Motion",
+                "Gravitation",
+                "Mechanical Properties of Solids",
+                "Mechanical Properties of Fluids",
+                "Thermal Properties of Matter",
+                "Thermodynamics",
+                "Kinetic Theory",
+                "Oscillations",
+                "Waves"
+              ]
+            },
+            "hc_verma": {
+              "title": "Concepts of Physics Vol. 1",
+              "publisher": "Bharati Bhawan",
+              "type": "advanced",
+              "path": "textbooks/hc_verma/class_11",
+              "status": "pending"
+            }
+          }
+        },
+        "12": {
+          "name": "Class 12",
+          "books": {
+            "ncert": {
+              "title": "NCERT Physics Class 12",
+              "publisher": "NCERT",
+              "type": "textbook",
+              "path": "textbooks/ncert/physics/class_12",
+              "status": "pending",
+              "chapters": [
+                "Electric Charges and Fields",
+                "Electrostatic Potential and Capacitance",
+                "Current Electricity",
+                "Moving Charges and Magnetism",
+                "Magnetism and Matter",
+                "Electromagnetic Induction",
+                "Alternating Current",
+                "Electromagnetic Waves",
+                "Ray Optics and Optical Instruments",
+                "Wave Optics",
+                "Dual Nature of Radiation and Matter",
+                "Atoms",
+                "Nuclei",
+                "Semiconductor Electronics",
+                "Communication Systems"
+              ]
+            },
+            "hc_verma": {
+              "title": "Concepts of Physics Vol. 2",
+              "publisher": "Bharati Bhawan",
+              "type": "advanced",
+              "path": "textbooks/hc_verma/class_12",
+              "status": "pending"
+            }
+          }
+        }
+      }
+    },
+    "chemistry": {
+      "name": "Chemistry",
+      "levels": {
+        "11": {
+          "name": "Class 11",
+          "books": {
+            "ncert": {
+              "title": "NCERT Chemistry Class 11",
+              "publisher": "NCERT",
+              "type": "textbook",
+              "path": "textbooks/ncert/chemistry/class_11",
+              "status": "pending",
+              "chapters": [
+                "Some Basic Concepts of Chemistry",
+                "Structure of Atom",
+                "Classification of Elements and Periodicity in Properties",
+                "Chemical Bonding and Molecular Structure",
+                "States of Matter",
+                "Thermodynamics",
+                "Equilibrium",
+                "Redox Reactions",
+                "Hydrogen",
+                "The s-Block Elements",
+                "The p-Block Elements",
+                "Organic Chemistry: Some Basic Principles and Techniques",
+                "Hydrocarbons",
+                "Environmental Chemistry"
+              ]
+            }
+          }
+        },
+        "12": {
+          "name": "Class 12",
+          "books": {
+            "ncert": {
+              "title": "NCERT Chemistry Class 12",
+              "publisher": "NCERT",
+              "type": "textbook",
+              "path": "textbooks/ncert/chemistry/class_12",
+              "status": "pending",
+              "chapters": [
+                "The Solid State",
+                "Solutions",
+                "Electrochemistry",
+                "Chemical Kinetics",
+                "Surface Chemistry",
+                "General Principles and Processes of Isolation of Elements",
+                "The p-Block Elements",
+                "The d-and f-Block Elements",
+                "Coordination Compounds",
+                "Haloalkanes and Haloarenes",
+                "Alcohols, Phenols and Ethers",
+                "Aldehydes, Ketones and Carboxylic Acids",
+                "Amines",
+                "Biomolecules",
+                "Polymers",
+                "Chemistry in Everyday Life"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "categories": {
+    "textbook": {
+      "name": "Core Textbook",
+      "description": "Standard curriculum textbooks"
+    },
+    "practice": {
+      "name": "Practice Book",
+      "description": "Additional practice problems and exercises"
+    },
+    "advanced": {
+      "name": "Advanced Level",
+      "description": "Higher difficulty for competitive exam preparation"
+    }
+  },
+  "exam_mappings": {
+    "jee_main": {
+      "name": "JEE Main",
+      "subjects": ["mathematics", "physics", "chemistry"],
+      "recommended_books": [
+        "textbooks/ncert/mathematics/class_11",
+        "textbooks/ncert/mathematics/class_12",
+        "textbooks/ncert/physics/class_11",
+        "textbooks/ncert/physics/class_12",
+        "textbooks/ncert/chemistry/class_11",
+        "textbooks/ncert/chemistry/class_12",
+        "textbooks/rd_sharma/class_11",
+        "textbooks/rd_sharma/class_12",
+        "textbooks/hc_verma/class_11",
+        "textbooks/hc_verma/class_12"
+      ]
+    },
+    "jee_advanced": {
+      "name": "JEE Advanced",
+      "subjects": ["mathematics", "physics", "chemistry"],
+      "recommended_books": [
+        "textbooks/cengage/class_11",
+        "textbooks/cengage/class_12",
+        "textbooks/hc_verma/class_11",
+        "textbooks/hc_verma/class_12"
+      ]
+    },
+    "neet": {
+      "name": "NEET",
+      "subjects": ["physics", "chemistry", "biology"],
+      "recommended_books": [
+        "textbooks/ncert/physics/class_11",
+        "textbooks/ncert/physics/class_12",
+        "textbooks/ncert/chemistry/class_11",
+        "textbooks/ncert/chemistry/class_12",
+        "textbooks/ncert/biology/class_11",
+        "textbooks/ncert/biology/class_12"
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+================================================================================
+📝 Mathematics Test - circles, triangles
+================================================================================
+Subject: Mathematics
+Topics: circles, triangles
+Duration: 30 minutes
+Total Points: 8
+Total Questions: 4
+
+📋 INSTRUCTIONS:
+• Read all questions carefully before starting
+• Show all your work for mathematical calculations
+• For MCQs, choose the BEST answer
+• Write clearly and legibly
+• Manage your time effectively
+
+================================================================================
+
+Q1. What is the formula for circle?
+     [Topic: Geometry, Difficulty: Easy, Points: 1]
+     A. The correct answer related to circle
+     B. An answer that confuses circle with another term
+     C. An incorrect but plausible answer about circle
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
+
+Q2. Outline the procedure for angle.
+     [Topic: Geometry, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q3. What is the formula for angle?
+     [Topic: Geometry, Difficulty: Easy, Points: 1]
+     A. The correct answer related to angle
+     B. A concept from a different mathematical area
+     C. An incorrect but plausible answer about angle
+     D. An answer that confuses angle with another term
+
+     Answer:
+     __________________________________________________
+
+Q4. How do you approach geometry problems?
+     [Topic: Geometry, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________

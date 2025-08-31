@@ -1,0 +1,82 @@
+{
+  "artificial_intelligence": [
+    "ai", "artificial intelligence", "machine learning", "deep learning", 
+    "neural networks", "nlp", "natural language processing", "computer vision",
+    "reinforcement learning", "generative ai", "llm", "transformers"
+  ],
+  "web_development": [
+    "html", "css", "javascript", "typescript", "react", "vue", "angular", 
+    "node", "nodejs", "express", "web development", "frontend", "backend",
+    "fullstack", "responsive design", "web api", "rest", "graphql"
+  ],
+  "mobile_development": [
+    "ios", "android", "swift", "kotlin", "react native", "flutter", 
+    "mobile development", "app development", "cross platform", "native"
+  ],
+  "databases": [
+    "sql", "nosql", "mongodb", "postgresql", "mysql", "database", 
+    "data modeling", "redis", "elasticsearch", "data warehouse",
+    "olap", "oltp", "acid", "transactions"
+  ],
+  "cloud_computing": [
+    "aws", "azure", "gcp", "google cloud", "cloud", "serverless", 
+    "microservices", "containers", "docker", "kubernetes", "devops",
+    "infrastructure", "terraform", "ansible", "ci/cd"
+  ],
+  "data_science": [
+    "data science", "analytics", "statistics", "pandas", "numpy", 
+    "jupyter", "r programming", "visualization", "tableau", "power bi",
+    "big data", "hadoop", "spark", "etl", "data pipeline"
+  ],
+  "cybersecurity": [
+    "security", "cybersecurity", "cryptography", "penetration testing",
+    "ethical hacking", "network security", "web security", "encryption",
+    "vulnerability", "malware", "firewall", "privacy"
+  ],
+  "systems_programming": [
+    "systems programming", "operating systems", "linux", "unix", "kernel",
+    "c programming", "c++", "rust", "go", "low level", "embedded",
+    "real time", "performance optimization"
+  ],
+  "software_engineering": [
+    "software engineering", "design patterns", "architecture", "clean code",
+    "refactoring", "testing", "unit testing", "integration testing",
+    "agile", "scrum", "project management", "version control", "git"
+  ],
+  "game_development": [
+    "game development", "unity", "unreal", "game engine", "graphics programming",
+    "shader", "3d modeling", "animation", "game design", "interactive media"
+  ],
+  "blockchain": [
+    "blockchain", "cryptocurrency", "bitcoin", "ethereum", "smart contracts",
+    "solidity", "defi", "nft", "web3", "distributed ledger"
+  ],
+  "mathematics": [
+    "mathematics", "calculus", "linear algebra", "discrete mathematics",
+    "probability", "statistics", "optimization", "algorithms", "complexity theory"
+  ],
+  "physics": [
+    "physics", "quantum computing", "quantum mechanics", "thermodynamics",
+    "electromagnetism", "relativity", "particle physics"
+  ],
+  "business_technology": [
+    "digital transformation", "enterprise architecture", "business intelligence",
+    "erp", "crm", "business process", "automation", "workflow",
+    "product management", "startup", "innovation"
+  ],
+  "ui_ux_design": [
+    "ui", "ux", "user experience", "user interface", "design thinking",
+    "usability", "accessibility", "interaction design", "visual design",
+    "prototyping", "wireframing", "design systems"
+  ],
+  "networking": [
+    "networking", "tcp/ip", "protocols", "network administration",
+    "cisco", "routing", "switching", "network security", "wireless",
+    "internet protocols", "osi model"
+  ],
+  "automation_testing": [
+    "automation", "testing", "selenium", "cypress", "test automation",
+    "quality assurance", "performance testing", "load testing",
+    "continuous testing", "test driven development"
+  ]
+}

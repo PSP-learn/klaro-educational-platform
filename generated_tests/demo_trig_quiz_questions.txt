@@ -1,0 +1,39 @@
+================================================================================
+📝 Mathematics Test - trigonometry
+================================================================================
+Subject: Mathematics
+Topics: trigonometry
+Duration: 30 minutes
+Total Points: 7
+Total Questions: 3
+
+📋 INSTRUCTIONS:
+• Read all questions carefully before starting
+• Show all your work for mathematical calculations
+• For MCQs, choose the BEST answer
+• Write clearly and legibly
+• Manage your time effectively
+
+================================================================================
+
+Q1. To find ratio, we use the formula:
+     [Topic: Trigonometry, Difficulty: Easy, Points: 1]
+     A. An incorrect but plausible answer about ratio
+     B. A concept from a different mathematical area
+     C. The correct answer related to ratio
+     D. An answer that confuses ratio with another term
+
+     Answer:
+     __________________________________________________
+
+Q2. Solve: An electrician has to repair an electric fault on a pole of height 5 m
+     [Topic: Trigonometry, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q3. Solve: A tower stands vertically on the ground
+     [Topic: Trigonometry, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________

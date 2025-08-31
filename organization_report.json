@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-08-30T00:49:24.290108",
+  "strategy": "SubjectFirstStrategy",
+  "total_processed": 3,
+  "errors_count": 0,
+  "duplicates_count": 0,
+  "books": [
+    {
+      "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf",
+      "title": "Introduction to Machine Learning",
+      "author": "Jane Smith",
+      "subject": "Test Subject",
+      "creator": "ReportLab PDF Library - www.reportlab.com",
+      "producer": "ReportLab PDF Library - www.reportlab.com",
+      "creation_date": "D:20250830004924-07'00'",
+      "modification_date": "D:20250830004924-07'00'",
+      "keywords": "test, pdf, sample",
+      "file_size": 1874,
+      "page_count": 1
+    },
+    {
+      "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf",
+      "title": "Business Strategy in Digital Age",
+      "author": "Sarah Johnson",
+      "subject": "Test Subject",
+      "creator": "ReportLab PDF Library - www.reportlab.com",
+      "producer": "ReportLab PDF Library - www.reportlab.com",
+      "creation_date": "D:20250830004924-07'00'",
+      "modification_date": "D:20250830004924-07'00'",
+      "keywords": "test, pdf, sample",
+      "file_size": 1834,
+      "page_count": 1
+    },
+    {
+      "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/programming/John_Doe/Python_Programming_Guide.pdf",
+      "title": "Python Programming Guide",
+      "author": "John Doe",
+      "subject": "Test Subject",
+      "creator": "ReportLab PDF Library - www.reportlab.com",
+      "producer": "ReportLab PDF Library - www.reportlab.com",
+      "creation_date": "D:20250830004924-07'00'",
+      "modification_date": "D:20250830004924-07'00'",
+      "keywords": "test, pdf, sample",
+      "file_size": 1843,
+      "page_count": 1
+    }
+  ],
+  "errors": [],
+  "duplicates": []
+}

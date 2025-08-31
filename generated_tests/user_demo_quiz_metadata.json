@@ -1,0 +1,136 @@
+{
+  "title": "Mathematics Test - quadratic equations",
+  "subject": "Mathematics",
+  "topics": [
+    "quadratic equations"
+  ],
+  "questions": [
+    {
+      "question_text": "Solve: Find the roots of the quadratic equation 6x2 \u2013 x \u2013 2 = 0",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "EQUATIONS",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of EQUATIONS with proper mathematical reasoning",
+      "explanation": "Refer to Chap\u20134 (8th Nov.) fian, page 6",
+      "source_content": "QUADRATIC EQUATIONS 43 Note that we have found the roots of 2x2 \u2013 5x + 3 = 0 by factorising 2x2 \u2013 5x + 3 into two linear factors and equating each factor to zero. Example 4 : Find the roots of the quadratic equation 6x2 \u2013 x \u2013 2 = 0. Solution : We have 6x2 \u2013 x \u2013 2 = 6x2 + 3x \u2013 4x \u2013 2 = 3x (2x + 1) \u2013 ...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 6,
+      "points": 3,
+      "keywords": [
+        "quadratic",
+        "roots",
+        "QUADRATIC",
+        "EQUATIONS",
+        "linear"
+      ],
+      "formula_used": "x = 2 3 or x = 1 2 \uf02d Therefore, the roots of 6x2 \u2013 x \u2013 2 = 0 are 2 1"
+    },
+    {
+      "question_text": "Solve: Find the roots of the quadratic equation 6x2 \u2013 x \u2013 2 = 0",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "QUADRATIC",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of QUADRATIC with proper mathematical reasoning",
+      "explanation": "Refer to Chap\u20134 (8th Nov.) fian, page 6",
+      "source_content": "QUADRATIC EQUATIONS 43 Note that we have found the roots of 2x2 \u2013 5x + 3 = 0 by factorising 2x2 \u2013 5x + 3 into two linear factors and equating each factor to zero. Example 4 : Find the roots of the quadratic equation 6x2 \u2013 x \u2013 2 = 0. Solution : We have 6x2 \u2013 x \u2013 2 = 6x2 + 3x \u2013 4x \u2013 2 = 3x (2x + 1) \u2013 ...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 6,
+      "points": 3,
+      "keywords": [
+        "quadratic",
+        "roots",
+        "QUADRATIC",
+        "EQUATIONS",
+        "linear"
+      ],
+      "formula_used": "x = 2 3 or x = 1 2 \uf02d Therefore, the roots of 6x2 \u2013 x \u2013 2 = 0 are 2 1"
+    },
+    {
+      "question_text": "Which formula is used to calculate equations?",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "equations",
+      "options": [
+        "The correct answer related to equations",
+        "An incorrect but plausible answer about equations",
+        "A concept from a different mathematical area",
+        "An answer that confuses equations with another term"
+      ],
+      "correct_answer": "A",
+      "explanation": "Based on content from Chap\u20134 (8th Nov.) fian, page 10",
+      "source_content": "QUADRATIC EQUATIONS 47 EXERCISE 4.3 1. Find the nature of the roots of the following quadratic equations. If the real roots exist, find them: (i) 2x2 \u2013 3x + 5 = 0 (ii) 3x2 \u2013 4 3 x + 4 = 0 (iii) 2x2 \u2013 ...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 10,
+      "points": 1,
+      "keywords": [
+        "quadratic",
+        "variable",
+        "roots",
+        "Quadratic",
+        "equations"
+      ],
+      "formula_used": "c = 0, where a, b, c are real numbers and a \uf0b9 0"
+    },
+    {
+      "question_text": "Which formula is used to calculate polynomial?",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "polynomial",
+      "options": [
+        "An incorrect but plausible answer about polynomial",
+        "The correct answer related to polynomial",
+        "An answer that confuses polynomial with another term",
+        "A concept from a different mathematical area"
+      ],
+      "correct_answer": "B",
+      "explanation": "Based on content from NCERT Mathematics Class 10 Exemplar Complete 2023, page 27",
+      "source_content": "10 EXEMPLAR PROBLEMS 7. The zeroes of the quadratic polynomial x2 + 99x + 127 are (A) both positive (B) both negative (C) one positive and one negative (D) both equal 8. The zeroes of the quadratic po...",
+      "source_book": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+      "source_page": 27,
+      "points": 1,
+      "keywords": [
+        "polynomial",
+        "quadratic",
+        "linear"
+      ],
+      "formula_used": "tant term is negative"
+    },
+    {
+      "question_text": "How do you approach algebra problems?",
+      "question_type": "short",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "linear",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of linear with proper mathematical reasoning",
+      "explanation": "Refer to NCERT Mathematics Class 10 Exemplar Complete 2023, page 27",
+      "source_content": "10 EXEMPLAR PROBLEMS 7. The zeroes of the quadratic polynomial x2 + 99x + 127 are (A) both positive (B) both negative (C) one positive and one negative (D) both equal 8. The zeroes of the quadratic polynomial x2 + kx + k, k \u2260 0, (A) cannot both be positive (B) cannot both be negative (C) are always ...",
+      "source_book": "NCERT Mathematics Class 10 Exemplar Complete 2023",
+      "source_page": 27,
+      "points": 4,
+      "keywords": [
+        "polynomial",
+        "quadratic",
+        "linear"
+      ],
+      "formula_used": "tant term is negative"
+    }
+  ],
+  "total_questions": 5,
+  "total_points": 12,
+  "duration_minutes": 30,
+  "difficulty_distribution": {
+    "easy": 3,
+    "medium": 2
+  },
+  "topic_distribution": {
+    "algebra": 5
+  },
+  "created_at": "2025-08-30T04:59:56.539223"
+}
