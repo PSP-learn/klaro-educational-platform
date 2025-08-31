@@ -724,7 +724,7 @@ async def root():
         "message": "🟢 Klaro Educational Platform API",
         "version": "2.0.0",
         "status": "running",
-        "deployed_at": "2025-08-31T08:13:00Z",
+        "deployed_at": "2025-08-31T12:10:00Z",
         "docs": "/docs" if os.getenv("ENVIRONMENT") != "production" else "disabled"
     }
 
