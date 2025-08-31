@@ -39,7 +39,7 @@ except ImportError as e:
     PDFQuizGenerator = None
 
 try:
-    from jee_test_system import JEETestSystem
+    from jee_backend_wrapper import JEETestSystem
     JEE_SYSTEM_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ JEE system not available: {e}")

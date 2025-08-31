@@ -455,11 +455,11 @@ class JEETestGenerator:
             difficulty = Difficulty.HARD
         
         if is_mcq:
-            return self._create_mcq_question(subject, topic, difficulty)
+            return self._create_mcq_question(subject, topic, difficulty, config)
         else:
-            return self._create_numerical_question(subject, topic, difficulty)
+            return self._create_numerical_question(subject, topic, difficulty, config)
     
-    def _create_mcq_question(self, subject: Subject, topic: str, difficulty: Difficulty) -> Dict:
+    def _create_mcq_question(self, subject: Subject, topic: str, difficulty: Difficulty, config: JEETestConfig) -> Dict:
         """Create MCQ question in JEE format"""
         
         # Generate using existing quiz generator if available
@@ -495,7 +495,7 @@ class JEETestGenerator:
             "negative_marks": -1 if config.negative_marking else 0
         }
     
-    def _create_numerical_question(self, subject: Subject, topic: str, difficulty: Difficulty) -> Dict:
+    def _create_numerical_question(self, subject: Subject, topic: str, difficulty: Difficulty, config: JEETestConfig) -> Dict:
         """Create numerical answer question in JEE format"""
         
         return {
