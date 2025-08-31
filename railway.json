@@ -1,14 +1,11 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "pip install -r backend/requirements.txt",
-    "watchPatterns": [
-      "backend/**"
-    ]
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "uvicorn backend.main:app --host 0.0.0.0 --port $PORT",
+    "startCommand": "uvicorn backend.main_with_supabase:app --host 0.0.0.0 --port $PORT",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
@@ -17,6 +14,7 @@
   "variables": {
     "ENVIRONMENT": "production",
     "LOG_LEVEL": "info",
-    "WORKERS": "2"
+    "WORKERS": "1",
+    "PYTHONPATH": "/app"
   }
 }

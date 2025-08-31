@@ -32,8 +32,14 @@ passlib[bcrypt]==1.7.4            # Password hashing
 # 📊 Data Processing & Analytics
 # ================================================================================
 pandas==2.1.4            # Data analysis
-numpy==1.25.2            # Numerical computations
+numpy==1.26.4            # Numerical computations (fixed version for Python 3.12)
 pydantic==2.5.0          # Data validation
+
+# ================================================================================
+# 🟢 Supabase Integration
+# ================================================================================
+supabase==2.0.3          # Supabase Python client
+postgrest==0.13.2        # PostgREST client
 
 # ================================================================================
 # 🧪 Testing & Development
