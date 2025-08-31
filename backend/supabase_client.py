@@ -33,8 +33,13 @@ class SupabaseClient:
         # Client for user operations (with RLS)
         self.client: Client = create_client(self.supabase_url, self.supabase_key)
         
-        # Admin client for service operations (bypasses RLS)
-        self.admin_client: Client = create_client(self.supabase_url, self.service_role_key)
+        # Admin client for service operations (bypasses RLS) - optional
+        if self.service_role_key:
+            self.admin_client: Client = create_client(self.supabase_url, self.service_role_key)
+            print("🟢 Supabase client initialized with admin access")
+        else:
+            self.admin_client = None
+            print("🟡 Supabase client initialized without admin access (service role key not provided)")
         
         print("🟢 Supabase client initialized successfully")
     

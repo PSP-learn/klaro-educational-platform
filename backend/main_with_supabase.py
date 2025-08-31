@@ -93,8 +93,16 @@ async def lifespan(app: FastAPI):
         
         # Initialize Supabase client
         if SUPABASE_CLIENT_AVAILABLE and get_supabase_client:
-            supabase_client = get_supabase_client()
-            print("✅ Supabase client initialized")
+            try:
+                supabase_client = get_supabase_client()
+                print("✅ Supabase client initialized")
+            except Exception as supabase_error:
+                print(f"❌ Supabase client initialization failed: {supabase_error}")
+                print("🔍 Environment variables check:")
+                print(f"  SUPABASE_URL: {'set' if os.getenv('SUPABASE_URL') else 'missing'}")
+                print(f"  SUPABASE_ANON_KEY: {'set' if os.getenv('SUPABASE_ANON_KEY') else 'missing'}")
+                print(f"  SUPABASE_SERVICE_ROLE_KEY: {'set' if os.getenv('SUPABASE_SERVICE_ROLE_KEY') else 'missing'}")
+                supabase_client = None
         else:
             supabase_client = None
             print("⚠️ Supabase client not available")
@@ -671,18 +679,32 @@ async def mark_notification_read(
 async def health_check():
     """Health check endpoint for Railway"""
     try:
-        # Quick database connectivity check
-        response = supabase_client.client.table('users').select('id').limit(1).execute()
+        # Check if supabase_client is available
+        database_status = "not_connected"
+        if supabase_client and hasattr(supabase_client, 'client') and supabase_client.client:
+            try:
+                # Quick database connectivity check
+                response = supabase_client.client.table('users').select('id').limit(1).execute()
+                database_status = "connected"
+            except Exception as db_e:
+                print(f"⚠️ Database connectivity check failed: {db_e}")
+                database_status = "connection_failed"
+        
+        services_status = {
+            "database": database_status,
+            "doubt_solver": "active" if doubt_solver else "inactive",
+            "quiz_generator": "active" if quiz_generator else "inactive",
+            "jee_system": "active" if jee_system else "inactive",
+            "supabase_client": "available" if supabase_client else "unavailable"
+        }
+        
+        # Determine overall health status
+        is_healthy = database_status in ["connected", "not_connected"]  # Allow running without DB for basic health check
         
         return {
-            "status": "healthy",
+            "status": "healthy" if is_healthy else "degraded",
             "timestamp": datetime.now().isoformat(),
-            "services": {
-                "database": "connected",
-                "doubt_solver": "active" if doubt_solver else "inactive",
-                "quiz_generator": "active" if quiz_generator else "inactive",
-                "jee_system": "active" if jee_system else "inactive"
-            }
+            "services": services_status
         }
         
     except Exception as e:
