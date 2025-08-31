@@ -12,9 +12,23 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 try:
     from supabase import create_client, Client
-except ImportError:
-    # Fallback for older versions
-    from supabase_py import create_client, Client
+    print("✅ Supabase package imported successfully")
+except ImportError as e:
+    print(f"⚠️ Primary supabase import failed: {e}")
+    try:
+        # Fallback for older versions
+        from supabase_py import create_client, Client
+        print("✅ Supabase-py package imported successfully (fallback)")
+    except ImportError as e2:
+        print(f"❌ Both supabase imports failed:")
+        print(f"  - supabase: {e}")
+        print(f"  - supabase_py: {e2}")
+        # Create dummy classes to prevent import errors
+        def create_client(url, key):
+            raise ImportError("Supabase client not available")
+        
+        class Client:
+            pass
 import asyncio
 from dataclasses import asdict
 
