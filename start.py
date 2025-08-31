@@ -21,9 +21,9 @@ def main():
     print(f"📁 Working Directory: {os.getcwd()}")
     print(f"🐍 Python Version: {sys.version}")
     
-    # Start uvicorn
+    # Start uvicorn with full-featured app
     uvicorn.run(
-        "backend.main_simple:app",
+        "backend.main_with_supabase:app",
         host=host,
         port=port,
         log_level="info",
