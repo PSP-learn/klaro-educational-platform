@@ -31,5 +31,5 @@ USER appuser
 # Expose port
 EXPOSE 8000
 
-# Start command (Railway will override this with environment variables)
-CMD ["uvicorn", "backend.main_with_supabase:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start command using Python startup script
+CMD ["python", "start.py"]
