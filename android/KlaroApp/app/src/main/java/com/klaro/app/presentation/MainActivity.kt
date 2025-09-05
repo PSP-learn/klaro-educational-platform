@@ -69,6 +69,18 @@ fun KlaroApp() {
             composable(Screen.JeeTest.route) {
                 JeeTestScreen(navController = navController)
             }
+
+            composable(Screen.JeeSubjectPractice.route) {
+                SubjectPracticeScreen(navController = navController)
+            }
+
+            composable(Screen.JeeTopicPractice.route) {
+                TopicPracticeScreen(navController = navController)
+            }
+
+            composable(Screen.JeePreviousPapers.route) {
+                PreviousPapersScreen(navController = navController)
+            }
             
             composable(Screen.DoubtSolver.route) {
                 DoubtSolverScreen(navController = navController)
@@ -119,6 +131,9 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     object Home : Screen("home", "Home", Icons.Filled.Home)
     object PdfGenerator : Screen("pdf_generator", "PDF Quiz", Icons.Filled.Assignment)
     object JeeTest : Screen("jee_test", "JEE Tests", Icons.Filled.Quiz)
+    object JeeSubjectPractice : Screen("jee_subject_practice", "Subject", Icons.Filled.Book)
+    object JeeTopicPractice : Screen("jee_topic_practice", "Topic", Icons.Filled.Topic)
+    object JeePreviousPapers : Screen("jee_previous_papers", "Papers", Icons.Filled.History)
     object DoubtSolver : Screen("doubt_solver", "Doubts", Icons.Filled.QuestionAnswer)
     object Profile : Screen("profile", "Profile", Icons.Filled.Person)
 }

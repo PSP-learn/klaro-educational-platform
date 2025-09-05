@@ -33,6 +33,16 @@ interface KlaroApiService {
     ): Response<okhttp3.ResponseBody>
 
     // ================================================================================
+    // 📚 Catalog Endpoints
+    // ================================================================================
+
+    @GET("catalog/chapters")
+    suspend fun getChapters(
+        @Query("subject") subject: String,
+        @Query("grade") grade: String
+    ): Response<ChaptersResponse>
+
+    // ================================================================================
     // 🎯 JEE Test Endpoints
     // ================================================================================
 

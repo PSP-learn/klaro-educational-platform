@@ -1,460 +1,410 @@
 package com.klaro.app.presentation.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.klaro.app.data.repository.MockDataProvider
+import com.klaro.app.presentation.syllabus.SyllabusData
+import com.klaro.app.presentation.viewmodels.PdfGeneratorViewModel
+import com.klaro.app.presentation.ui.design.*
 
 /**
- * 📄 PDF Quiz Generator Screen
+ * 📄 Quiz Generator - World-Class Form Design
  * 
- * Create custom practice tests and download as PDF
- * Uses existing backend: /api/quiz/create
+ * Design Philosophy: "Progressive Disclosure + Zero Confusion"
+ * - Single-column flow for focus
+ * - Smart defaults reduce decisions
+ * - Clear visual feedback at every step
+ * - Form feels conversational, not overwhelming
+ */
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PdfGeneratorScreen(
+    navController: NavController,
+    viewModel: PdfGeneratorViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    
+    // Form state with smart defaults
+    var selectedSubject by remember { mutableStateOf("Mathematics") }
+    var selectedClass by remember { mutableStateOf("Class 12") }
+    var selectedTopic by remember { mutableStateOf("All Chapters") }
+    var selectedSubtopic by remember { mutableStateOf("All Subtopics") }
+
+    // Load chapters when subject or class changes
+    LaunchedEffect(selectedSubject, selectedClass) {
+        selectedTopic = "All Chapters"
+        selectedSubtopic = "All Subtopics"
+        viewModel.loadChapters(subject = selectedSubject, grade = selectedClass)
+    }
+    var selectedDifficulty by remember { mutableStateOf("Medium") }
+    var selectedQuestionTypes by remember { mutableStateOf(setOf("MCQ")) }
+    var numberOfQuestions by remember { mutableStateOf(10) }
+    
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(KlaroDesign.Spacing.ScreenPadding)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(KlaroDesign.Spacing.SectionGap)
+    ) {
+        
+        // Page Header - Clear purpose
+        CleanCard {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    Icons.Filled.CreateNewFolder,
+                    contentDescription = null,
+                    tint = KlaroDesign.Colors.LearningBlue,
+                    modifier = Modifier.size(KlaroDesign.Components.IconLarge)
+                )
+                Spacer(modifier = Modifier.width(KlaroDesign.Spacing.Medium))
+                Column {
+                    Text(
+                        text = "Create Quiz",
+                        fontSize = KlaroDesign.Typography.Headline,
+                        fontWeight = KlaroDesign.Typography.Bold,
+                        color = KlaroDesign.Colors.NeutralDark
+                    )
+                    Text(
+                        text = "Personalized practice questions",
+                        fontSize = KlaroDesign.Typography.Body,
+                        color = KlaroDesign.Colors.NeutralMedium
+                    )
+                }
+            }
+        }
+        
+        // Form Section 1: Subject & Class (Most Important)
+        CleanCard {
+            Text(
+                text = "What to study?",
+                fontSize = KlaroDesign.Typography.Title,
+                fontWeight = KlaroDesign.Typography.SemiBold,
+                color = KlaroDesign.Colors.NeutralDark
+            )
+            
+            // Subject selection - Most important choice
+            CleanDropdown(
+                label = "Subject",
+                selectedValue = selectedSubject,
+                options = SyllabusData.getSubjects(),
+                onValueChange = { 
+                    selectedSubject = it
+                    selectedTopic = "All Chapters" // Reset dependent choice
+                    selectedSubtopic = "All Subtopics"
+                }
+            )
+            
+            // Class level - Context for difficulty
+            CleanDropdown(
+                label = "Class Level",
+                selectedValue = selectedClass,
+                options = SyllabusData.getClasses(),
+                onValueChange = { 
+                    selectedClass = it 
+                    selectedTopic = "All Chapters"
+                    selectedSubtopic = "All Subtopics"
+                }
+            )
+        }
+        
+        // Form Section 2: Topic Focus (Progressive Disclosure)
+        CleanCard {
+            Text(
+                text = "Focus area?",
+                fontSize = KlaroDesign.Typography.Title,
+                fontWeight = KlaroDesign.Typography.SemiBold,
+                color = KlaroDesign.Colors.NeutralDark
+            )
+            
+            // Loading indicator for chapters
+            if (uiState.isChaptersLoading) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                Spacer(modifier = Modifier.height(KlaroDesign.Spacing.Small))
+            }
+
+            CleanDropdown(
+                label = "Chapter",
+                selectedValue = selectedTopic,
+                options = listOf("All Chapters") + uiState.chapters,
+                onValueChange = { 
+                    selectedTopic = it 
+                    selectedSubtopic = "All Subtopics"
+                }
+            )
+
+            CleanDropdown(
+                label = "Subtopic",
+                selectedValue = selectedSubtopic,
+                options = listOf("All Subtopics"),
+                onValueChange = { selectedSubtopic = it }
+            )
+        }
+        
+        // Form Section 3: Quiz Configuration
+        CleanCard {
+            Text(
+                text = "Quiz setup",
+                fontSize = KlaroDesign.Typography.Title,
+                fontWeight = KlaroDesign.Typography.SemiBold,
+                color = KlaroDesign.Colors.NeutralDark
+            )
+            
+            // Question types (multi-select)
+            MultiSelectDropdown(
+                label = "Question Types",
+                selectedValues = selectedQuestionTypes.toList(),
+                options = listOf("MCQ", "Short Answer", "Long Answer", "Numerical"),
+                onSelectionChange = { selectedQuestionTypes = it.toSet() }
+            )
+            
+            // Difficulty
+            CleanDropdown(
+                label = "Difficulty",
+                selectedValue = selectedDifficulty,
+                options = listOf("Easy", "Medium", "Hard", "Mixed"),
+                onValueChange = { selectedDifficulty = it }
+            )
+            
+            // Question count with clear visual
+            Column {
+                Text(
+                    text = "Number of Questions: $numberOfQuestions",
+                    fontSize = KlaroDesign.Typography.Body,
+                    fontWeight = KlaroDesign.Typography.Medium,
+                    color = KlaroDesign.Colors.NeutralDark
+                )
+                Spacer(modifier = Modifier.height(KlaroDesign.Spacing.Small))
+                Slider(
+                    value = numberOfQuestions.toFloat(),
+                    onValueChange = { numberOfQuestions = it.toInt() },
+                    valueRange = 5f..30f,
+                    steps = 4,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("5", fontSize = KlaroDesign.Typography.Caption, color = KlaroDesign.Colors.NeutralMedium)
+                    Text("30", fontSize = KlaroDesign.Typography.Caption, color = KlaroDesign.Colors.NeutralMedium)
+                }
+            }
+        }
+        
+        // Primary Action - Confident and clear
+        PrimaryActionButton(
+            text = "Generate Quiz",
+            onClick = {
+                val topicsArg = when {
+                    selectedTopic == "All Chapters" -> emptyList()
+                    selectedSubtopic != "All Subtopics" -> listOf(selectedSubtopic)
+                    else -> listOf(selectedTopic)
+                }
+                val typeCode: (String) -> String = { t ->
+                    when (t) {
+                        "MCQ" -> "mcq"
+                        "Short Answer" -> "short"
+                        "Long Answer" -> "long"
+                        "Numerical" -> "numerical"
+                        else -> t.lowercase()
+                    }
+                }
+                viewModel.generateQuiz(
+                    topics = topicsArg,
+                    numQuestions = numberOfQuestions,
+                    questionTypes = selectedQuestionTypes.map(typeCode),
+                    difficultyLevels = listOf(selectedDifficulty.lowercase()),
+                    subject = selectedSubject
+                )
+            },
+            isLoading = uiState.isGenerating,
+            icon = Icons.Filled.AutoAwesome
+        )
+        
+        // Feedback Messages - Minimal and clear
+        uiState.success?.let { message ->
+            MessageCard(message = message, type = MessageType.SUCCESS)
+        }
+        
+        uiState.error?.let { error ->
+            MessageCard(message = "Generation failed. Please try again.", type = MessageType.ERROR)
+        }
+    }
+}
+
+/**
+ * Clean Dropdown Component - Minimal and functional
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PdfGeneratorScreen(navController: NavController) {
+fun CleanDropdown(
+    label: String,
+    selectedValue: String,
+    options: List<String>,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var expanded by remember { mutableStateOf(false) }
     
-    var selectedTopics by remember { mutableStateOf(setOf<String>()) }
-    var numQuestions by remember { mutableStateOf(10f) }
-    var selectedDifficulty by remember { mutableStateOf(setOf("medium")) }
-    var selectedTypes by remember { mutableStateOf(setOf("mcq")) }
-    var quizTitle by remember { mutableStateOf("") }
-    var isGenerating by remember { mutableStateOf(false) }
-    
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        
-        // Header
-        item {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
-            ) {
-                Column(
-                    modifier = Modifier.padding(20.dp)
-                ) {
-                    Text(
-                        text = "📄 PDF Quiz Generator",
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Create custom practice tests tailored to your needs",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
-                    )
-                }
-            }
-        }
-        
-        // Quiz Title Input
-        item {
-            QuizTitleSection(
-                title = quizTitle,
-                onTitleChange = { quizTitle = it }
-            )
-        }
-        
-        // Topic Selection
-        item {
-            TopicSelectionSection(
-                selectedTopics = selectedTopics,
-                onTopicToggle = { topic ->
-                    selectedTopics = if (topic in selectedTopics) {
-                        selectedTopics - topic
-                    } else {
-                        selectedTopics + topic
-                    }
-                }
-            )
-        }
-        
-        // Number of Questions
-        item {
-            QuestionCountSection(
-                numQuestions = numQuestions,
-                onCountChange = { numQuestions = it }
-            )
-        }
-        
-        // Difficulty Selection
-        item {
-            DifficultySelectionSection(
-                selectedDifficulty = selectedDifficulty,
-                onDifficultyToggle = { difficulty ->
-                    selectedDifficulty = if (difficulty in selectedDifficulty) {
-                        selectedDifficulty - difficulty
-                    } else {
-                        selectedDifficulty + difficulty
-                    }
-                }
-            )
-        }
-        
-        // Question Types
-        item {
-            QuestionTypesSection(
-                selectedTypes = selectedTypes,
-                onTypeToggle = { type ->
-                    selectedTypes = if (type in selectedTypes) {
-                        selectedTypes - type
-                    } else {
-                        selectedTypes + type
-                    }
-                }
-            )
-        }
-        
-        // Generate Button
-        item {
-            GenerateQuizButton(
-                isEnabled = selectedTopics.isNotEmpty() && !isGenerating,
-                isLoading = isGenerating,
-                onClick = {
-                    isGenerating = true
-                    // TODO: Call API to generate quiz
-                    // For now, simulate generation
-                    // generateQuiz(selectedTopics, numQuestions.toInt(), etc.)
-                }
-            )
-        }
-        
-        // Recent Quizzes
-        item {
-            RecentQuizzesSection()
-        }
-    }
-}
-
-@Composable
-fun QuizTitleSection(
-    title: String,
-    onTitleChange: (String) -> Unit
-) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "📝 Quiz Title",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = title,
-                onValueChange = onTitleChange,
-                label = { Text("Enter quiz title (optional)") },
-                placeholder = { Text("e.g., Algebra Practice Test") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-        }
-    }
-}
-
-@Composable
-fun TopicSelectionSection(
-    selectedTopics: Set<String>,
-    onTopicToggle: (String) -> Unit
-) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "🎯 Select Topics",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            // Mathematics Topics
-            Text(
-                text = "Mathematics",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(mathTopics) { topic ->
-                    TopicChip(
-                        topic = topic,
-                        isSelected = topic in selectedTopics,
-                        onToggle = { onTopicToggle(topic) }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun LazyRow(
-    horizontalArrangement: Arrangement.Horizontal,
-    content: @Composable () -> Unit
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = horizontalArrangement
-    ) {
-        content()
-    }
-}
-
-@Composable
-fun TopicChip(
-    topic: String,
-    isSelected: Boolean,
-    onToggle: () -> Unit
-) {
-    FilterChip(
-        onClick = onToggle,
-        label = { Text(topic) },
-        selected = isSelected,
-        leadingIcon = if (isSelected) {
-            { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(18.dp)) }
-        } else null
-    )
-}
-
-@Composable
-fun QuestionCountSection(
-    numQuestions: Float,
-    onCountChange: (Float) -> Unit
-) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "📊 Number of Questions: ${numQuestions.toInt()}",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            Slider(
-                value = numQuestions,
-                onValueChange = onCountChange,
-                valueRange = 5f..50f,
-                steps = 8, // 5, 10, 15, 20, 25, 30, 40, 50
-                modifier = Modifier.fillMaxWidth()
-            )
-            
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("5", style = MaterialTheme.typography.bodySmall)
-                Text("50", style = MaterialTheme.typography.bodySmall)
-            }
-        }
-    }
-}
-
-@Composable
-fun DifficultySelectionSection(
-    selectedDifficulty: Set<String>,
-    onDifficultyToggle: (String) -> Unit
-) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "⚡ Difficulty Level",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                difficultyLevels.forEach { difficulty ->
-                    FilterChip(
-                        onClick = { onDifficultyToggle(difficulty.key) },
-                        label = { Text("${difficulty.value.icon} ${difficulty.value.name}") },
-                        selected = difficulty.key in selectedDifficulty
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun QuestionTypesSection(
-    selectedTypes: Set<String>,
-    onTypeToggle: (String) -> Unit
-) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "📝 Question Types",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                questionTypes.forEach { type ->
-                    FilterChip(
-                        onClick = { onTypeToggle(type.key) },
-                        label = { Text("${type.value.icon} ${type.value.name}") },
-                        selected = type.key in selectedTypes
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun GenerateQuizButton(
-    isEnabled: Boolean,
-    isLoading: Boolean,
-    onClick: () -> Unit
-) {
-    Button(
-        onClick = onClick,
-        enabled = isEnabled,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp),
-        shape = RoundedCornerShape(12.dp)
-    ) {
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.size(20.dp),
-                color = Color.White
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Generating Quiz...")
-        } else {
-            Icon(Icons.Filled.Download, contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "🚀 Generate PDF Quiz",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-}
-
-@Composable
-fun RecentQuizzesSection() {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "📚 Recent Quizzes",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            recentQuizzes.forEach { quiz ->
-                RecentQuizItem(quiz)
-                if (quiz != recentQuizzes.last()) {
-                    Divider(modifier = Modifier.padding(vertical = 8.dp))
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun RecentQuizItem(quiz: RecentQuiz) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { /* TODO: Download or view quiz */ },
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = Icons.Filled.Assignment,
-            contentDescription = "Quiz",
-            tint = MaterialTheme.colorScheme.primary
-        )
-        
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = quiz.title,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium
-            )
-            Text(
-                text = "${quiz.questions} questions • ${quiz.difficulty}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        
+    Column(modifier = modifier) {
         Text(
-            text = quiz.createdDate,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            text = label,
+            fontSize = KlaroDesign.Typography.Caption,
+            fontWeight = KlaroDesign.Typography.Medium,
+            color = KlaroDesign.Colors.NeutralMedium,
+            modifier = Modifier.padding(bottom = KlaroDesign.Spacing.XSmall)
         )
         
-        IconButton(onClick = { /* TODO: Download quiz */ }) {
-            Icon(Icons.Filled.Download, contentDescription = "Download")
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            OutlinedTextField(
+                value = selectedValue,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = KlaroDesign.Colors.LearningBlue,
+                    unfocusedBorderColor = KlaroDesign.Colors.NeutralMedium.copy(alpha = 0.3f)
+                )
+            )
+            
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                options.forEach { option ->
+                    DropdownMenuItem(
+                        text = { 
+                            Text(
+                                option,
+                                fontSize = KlaroDesign.Typography.Body
+                            ) 
+                        },
+                        onClick = {
+                            onValueChange(option)
+                            expanded = false
+                        }
+                    )
+                }
+            }
         }
     }
 }
 
-// ================================================================================
-// 📋 Data Classes & Static Data
-// ================================================================================
+/**
+ * Multi-select dropdown with checkbox items and a compact summary.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MultiSelectDropdown(
+    label: String,
+    selectedValues: List<String>,
+    options: List<String>,
+    onSelectionChange: (List<String>) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val summary = if (selectedValues.isEmpty()) "Select one or more" else selectedValues.joinToString(", ")
 
-data class DifficultyInfo(val name: String, val icon: String)
-data class QuestionTypeInfo(val name: String, val icon: String)
-data class RecentQuiz(
-    val title: String,
-    val questions: Int,
-    val difficulty: String,
-    val createdDate: String
-)
+    Column(modifier = modifier) {
+        Text(
+            text = label,
+            fontSize = KlaroDesign.Typography.Caption,
+            fontWeight = KlaroDesign.Typography.Medium,
+            color = KlaroDesign.Colors.NeutralMedium,
+            modifier = Modifier.padding(bottom = KlaroDesign.Spacing.XSmall)
+        )
 
-val mathTopics = listOf(
-    "Algebra", "Trigonometry", "Calculus", "Geometry", 
-    "Coordinate Geometry", "Statistics", "Probability",
-    "Quadratic Equations", "Polynomials", "Matrices"
-)
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            OutlinedTextField(
+                value = summary,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = KlaroDesign.Colors.LearningBlue,
+                    unfocusedBorderColor = KlaroDesign.Colors.NeutralMedium.copy(alpha = 0.3f)
+                )
+            )
 
-val difficultyLevels = mapOf(
-    "easy" to DifficultyInfo("Easy", "🟢"),
-    "medium" to DifficultyInfo("Medium", "🟡"),
-    "hard" to DifficultyInfo("Hard", "🔴")
-)
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                options.forEach { option ->
+                    val isSelected = selectedValues.contains(option)
+                    DropdownMenuItem(
+                        text = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Checkbox(checked = isSelected, onCheckedChange = null)
+                                Spacer(Modifier.width(8.dp))
+                                Text(option, fontSize = KlaroDesign.Typography.Body)
+                            }
+                        },
+                        onClick = {
+                            val newSelection = if (isSelected) selectedValues - option else selectedValues + option
+                            onSelectionChange(newSelection)
+                        }
+                    )
+                }
+            }
+        }
 
-val questionTypes = mapOf(
-    "mcq" to QuestionTypeInfo("Multiple Choice", "🔘"),
-    "short" to QuestionTypeInfo("Short Answer", "✏️"),
-    "essay" to QuestionTypeInfo("Essay", "📝")
-)
+        // Selected chips (horizontal scroll to handle overflow gracefully)
+        if (selectedValues.isNotEmpty()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                selectedValues.forEach { value ->
+                    AssistChip(onClick = { /* no-op */ }, label = { Text(value) })
+                }
+            }
+        }
+    }
+}
 
-val recentQuizzes = listOf(
-    RecentQuiz("Algebra Practice", 15, "Medium", "2 hours ago"),
-    RecentQuiz("Trigonometry Test", 10, "Hard", "1 day ago"),
-    RecentQuiz("Quick Revision", 20, "Easy", "3 days ago")
-)
+// Smart content helpers
+fun getTopicsForSubject(subject: String): List<String> {
+    return when (subject) {
+        "Mathematics" -> listOf("All Topics", "Algebra", "Calculus", "Geometry", "Trigonometry", "Statistics")
+        "Physics" -> listOf("All Topics", "Mechanics", "Thermodynamics", "Electromagnetism", "Optics", "Modern Physics")
+        "Chemistry" -> listOf("All Topics", "Physical Chemistry", "Organic Chemistry", "Inorganic Chemistry")
+        "Biology" -> listOf("All Topics", "Cell Biology", "Genetics", "Ecology", "Human Physiology", "Plant Biology")
+        else -> listOf("All Topics")
+    }
+}

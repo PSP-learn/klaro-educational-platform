@@ -1,8 +1,5 @@
 package com.klaro.app.data.models
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 /**
  * 📊 API Data Models
  * 
@@ -13,7 +10,6 @@ import kotlinx.parcelize.Parcelize
 // 📄 Quiz/PDF Generation Models
 // ================================================================================
 
-@Parcelize
 data class QuizRequest(
     val topics: List<String>,
     val numQuestions: Int = 10,
@@ -21,9 +17,8 @@ data class QuizRequest(
     val difficultyLevels: List<String> = listOf("easy", "medium"),
     val subject: String = "Mathematics",
     val title: String? = null
-) : Parcelable
+)
 
-@Parcelize
 data class QuizResponse(
     val quizId: String,
     val title: String,
@@ -31,46 +26,42 @@ data class QuizResponse(
     val totalPoints: Int,
     val createdAt: String,
     val downloadUrl: String
-) : Parcelable
+)
 
-@Parcelize
-data class QuizPreset(
-    val presetId: String,
-    val name: String,
-    val description: String,
-    val topics: List<String>,
-    val questions: Int,
-    val duration: Int,
-    val difficulty: List<String>
-) : Parcelable
+// ================================================================================
+// 📚 Catalog Models
+// ================================================================================
+
+data class ChaptersResponse(
+    val success: Boolean,
+    val count: Int,
+    val chapters: List<String>
+)
 
 // ================================================================================
 // 🎯 JEE Test Models
 // ================================================================================
 
-@Parcelize
 data class JEETestRequest(
-    val testType: String = "full_mock", // "full_mock", "subject_practice", "topic_practice"
+    val testType: String = "full_mock",
     val subjects: List<String> = listOf("Mathematics", "Physics", "Chemistry"),
     val topics: List<String> = emptyList(),
-    val duration: Int = 180, // minutes
+    val duration: Int = 180,
     val difficulty: String = "mixed"
-) : Parcelable
+)
 
-@Parcelize
 data class JEEQuestion(
     val questionId: String,
     val questionText: String,
-    val options: List<String>? = null, // null for numerical questions
-    val questionType: String, // "mcq" or "numerical"
+    val options: List<String>? = null,
+    val questionType: String,
     val subject: String,
     val topic: String,
     val difficulty: String,
     val marks: Int,
     val negativeMarks: Double
-) : Parcelable
+)
 
-@Parcelize
 data class JEETestResponse(
     val testId: String,
     val title: String,
@@ -79,55 +70,21 @@ data class JEETestResponse(
     val duration: Int,
     val subjects: List<String>,
     val createdAt: String
-) : Parcelable
-
-@Parcelize
-data class JEEAnswer(
-    val questionId: String,
-    val selectedOption: String? = null, // for MCQ
-    val numericalValue: Double? = null, // for numerical
-    val timeTaken: Long, // milliseconds
-    val isMarkedForReview: Boolean = false
-) : Parcelable
-
-@Parcelize
-data class JEETestResult(
-    val testId: String,
-    val totalScore: Double,
-    val maxScore: Int,
-    val percentile: Double,
-    val subjectWiseScores: Map<String, Double>,
-    val correctAnswers: Int,
-    val incorrectAnswers: Int,
-    val unattempted: Int,
-    val timeTaken: Long,
-    val analysis: TestAnalysis
-) : Parcelable
-
-@Parcelize
-data class TestAnalysis(
-    val strongTopics: List<String>,
-    val weakTopics: List<String>,
-    val recommendations: List<String>,
-    val timeManagement: String,
-    val accuracyRate: Double
-) : Parcelable
+)
 
 // ================================================================================
 // 🤔 Doubt Solving Models
 // ================================================================================
 
-@Parcelize
 data class DoubtRequest(
     val question: String,
     val subject: String = "Mathematics",
     val userId: String,
     val userPlan: String = "basic",
     val context: String? = null,
-    val imageData: String? = null // Base64 encoded image
-) : Parcelable
+    val imageData: String? = null
+)
 
-@Parcelize
 data class DoubtSolution(
     val question: String,
     val answer: String,
@@ -135,17 +92,15 @@ data class DoubtSolution(
     val metadata: DoubtMetadata,
     val mobileFormat: MobileFormat,
     val whatsappFormat: String
-) : Parcelable
+)
 
-@Parcelize
 data class SolutionStep(
     val stepNumber: Int,
     val title: String,
     val explanation: String,
     val confidence: Double
-) : Parcelable
+)
 
-@Parcelize
 data class DoubtMetadata(
     val topic: String,
     val difficulty: String,
@@ -154,21 +109,19 @@ data class DoubtMetadata(
     val cost: Double,
     val timeTaken: Double,
     val retryAttempts: Int
-) : Parcelable
+)
 
-@Parcelize
 data class MobileFormat(
     val shortAnswer: String,
     val keySteps: List<String>,
     val visualAids: List<String>,
     val practiceProblems: List<String>
-) : Parcelable
+)
 
 // ================================================================================
 // 👤 User Management Models
 // ================================================================================
 
-@Parcelize
 data class User(
     val userId: String,
     val name: String,
@@ -179,17 +132,8 @@ data class User(
     val joinedDate: String,
     val totalDoubtsAsked: Int = 0,
     val favoriteSubjects: List<String> = emptyList()
-) : Parcelable
+)
 
-@Parcelize
-data class UserProfile(
-    val user: User,
-    val stats: UserStats,
-    val achievements: List<Achievement>,
-    val subscription: SubscriptionInfo
-) : Parcelable
-
-@Parcelize
 data class UserStats(
     val totalQuizzes: Int,
     val totalTests: Int,
@@ -197,52 +141,55 @@ data class UserStats(
     val averageScore: Double,
     val studyStreak: Int,
     val hoursStudied: Double
-) : Parcelable
+)
 
-@Parcelize
+data class UserAnalytics(
+    val totalDoubts: Int,
+    val doubtsThisWeek: Int,
+    val averageResponseTime: Double,
+    val topSubjects: List<String>,
+    val accuracyRate: Double
+)
+
 data class Achievement(
+    val id: String,
     val name: String,
     val description: String,
-    val earnedDate: String,
-    val iconUrl: String? = null
-) : Parcelable
+    val icon: String,
+    val unlockedAt: String?
+)
 
-@Parcelize
 data class SubscriptionInfo(
     val plan: String,
-    val doubtsRemaining: Int? = null, // null for unlimited
-    val renewalDate: String,
+    val status: String,
+    val expiresAt: String?,
     val features: List<String>
-) : Parcelable
+)
 
 // ================================================================================
-// 📊 Analytics Models
-// ================================================================================
-
-@Parcelize
-data class UserAnalytics(
-    val userMetrics: Map<String, String>,
-    val insights: Map<String, String>,
-    val recommendations: List<String>,
-    val costEfficiency: Map<String, String>
-) : Parcelable
-
-// ================================================================================
-// 🌐 API Response Wrappers
+// 🔄 API Response Wrappers
 // ================================================================================
 
 data class ApiResponse<T>(
-    val success: Boolean,
-    val data: T? = null,
-    val error: String? = null,
-    val message: String? = null
+    val data: T,
+    val message: String,
+    val status: String
 )
 
 data class PaginatedResponse<T>(
     val items: List<T>,
-    val totalCount: Int,
-    val hasMore: Boolean,
-    val nextOffset: Int? = null
+    val total: Int,
+    val page: Int,
+    val limit: Int,
+    val hasNext: Boolean
+)
+
+data class DoubtsResponse(
+    val question: String,
+    val answer: String,
+    val steps: List<SolutionStep>,
+    val metadata: DoubtMetadata,
+    val createdAt: String
 )
 
 // ================================================================================
@@ -264,3 +211,53 @@ enum class ErrorType {
     SERVER_ERROR,
     UNKNOWN_ERROR
 }
+
+// ================================================================================
+// 📄 Missing Models
+// ================================================================================
+
+data class QuizPreset(
+    val presetId: String,
+    val name: String,
+    val description: String,
+    val topics: List<String>,
+    val questions: Int,
+    val duration: Int,
+    val difficulty: List<String>
+)
+
+data class JEEAnswer(
+    val questionId: String,
+    val selectedOption: String? = null,
+    val numericalValue: Double? = null,
+    val timeTaken: Long,
+    val isMarkedForReview: Boolean = false
+)
+
+data class JEETestResult(
+    val testId: String,
+    val totalScore: Double,
+    val maxScore: Int,
+    val percentile: Double,
+    val subjectWiseScores: Map<String, Double>,
+    val correctAnswers: Int,
+    val incorrectAnswers: Int,
+    val unattempted: Int,
+    val timeTaken: Long,
+    val analysis: TestAnalysis
+)
+
+data class TestAnalysis(
+    val strongTopics: List<String>,
+    val weakTopics: List<String>,
+    val recommendations: List<String>,
+    val timeManagement: String,
+    val accuracyRate: Double
+)
+
+data class UserProfile(
+    val user: User,
+    val stats: UserStats,
+    val achievements: List<Achievement>,
+    val subscription: SubscriptionInfo
+)

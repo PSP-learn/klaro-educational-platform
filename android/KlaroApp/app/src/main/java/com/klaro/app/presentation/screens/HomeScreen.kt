@@ -1,368 +1,168 @@
 package com.klaro.app.presentation.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.klaro.app.presentation.ui.design.*
 
 /**
- * 🏠 Home Screen
+ * 🏠 Home Screen - World-Class Minimal Design
  * 
- * Main dashboard with quick access to all 3 core features:
- * - PDF Quiz Generator
- * - JEE Online Tests
- * - Doubt Solving
+ * Design Philosophy: "First Impression = Everything"
+ * - Instant clarity on what the app does
+ * - Zero cognitive load
+ * - Immediate access to core learning actions
  */
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun HomeScreen(navController: NavController) {
     
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(KlaroDesign.Spacing.ScreenPadding),
+        verticalArrangement = Arrangement.spacedBy(KlaroDesign.Spacing.SectionGap)
     ) {
         
-        // Welcome Header
+        // Hero Welcome - Confident but not overwhelming
         item {
-            WelcomeHeader()
-        }
-        
-        // Quick Stats Card
-        item {
-            QuickStatsCard()
-        }
-        
-        // Core Features
-        item {
-            Text(
-                text = "🎯 Core Features",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-        }
-        
-        items(coreFeatures) { feature ->
-            FeatureCard(
-                feature = feature,
-                onClick = {
-                    navController.navigate(feature.route)
-                }
-            )
-        }
-        
-        // Recent Activity
-        item {
-            RecentActivityCard()
-        }
-    }
-}
-
-@Composable
-fun WelcomeHeader() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-    ) {
-        Box(
-            modifier = Modifier
-                .background(
-                    Brush.horizontalGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.primary,
-                            MaterialTheme.colorScheme.secondary
-                        )
+            CleanCard {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Klaro",
+                        fontSize = KlaroDesign.Typography.Hero,
+                        fontWeight = KlaroDesign.Typography.Bold,
+                        color = KlaroDesign.Colors.LearningBlue
                     )
-                )
-                .padding(24.dp)
-        ) {
-            Column {
-                Text(
-                    text = "🎓 Welcome to Klaro!",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Your AI-powered educational companion",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White.copy(alpha = 0.9f)
-                )
+                    Spacer(modifier = Modifier.height(KlaroDesign.Spacing.Small))
+                    Text(
+                        text = "Your study companion",
+                        fontSize = KlaroDesign.Typography.Body,
+                        fontWeight = KlaroDesign.Typography.Regular,
+                        color = KlaroDesign.Colors.NeutralMedium
+                    )
+                }
             }
         }
-    }
-}
-
-@Composable
-fun QuickStatsCard() {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = "📊 Your Progress",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+        
+        // Core Learning Actions - Perfect hierarchy
+        items(learningActions) { action ->
+            LearningActionCard(
+                action = action,
+                onClick = { navController.navigate(action.route) }
             )
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                StatItem("Quizzes Created", "12")
-                StatItem("Tests Taken", "8")
-                StatItem("Doubts Solved", "25")
-            }
         }
     }
 }
 
 @Composable
-fun StatItem(label: String, value: String) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = value,
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
-        )
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Composable
-fun FeatureCard(
-    feature: CoreFeature,
+fun LearningActionCard(
+    action: LearningAction,
     onClick: () -> Unit
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    CleanCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+        
+        // Action performed through card click
+        Card(
+            onClick = onClick,
+            colors = CardDefaults.cardColors(
+                containerColor = action.color.copy(alpha = 0.05f)
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
         ) {
-            
-            // Feature Icon
-            Box(
+            Row(
                 modifier = Modifier
-                    .size(56.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(feature.color.copy(alpha = 0.1f)),
-                contentAlignment = Alignment.Center
+                    .padding(KlaroDesign.Spacing.Large)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                
+                // Action Icon - Purposeful color coding
                 Icon(
-                    imageVector = feature.icon,
-                    contentDescription = feature.title,
-                    tint = feature.color,
-                    modifier = Modifier.size(32.dp)
+                    imageVector = action.icon,
+                    contentDescription = null,
+                    tint = action.color,
+                    modifier = Modifier.size(KlaroDesign.Components.IconLarge)
                 )
-            }
-            
-            // Feature Info
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = feature.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = feature.description,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = feature.status,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-            
-            // Arrow Icon
-            Icon(
-                imageVector = Icons.Filled.ChevronRight,
-                contentDescription = "Go to ${feature.title}",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
-
-@Composable
-fun RecentActivityCard() {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = "📈 Recent Activity",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            recentActivities.forEach { activity ->
-                ActivityItem(activity)
-                if (activity != recentActivities.last()) {
-                    Divider(modifier = Modifier.padding(vertical = 8.dp))
+                
+                Spacer(modifier = Modifier.width(KlaroDesign.Spacing.Medium))
+                
+                // Action Content - Clear hierarchy
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = action.title,
+                        fontSize = KlaroDesign.Typography.Title,
+                        fontWeight = KlaroDesign.Typography.SemiBold,
+                        color = KlaroDesign.Colors.NeutralDark
+                    )
+                    Spacer(modifier = Modifier.height(KlaroDesign.Spacing.XSmall))
+                    Text(
+                        text = action.description,
+                        fontSize = KlaroDesign.Typography.Body,
+                        fontWeight = KlaroDesign.Typography.Regular,
+                        color = KlaroDesign.Colors.NeutralMedium
+                    )
                 }
+                
+                // Subtle visual cue
+                Icon(
+                    imageVector = Icons.Filled.ChevronRight,
+                    contentDescription = null,
+                    tint = KlaroDesign.Colors.NeutralMedium.copy(alpha = 0.6f),
+                    modifier = Modifier.size(KlaroDesign.Components.IconMedium)
+                )
             }
         }
     }
 }
 
-@Composable
-fun ActivityItem(activity: RecentActivity) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = activity.icon,
-            contentDescription = activity.action,
-            tint = activity.color,
-            modifier = Modifier.size(20.dp)
-        )
-        
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = activity.action,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium
-            )
-            Text(
-                text = activity.details,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        
-        Text(
-            text = activity.time,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-    }
-}
+// ============================================================================
+// 📋 LEARNING ACTIONS - Core Features Only
+// ============================================================================
 
-// ================================================================================
-// 📋 Data Classes
-// ================================================================================
-
-data class CoreFeature(
+data class LearningAction(
     val title: String,
     val description: String,
-    val status: String,
-    val icon: ImageVector,
-    val color: Color,
+    val icon: androidx.compose.ui.graphics.vector.ImageVector,
+    val color: androidx.compose.ui.graphics.Color,
     val route: String
 )
 
-data class RecentActivity(
-    val action: String,
-    val details: String,
-    val time: String,
-    val icon: ImageVector,
-    val color: Color
-)
-
-// ================================================================================
-// 🎯 Static Data
-// ================================================================================
-
-val coreFeatures = listOf(
-    CoreFeature(
-        title = "📄 PDF Quiz Generator",
-        description = "Create custom practice tests and download as PDF",
-        status = "Ready • Generate unlimited quizzes",
-        icon = Icons.Filled.Assignment,
-        color = Color(0xFF4CAF50),
-        route = Screen.PdfGenerator.route
-    ),
-    CoreFeature(
-        title = "🎯 JEE Online Tests",
-        description = "Take customizable JEE Main mock tests with real-time scoring",
-        status = "Ready • Exact JEE 2024 format",
+// Purposeful feature set - no feature bloat
+val learningActions = listOf(
+    LearningAction(
+        title = "Generate Quiz",
+        description = "Create personalized practice tests",
         icon = Icons.Filled.Quiz,
-        color = Color(0xFF2196F3),
-        route = Screen.JeeTest.route
+        color = KlaroDesign.Colors.LearningBlue,
+        route = "pdf_generator"
     ),
-    CoreFeature(
-        title = "🤔 AI Doubt Solver",
-        description = "Get step-by-step solutions with camera OCR support",
-        status = "Ready • Text & Image support",
-        icon = Icons.Filled.QuestionAnswer,
-        color = Color(0xFFFF9800),
-        route = Screen.DoubtSolver.route
-    )
-)
-
-val recentActivities = listOf(
-    RecentActivity(
-        action = "Created PDF Quiz",
-        details = "Algebra Practice - 15 questions",
-        time = "2 hours ago",
-        icon = Icons.Filled.Assignment,
-        color = Color(0xFF4CAF50)
+    LearningAction(
+        title = "Practice Tests",
+        description = "JEE Main exam preparation",
+        icon = Icons.Filled.School,
+        color = KlaroDesign.Colors.GrowthGreen,
+        route = "jee_test"
     ),
-    RecentActivity(
-        action = "Completed JEE Test",
-        details = "Mathematics Mock - Score: 85%",
-        time = "1 day ago",
-        icon = Icons.Filled.Quiz,
-        color = Color(0xFF2196F3)
-    ),
-    RecentActivity(
-        action = "Solved Doubt",
-        details = "Integration by parts method",
-        time = "2 days ago",
-        icon = Icons.Filled.QuestionAnswer,
-        color = Color(0xFFFF9800)
+    LearningAction(
+        title = "Solve Doubts",
+        description = "Get instant step-by-step solutions",
+        icon = Icons.Filled.Psychology,
+        color = KlaroDesign.Colors.FocusAmber,
+        route = "doubt_solver"
     )
 )

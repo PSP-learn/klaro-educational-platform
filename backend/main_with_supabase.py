@@ -21,6 +21,17 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import FileResponse, JSONResponse
 import uvicorn
 
+# Load environment variables from .env if present
+try:
+    from dotenv import load_dotenv
+    from pathlib import Path
+    # Load from current working directory/root
+    load_dotenv()
+    # Also load backend/.env explicitly if present
+    load_dotenv(Path(__file__).resolve().parent / ".env", override=False)
+except Exception:
+    pass
+
 # Import existing modules with fallbacks
 try:
     from doubt_solver import DoubtSolverEngine
@@ -670,6 +681,39 @@ async def mark_notification_read(
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to update notification: {str(e)}")
+
+# ================================================================================
+# 📚 Catalog Endpoints
+# ================================================================================
+
+@app.get("/catalog/chapters")
+@app.get("/api/catalog/chapters")
+async def get_catalog_chapters(subject: Optional[str] = None, grade: Optional[str] = None):
+    """Get grade-wise chapters from topics_simple view.
+    Optional filters: subject (e.g., 'Mathematics'), grade (e.g., 'Class 12')."""
+    try:
+        if not supabase_client:
+            raise HTTPException(status_code=503, detail="Database not available")
+
+        query = supabase_client.client.table('topics_simple').select('*')
+        if subject:
+            query = query.eq('subject', subject)
+        if grade:
+            query = query.eq('grade', grade)
+
+        response = query.order('subject').order('grade').order('chapter').execute()
+        rows = response.data or []
+        chapters = [row.get('chapter') for row in rows]
+
+        return {
+            "success": True,
+            "count": len(chapters),
+            "chapters": chapters
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch chapters: {str(e)}")
 
 # ================================================================================
 # 🔧 System Health Endpoints
