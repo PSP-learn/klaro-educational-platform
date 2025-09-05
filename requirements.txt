@@ -16,6 +16,8 @@ python-dotenv==1.0.0
 
 # Supabase (minimal version)
 supabase==2.7.4
+# WebSockets runtime for Supabase (pin to v12 to avoid incompatibilities)
+websockets==12.0
 
 # Basic utilities
 requests==2.31.0
