@@ -37,9 +37,21 @@ class SupabaseClient:
     
     def __init__(self):
         # Initialize Supabase client
-        self.supabase_url = os.getenv("SUPABASE_URL")
-        self.supabase_key = os.getenv("SUPABASE_ANON_KEY")
-        self.service_role_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+        # Accept common environment variable names to be forgiving across platforms
+        self.supabase_url = (
+            os.getenv("SUPABASE_URL")
+            or os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+        )
+        self.supabase_key = (
+            os.getenv("SUPABASE_ANON_KEY")
+            or os.getenv("SUPABASE_KEY")
+            or os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY")
+            or os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+        )
+        self.service_role_key = (
+            os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+            or os.getenv("SUPABASE_SERVICE_KEY")
+        )
         
         if not all([self.supabase_url, self.supabase_key]):
             raise ValueError("Supabase credentials not found in environment")
@@ -55,7 +67,7 @@ class SupabaseClient:
             self.admin_client = None
             print("🟡 Supabase client initialized without admin access (service role key not provided)")
         
-        print("🟢 Supabase client initialized successfully")
+        print("🟢 Supabase client initialized successfully (env fallbacks enabled)")
     
     # ================================================================================
     # 👤 User Management

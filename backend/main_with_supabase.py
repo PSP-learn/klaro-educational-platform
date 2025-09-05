@@ -769,8 +769,13 @@ async def health_env():
             return bool(os.getenv(name))
         env_status = {
             "SUPABASE_URL": present("SUPABASE_URL"),
+            "NEXT_PUBLIC_SUPABASE_URL": present("NEXT_PUBLIC_SUPABASE_URL"),
             "SUPABASE_ANON_KEY": present("SUPABASE_ANON_KEY"),
+            "SUPABASE_KEY": present("SUPABASE_KEY"),
+            "NEXT_PUBLIC_SUPABASE_ANON_KEY": present("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+            "NEXT_PUBLIC_SUPABASE_KEY": present("NEXT_PUBLIC_SUPABASE_KEY"),
             "SUPABASE_SERVICE_ROLE_KEY": present("SUPABASE_SERVICE_ROLE_KEY"),
+            "SUPABASE_SERVICE_KEY": present("SUPABASE_SERVICE_KEY"),
             "OPENAI_API_KEY": present("OPENAI_API_KEY"),
             "ENVIRONMENT": os.getenv("ENVIRONMENT", "").lower() or "unset",
         }
