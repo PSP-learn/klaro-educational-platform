@@ -761,6 +761,27 @@ async def health_check():
             }
         )
 
+@app.get("/health/env")
+async def health_env():
+    """Non-secret environment diagnostics (set/missing flags only)."""
+    try:
+        def present(name: str) -> bool:
+            return bool(os.getenv(name))
+        env_status = {
+            "SUPABASE_URL": present("SUPABASE_URL"),
+            "SUPABASE_ANON_KEY": present("SUPABASE_ANON_KEY"),
+            "SUPABASE_SERVICE_ROLE_KEY": present("SUPABASE_SERVICE_ROLE_KEY"),
+            "OPENAI_API_KEY": present("OPENAI_API_KEY"),
+            "ENVIRONMENT": os.getenv("ENVIRONMENT", "").lower() or "unset",
+        }
+        return {
+            "status": "ok",
+            "timestamp": datetime.now().isoformat(),
+            "env": env_status,
+        }
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "error": str(e)})
+
 @app.get("/")
 async def root():
     """Root endpoint"""
