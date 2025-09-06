@@ -198,6 +198,32 @@ Now we just need to build the Android frontend that uses our robust backend.
 
 ---
 
+### 2025-09-06 04:40 UTC - Backend + Android Integration Progress
+**COMPLETED TODAY**:
+- ✅ Backend: Added alias route /api/catalog/chapters and created new /api/catalog/subtopics
+- ✅ Backend: Health diagnostics /health/env added; env fallbacks (SUPABASE_KEY, NEXT_PUBLIC_*) supported
+- ✅ Backend: Made backend a package (backend/__init__.py); fixed imports and lazy init of Supabase client
+- ✅ Backend: Deployed on Railway; verified chapters endpoint working in production
+- ✅ DB: Created idempotent seed file for Class 12 Maths subtopics (backend/db/seed/seed_class12_math_subtopics.sql)
+- ✅ Android: Chapters dropdown now calls absolute path; error/Retry UX added
+- ✅ Android: Subtopics dropdown implemented; loads based on selected chapter
+- ✅ Android: Added “Source” dropdown to PDF Quiz with requested options; plumbed to backend
+- ✅ App built and installed on emulator; endpoints verified via OkHttp logs
+
+**NEXT ACTIONS**:
+- ⏩ Run the subtopics seed in Supabase SQL editor to populate subtopics for Class 12 Maths (others optional next)
+- ⏩ Optionally persist quiz "source" in quiz_history (add column and update save_quiz)
+- ⏩ Configure ENVIRONMENT=production in Railway for production docs behavior
+- ⏩ Consider adding more seed coverage (Classes 9–11, Physics/Chemistry)
+
+**STATUS**:
+- 📱 Android: Chapters + Subtopics + Source wired to backend
+- 🌐 Backend: Routes healthy; Supabase client active in prod
+
+*Last Updated: 2025-09-06 04:40 UTC by AI Assistant*
+
+---
+
 ### 2025-08-31 04:20 - Android App UI Complete! 🎉
 **COMPLETED TODAY**: 
 - ✅ **Full Android Studio project structure**
