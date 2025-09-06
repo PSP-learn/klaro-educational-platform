@@ -59,7 +59,8 @@ except ImportError as e:
 
 # Import new Supabase integration
 try:
-    from supabase_client import get_supabase_client, SupabaseClient
+    # Use relative import so it works when running as a package (backend.main_with_supabase)
+    from .supabase_client import get_supabase_client, SupabaseClient
     SUPABASE_CLIENT_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ Supabase client not available: {e}")
@@ -107,6 +108,9 @@ async def lifespan(app: FastAPI):
             try:
                 supabase_client = get_supabase_client()
                 print("✅ Supabase client initialized")
+                # reset init error on success
+                global supabase_init_error
+                supabase_init_error = None
             except Exception as supabase_error:
                 print(f"❌ Supabase client initialization failed: {supabase_error}")
                 print("🔍 Environment variables check:")
@@ -114,6 +118,7 @@ async def lifespan(app: FastAPI):
                 print(f"  SUPABASE_ANON_KEY: {'set' if os.getenv('SUPABASE_ANON_KEY') else 'missing'}")
                 print(f"  SUPABASE_SERVICE_ROLE_KEY: {'set' if os.getenv('SUPABASE_SERVICE_ROLE_KEY') else 'missing'}")
                 supabase_client = None
+                supabase_init_error = str(supabase_error)
         else:
             supabase_client = None
             print("⚠️ Supabase client not available")
@@ -156,6 +161,7 @@ doubt_solver: DoubtSolverEngine = None
 quiz_generator: PDFQuizGenerator = None
 jee_system: JEETestSystem = None
 supabase_client: SupabaseClient = None
+supabase_init_error: Optional[str] = None
 
 # ================================================================================
 # 🔐 Authentication & Authorization
@@ -692,8 +698,16 @@ async def get_catalog_chapters(subject: Optional[str] = None, grade: Optional[st
     """Get grade-wise chapters from topics_simple view.
     Optional filters: subject (e.g., 'Mathematics'), grade (e.g., 'Class 12')."""
     try:
+        global supabase_client
         if not supabase_client:
-            raise HTTPException(status_code=503, detail="Database not available")
+            # Try lazy-initializing the client
+            if SUPABASE_CLIENT_AVAILABLE and get_supabase_client:
+                try:
+                    supabase_client = get_supabase_client()
+                except Exception:
+                    raise HTTPException(status_code=503, detail="Database not available")
+            else:
+                raise HTTPException(status_code=503, detail="Database not available")
 
         query = supabase_client.client.table('topics_simple').select('*')
         if subject:
@@ -778,6 +792,8 @@ async def health_env():
             "SUPABASE_SERVICE_KEY": present("SUPABASE_SERVICE_KEY"),
             "OPENAI_API_KEY": present("OPENAI_API_KEY"),
             "ENVIRONMENT": os.getenv("ENVIRONMENT", "").lower() or "unset",
+            "supabase_client": bool(supabase_client),
+            "supabase_init_error": (supabase_init_error or "")[:200],
         }
         return {
             "status": "ok",
@@ -815,7 +831,7 @@ if __name__ == "__main__":
     if os.getenv("ENVIRONMENT") == "production":
         # Production configuration
         uvicorn.run(
-            "main_with_supabase:app",
+            "backend.main_with_supabase:app",
             host=host,
             port=port,
             workers=workers,
@@ -825,7 +841,7 @@ if __name__ == "__main__":
     else:
         # Development configuration
         uvicorn.run(
-            "main_with_supabase:app",
+            "backend.main_with_supabase:app",
             host=host,
             port=port,
             reload=True,
