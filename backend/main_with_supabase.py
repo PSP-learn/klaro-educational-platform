@@ -732,7 +732,8 @@ async def get_catalog_chapters(subject: Optional[str] = None, grade: Optional[st
 @app.get("/catalog/subtopics")
 @app.get("/api/catalog/subtopics")
 async def get_catalog_subtopics(subject: str, grade: str, chapter: str):
-    """Get subtopics for a given subject, grade, and chapter from topics_simple view."""
+    """Get subtopics for a given subject, grade, and chapter.
+    Uses topics table directly: parent (chapter) -> child (subtopic)."""
     try:
         global supabase_client
         if not supabase_client:
@@ -744,26 +745,44 @@ async def get_catalog_subtopics(subject: str, grade: str, chapter: str):
             else:
                 raise HTTPException(status_code=503, detail="Database not available")
 
-        query = (
+        # Resolve subject_id and grade_id
+        s_resp = supabase_client.client.table('subjects').select('id').eq('name', subject).limit(1).execute()
+        g_resp = supabase_client.client.table('grades').select('id').eq('name', grade).limit(1).execute()
+        if not s_resp.data or not g_resp.data:
+            return {"success": True, "count": 0, "subtopics": []}
+        subject_id = s_resp.data[0]['id']
+        grade_id = g_resp.data[0]['id']
+
+        # Find parent chapter row (prefer parent_id is null)
+        p_resp = (
             supabase_client.client
-            .table('topics_simple')
-            .select('*')
-            .eq('subject', subject)
-            .eq('grade', grade)
-            .eq('chapter', chapter)
+            .table('topics')
+            .select('id,parent_id')
+            .eq('subject_id', subject_id)
+            .eq('grade_id', grade_id)
+            .eq('name', chapter)
+            .execute()
         )
-        response = query.execute()
-        rows = response.data or []
-        # Support either 'subtopic' or 'topic' column name for compatibility
-        subtopics = []
-        for row in rows:
-            st = row.get('subtopic') or row.get('topic')
-            if st:
-                subtopics.append(st)
+        if not p_resp.data:
+            return {"success": True, "count": 0, "subtopics": []}
+        parent_candidates = p_resp.data
+        parent = next((row for row in parent_candidates if not row.get('parent_id')), parent_candidates[0])
+        parent_id = parent['id']
+
+        # Fetch children (subtopics)
+        c_resp = (
+            supabase_client.client
+            .table('topics')
+            .select('name')
+            .eq('parent_id', parent_id)
+            .order('name')
+            .execute()
+        )
+        names = [row.get('name') for row in (c_resp.data or []) if row.get('name')]
         # Dedupe while preserving order
         seen = set()
         unique_subtopics = []
-        for st in subtopics:
+        for st in names:
             if st not in seen:
                 seen.add(st)
                 unique_subtopics.append(st)
