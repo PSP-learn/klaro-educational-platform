@@ -146,13 +146,28 @@ fun PdfGeneratorScreen(
                 onValueChange = { 
                     selectedTopic = it 
                     selectedSubtopic = "All Subtopics"
+                    // Load subtopics for selected chapter
+                    viewModel.loadSubtopics(selectedSubject, selectedClass, it)
                 }
             )
+
+            // Retry button if chapters failed to load
+            if (!uiState.isChaptersLoading && uiState.chapters.isEmpty()) {
+                TextButton(onClick = { viewModel.loadChapters(selectedSubject, selectedClass) }) {
+                    Text("Retry loading chapters")
+                }
+            }
+
+            // Loading indicator for subtopics
+            if (uiState.isSubtopicsLoading) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                Spacer(modifier = Modifier.height(KlaroDesign.Spacing.Small))
+            }
 
             CleanDropdown(
                 label = "Subtopic",
                 selectedValue = selectedSubtopic,
-                options = listOf("All Subtopics"),
+                options = listOf("All Subtopics") + uiState.subtopics,
                 onValueChange = { selectedSubtopic = it }
             )
         }
@@ -244,7 +259,7 @@ fun PdfGeneratorScreen(
         }
         
         uiState.error?.let { error ->
-            MessageCard(message = "Generation failed. Please try again.", type = MessageType.ERROR)
+            MessageCard(message = error, type = MessageType.ERROR)
         }
     }
 }

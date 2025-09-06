@@ -20,5 +20,18 @@ class CatalogRepository @Inject constructor(
             Result.failure(e)
         }
     }
+
+    suspend fun getSubtopics(subject: String, grade: String, chapter: String): Result<List<String>> {
+        return try {
+            val resp = api.getSubtopics(subject = subject, grade = grade, chapter = chapter)
+            if (resp.isSuccessful && resp.body() != null) {
+                Result.success(resp.body()!!.subtopics)
+            } else {
+                Result.failure(Exception("Failed to fetch subtopics: ${resp.code()} ${resp.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
 

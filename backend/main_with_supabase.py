@@ -717,7 +717,7 @@ async def get_catalog_chapters(subject: Optional[str] = None, grade: Optional[st
 
         response = query.order('subject').order('grade').order('chapter').execute()
         rows = response.data or []
-        chapters = [row.get('chapter') for row in rows]
+        chapters = [row.get('chapter') for row in rows if row.get('chapter')]
 
         return {
             "success": True,
@@ -728,6 +728,55 @@ async def get_catalog_chapters(subject: Optional[str] = None, grade: Optional[st
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch chapters: {str(e)}")
+
+@app.get("/catalog/subtopics")
+@app.get("/api/catalog/subtopics")
+async def get_catalog_subtopics(subject: str, grade: str, chapter: str):
+    """Get subtopics for a given subject, grade, and chapter from topics_simple view."""
+    try:
+        global supabase_client
+        if not supabase_client:
+            if SUPABASE_CLIENT_AVAILABLE and get_supabase_client:
+                try:
+                    supabase_client = get_supabase_client()
+                except Exception:
+                    raise HTTPException(status_code=503, detail="Database not available")
+            else:
+                raise HTTPException(status_code=503, detail="Database not available")
+
+        query = (
+            supabase_client.client
+            .table('topics_simple')
+            .select('*')
+            .eq('subject', subject)
+            .eq('grade', grade)
+            .eq('chapter', chapter)
+        )
+        response = query.order('subtopic').execute()
+        rows = response.data or []
+        # Support either 'subtopic' or 'topic' column name for compatibility
+        subtopics = []
+        for row in rows:
+            st = row.get('subtopic') or row.get('topic')
+            if st:
+                subtopics.append(st)
+        # Dedupe while preserving order
+        seen = set()
+        unique_subtopics = []
+        for st in subtopics:
+            if st not in seen:
+                seen.add(st)
+                unique_subtopics.append(st)
+
+        return {
+            "success": True,
+            "count": len(unique_subtopics),
+            "subtopics": unique_subtopics
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch subtopics: {str(e)}")
 
 # ================================================================================
 # 🔧 System Health Endpoints

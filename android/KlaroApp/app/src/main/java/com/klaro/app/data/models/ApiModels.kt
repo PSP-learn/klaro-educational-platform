@@ -38,6 +38,12 @@ data class ChaptersResponse(
     val chapters: List<String>
 )
 
+data class SubtopicsResponse(
+    val success: Boolean,
+    val count: Int,
+    val subtopics: List<String>
+)
+
 // ================================================================================
 // 🎯 JEE Test Models
 // ================================================================================

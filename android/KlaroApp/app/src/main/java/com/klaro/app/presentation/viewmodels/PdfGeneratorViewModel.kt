@@ -134,19 +134,46 @@ class PdfGeneratorViewModel @Inject constructor(
 
     fun loadChapters(subject: String, grade: String) {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isChaptersLoading = true, error = null)
+            _uiState.value = _uiState.value.copy(isChaptersLoading = true, error = null, chapters = emptyList(), subtopics = emptyList())
             catalogRepository.getChapters(subject, grade).fold(
                 onSuccess = { chapters ->
                     _uiState.value = _uiState.value.copy(
                         isChaptersLoading = false,
-                        chapters = chapters
+                        chapters = chapters,
+                        subtopics = emptyList()
                     )
                 },
                 onFailure = { e ->
                     _uiState.value = _uiState.value.copy(
                         isChaptersLoading = false,
                         error = "Failed to load chapters: ${e.message}",
-                        chapters = emptyList()
+                        chapters = emptyList(),
+                        subtopics = emptyList()
+                    )
+                }
+            )
+        }
+    }
+
+    fun loadSubtopics(subject: String, grade: String, chapter: String) {
+        if (chapter == "All Chapters") {
+            _uiState.value = _uiState.value.copy(subtopics = emptyList())
+            return
+        }
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isSubtopicsLoading = true, error = null, subtopics = emptyList())
+            catalogRepository.getSubtopics(subject, grade, chapter).fold(
+                onSuccess = { subs ->
+                    _uiState.value = _uiState.value.copy(
+                        isSubtopicsLoading = false,
+                        subtopics = subs
+                    )
+                },
+                onFailure = { e ->
+                    _uiState.value = _uiState.value.copy(
+                        isSubtopicsLoading = false,
+                        error = "Failed to load subtopics: ${e.message}",
+                        subtopics = emptyList()
                     )
                 }
             )
@@ -181,7 +208,9 @@ data class PdfGeneratorUiState(
     val isGenerating: Boolean = false,
     val isDownloading: Boolean = false,
     val isChaptersLoading: Boolean = false,
+    val isSubtopicsLoading: Boolean = false,
     val chapters: List<String> = emptyList(),
+    val subtopics: List<String> = emptyList(),
     val lastGeneratedQuiz: QuizResponse? = null,
     val downloadedFile: okhttp3.ResponseBody? = null,
     val error: String? = null,
