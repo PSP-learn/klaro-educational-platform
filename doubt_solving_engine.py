@@ -315,6 +315,10 @@ class DoubtSolvingEngine:
     async def _solve_with_wolfram(self, question: str, request: DoubtRequest) -> DoubtSolution:
         """Solve computational problems using Wolfram Alpha ($0.0025/query)"""
         
+        # If no API key configured, skip directly to GPT-3.5
+        if not self.wolfram_api_key:
+            return await self._solve_with_gpt35(question, request)
+        
         try:
             # Wolfram Alpha API call
             params = {
@@ -554,7 +558,10 @@ Make this worthy of premium tutoring service.
             self.usage_db[user_key] = {
                 "doubts_used": 0,
                 "plan": user_plan,
-                "reset_date": next_month.replace(day=1)
+                "reset_date": next_month.replace(day=1),
+                # Ensure keys expected by _track_usage exist from the start
+                "total_cost": 0.0,
+                "methods_used": {}
             }
             
         current_usage = self.usage_db[user_key]
