@@ -115,6 +115,27 @@ async def lifespan(app: FastAPI):
             jee_system = None
             print("⚠️ JEE system not available")
         
+        # Initialize Enhanced Doubt Engine explicitly within lifespan
+        global enhanced_doubt_engine, enhanced_doubt_analytics
+        if ENHANCED_ENGINE_AVAILABLE and EnhancedEngine:
+            try:
+                enhanced_config = {
+                    "openai_api_key": os.getenv("OPENAI_API_KEY"),
+                    "wolfram_api_key": os.getenv("WOLFRAM_API_KEY"),
+                    "mathpix_api_key": os.getenv("MATHPIX_API_KEY"),
+                    "mathpix_api_secret": os.getenv("MATHPIX_API_SECRET"),
+                }
+                enhanced_doubt_engine = EnhancedEngine(enhanced_config)
+                if EnhancedDoubtAnalytics:
+                    enhanced_doubt_analytics = EnhancedDoubtAnalytics(enhanced_doubt_engine.usage_db)
+                print("✅ Enhanced doubt engine initialized (lifespan)")
+            except Exception as e:
+                enhanced_doubt_engine = None
+                enhanced_doubt_analytics = None
+                print(f"❌ Enhanced doubt engine init failed (lifespan): {e}")
+        else:
+            print("⚠️ Enhanced doubt engine not available")
+        
         # Initialize Supabase client
         if SUPABASE_CLIENT_AVAILABLE and get_supabase_client:
             try:
