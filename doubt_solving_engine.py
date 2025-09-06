@@ -33,6 +33,7 @@ import io
 import aiohttp
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from fractions import Fraction
+import sympy as sp
 
 # Import existing textbook search
 try:
@@ -205,8 +206,11 @@ class DoubtSolvingEngine:
         problem_type = await self._classify_problem(question_text)
         
         # Step 5: Route to appropriate AI service (compute-then-explain when possible)
-        if problem_type == ProblemType.COMPUTATIONAL and self.wolfram_api_key:
-            solution = await self._compute_then_explain_with_wolfram(question_text, request)
+        if problem_type == ProblemType.COMPUTATIONAL:
+            if self.wolfram_api_key:
+                solution = await self._compute_then_explain_with_wolfram(question_text, request)
+            else:
+                solution = await self._compute_then_explain_with_sympy(question_text, request)
         elif request.user_plan == "basic":
             solution = await self._solve_with_gpt35(question_text, request)
         else:  # Premium users get GPT-4
@@ -417,6 +421,202 @@ class DoubtSolvingEngine:
             if best_text:
                 break
         return best_text
+
+    async def _compute_then_explain_with_sympy(self, question: str, request: DoubtRequest) -> DoubtSolution:
+        """Compute using SymPy locally, then have GPT explain using the verified result.
+        Covers common tasks: solving equations, derivatives, integrals, and monotonicity for polynomials.
+        """
+        norm_q = self._normalize_for_sympy(question)
+        cached = self.compute_cache.get(norm_q)
+        if cached and cached.get("answer"):
+            computed_answer = cached["answer"]
+            meta = cached.get("meta", {})
+        else:
+            computed_answer, meta = self._sympy_compute(norm_q)
+            if not computed_answer:
+                # Fall back to GPT if we couldn't compute deterministically
+                return await self._solve_with_gpt35(question, request)
+            self.compute_cache[norm_q] = {"answer": computed_answer, "meta": meta, "ts": time.time()}
+        # Explain with GPT, constrained to verified answer
+        try:
+            explanation_solution = await self._explain_with_gpt(question, computed_answer, request)
+        except Exception:
+            explanation_solution = DoubtSolution(
+                question=question,
+                final_answer=computed_answer,
+                steps=[
+                    SolutionStep(
+                        step_number=1,
+                        title="Verified Result",
+                        explanation=f"Verified by computation: {computed_answer}",
+                        confidence=0.98,
+                    )
+                ],
+                topic=self._extract_topic(question),
+                difficulty="Medium",
+                confidence_score=0.95,
+                solution_method="sympy",
+                cost_incurred=0.0,
+                time_taken=1.0
+            )
+        # Ensure final answer and add verification step
+        explanation_solution.final_answer = computed_answer
+        explanation_solution.solution_method = "sympy+gpt"
+        explanation_solution.steps.append(
+            SolutionStep(
+                step_number=len(explanation_solution.steps)+1,
+                title="Verification (SymPy)",
+                explanation=f"Computed with SymPy: {computed_answer}",
+                confidence=0.98,
+            )
+        )
+        return explanation_solution
+
+    def _normalize_for_sympy(self, question: str) -> str:
+        """Normalize math text for SymPy parsing."""
+        if not question:
+            return ""
+        s = question
+        s = s.replace("−", "-")
+        s = s.replace("^", "**")
+        # x2 -> x**2, y3 -> y**3 (simple heuristic)
+        s = re.sub(r"x(\d+)", r"x**\1", s)
+        s = re.sub(r"y(\d+)", r"y**\1", s)
+        # Clean multiple spaces
+        s = re.sub(r"\s+", " ", s).strip()
+        return s
+
+    def _sympy_compute(self, norm_q: str) -> (Optional[str], Dict[str, Any]):
+        """Try to deterministically compute an answer from a normalized question using SymPy.
+        Returns (answer_string, metadata).
+        """
+        meta: Dict[str, Any] = {}
+        try:
+            x = sp.symbols('x', real=True)
+            qlow = norm_q.lower()
+
+            # Monotonicity: "where <expr> is increasing/decreasing"
+            if ("increasing" in qlow or "decreasing" in qlow) and "is" in qlow:
+                dirn = "increasing" if "increasing" in qlow else "decreasing"
+                m = re.search(r"where\s+(.+?)\s+is\s+(increasing|decreasing)", qlow)
+                expr_txt = None
+                if m:
+                    expr_txt = norm_q[m.start(1):m.end(1)]
+                else:
+                    # Fallback: try between 'find' and 'is'
+                    m2 = re.search(r"find.*?\s+(.+?)\s+is\s+(increasing|decreasing)", qlow)
+                    if m2:
+                        expr_txt = norm_q[m2.start(1):m2.end(1)]
+                if expr_txt:
+                    try:
+                        f = sp.sympify(expr_txt)
+                        fp = sp.diff(f, x)
+                        crit = sp.solve(sp.Eq(fp, 0), x)
+                        crit = sorted([sp.N(c) for c in crit])
+                        intervals = []
+                        test_points = []
+                        points = [-sp.oo] + crit + [sp.oo]
+                        for i in range(len(points)-1):
+                            a = points[i]
+                            b = points[i+1]
+                            tp = 0 if (a is -sp.oo and b is sp.oo) else (a + (b-a)/2)
+                            test_points.append(tp)
+                            val = fp.subs(x, tp)
+                            if dirn == "increasing" and val > 0:
+                                intervals.append((a, b))
+                            if dirn == "decreasing" and val < 0:
+                                intervals.append((a, b))
+                        ans = self._format_intervals(intervals)
+                        meta.update({"type": "monotonicity", "expr": str(f), "critical_points": [str(c) for c in crit]})
+                        return f"{dirn.title()} on {ans}", meta
+                    except Exception:
+                        pass
+                # If parsing failed, fall back to derivative guard
+                # The guard itself modifies the solution later; here we can't compute an answer string
+                return None, meta
+
+            # Solve equations if we see '=' and keywords imply solve
+            if "=" in norm_q and ("solve" in qlow or "find" in qlow or "roots" in qlow or "value of x" in qlow):
+                # Try to extract expression around '='
+                try:
+                    left, right = norm_q.split("=", 1)
+                    left = left.split(":")[-1].strip()  # drop any prefix like "solve:" if present
+                    f_left = sp.sympify(left)
+                    f_right = sp.sympify(right)
+                    sol = sp.solve(sp.Eq(f_left, f_right), x)
+                    ans = ", ".join(sorted({sp.sstr(s) for s in sol})) if sol else "No real solution"
+                    meta.update({"type": "solve", "equation": f"{sp.sstr(f_left)} = {sp.sstr(f_right)}"})
+                    return f"x = {ans}", meta
+                except Exception:
+                    pass
+
+            # Derivative requests
+            if any(k in qlow for k in ["derivative", "differentiate", "d/dx"]):
+                # Try to extract expression after 'of' or last colon
+                expr_txt = None
+                mo = re.search(r"derivative of (.+)$", norm_q, flags=re.IGNORECASE)
+                if mo:
+                    expr_txt = mo.group(1).strip()
+                else:
+                    parts = norm_q.split(":")
+                    if len(parts) > 1:
+                        expr_txt = parts[-1].strip()
+                if expr_txt:
+                    try:
+                        f = sp.sympify(expr_txt)
+                        fp = sp.diff(f, x)
+                        meta.update({"type": "derivative", "expr": str(f)})
+                        return f"d/dx = {sp.sstr(sp.simplify(fp))}", meta
+                    except Exception:
+                        pass
+
+            # Integral requests (indefinite)
+            if any(k in qlow for k in ["integral", "integrate", "∫"]):
+                expr_txt = None
+                mo = re.search(r"integral of (.+)$", norm_q, flags=re.IGNORECASE)
+                if mo:
+                    expr_txt = mo.group(1).strip()
+                else:
+                    parts = norm_q.split(":")
+                    if len(parts) > 1:
+                        expr_txt = parts[-1].strip()
+                if expr_txt:
+                    try:
+                        f = sp.sympify(expr_txt)
+                        F = sp.integrate(f, x)
+                        meta.update({"type": "integral", "expr": str(f)})
+                        return f"∫ dx = {sp.sstr(F)} + C", meta
+                    except Exception:
+                        pass
+
+            # Roots of polynomial (simple heuristic)
+            if any(k in qlow for k in ["roots", "zeroes", "zeros"]):
+                m = re.search(r"(?:of|for)\s+(.+)$", norm_q, flags=re.IGNORECASE)
+                expr_txt = m.group(1).strip() if m else None
+                if expr_txt:
+                    try:
+                        f = sp.sympify(expr_txt)
+                        sol = sp.solve(sp.Eq(f, 0), x)
+                        ans = ", ".join(sorted({sp.sstr(s) for s in sol})) if sol else "No real roots"
+                        meta.update({"type": "roots", "expr": str(f)})
+                        return f"Roots: {ans}", meta
+                    except Exception:
+                        pass
+
+        except Exception as e:
+            logger.error(f"❌ SymPy compute failed: {e}")
+            return None, meta
+        # No deterministic parse/compute succeeded
+        return None, meta
+
+    def _format_intervals(self, intervals: List[tuple]) -> str:
+        """Format a list of intervals (a,b) possibly with infinities, joined by union symbol."""
+        parts = []
+        for a, b in intervals:
+            a_txt = "-∞" if a is -sp.oo else self._nice_num(float(a)) if a.is_real else str(a)
+            b_txt = "∞" if b is sp.oo else self._nice_num(float(b)) if b.is_real else str(b)
+            parts.append(f"({a_txt}, {b_txt})")
+        return " ∪ ".join(parts) if parts else "∅"
 
     async def _explain_with_gpt(self, question: str, verified_answer: str, request: DoubtRequest) -> DoubtSolution:
         """Generate step-by-step explanation that conforms to the verified answer."""
