@@ -134,6 +134,10 @@ class DoubtSolvingEngine:
         # Usage tracking with route granularity
         self.usage_db = {}  # In production, use PostgreSQL
         self.route_analytics = {}  # Track per-route usage
+
+        # Simple in-memory compute cache to reduce cost/latency
+        # Keyed by normalized question string
+        self.compute_cache: Dict[str, Dict[str, Any]] = {}
         
         logger.info("✅ Doubt Solving Engine ready!")
     
@@ -200,9 +204,9 @@ class DoubtSolvingEngine:
         # Step 4: Classify problem type for AI routing
         problem_type = await self._classify_problem(question_text)
         
-        # Step 5: Route to appropriate AI service
-        if problem_type == ProblemType.COMPUTATIONAL:
-            solution = await self._solve_with_wolfram(question_text, request)
+        # Step 5: Route to appropriate AI service (compute-then-explain when possible)
+        if problem_type == ProblemType.COMPUTATIONAL and self.wolfram_api_key:
+            solution = await self._compute_then_explain_with_wolfram(question_text, request)
         elif request.user_plan == "basic":
             solution = await self._solve_with_gpt35(question_text, request)
         else:  # Premium users get GPT-4
@@ -321,57 +325,167 @@ class DoubtSolvingEngine:
             return ProblemType.COMPLEX
     
     async def _solve_with_wolfram(self, question: str, request: DoubtRequest) -> DoubtSolution:
-        """Solve computational problems using Wolfram Alpha ($0.0025/query)"""
-        
-        # If no API key configured, skip directly to GPT-3.5
+        """Solve computational problems using Wolfram Alpha ($0.0025/query) - legacy path."""
         if not self.wolfram_api_key:
             return await self._solve_with_gpt35(question, request)
-        
         try:
-            # Wolfram Alpha API call
-            params = {
-                'input': question,
-                'appid': self.wolfram_api_key,
-                'output': 'json',
-                'format': 'plaintext'
-            }
-            
-            response = requests.get(self.wolfram_url, params=params, timeout=10)
-            data = response.json()
-            
-            # Extract solution from Wolfram response
-            if 'queryresult' in data and data['queryresult']['success']:
-                pods = data['queryresult']['pods']
-                solution_pod = next((p for p in pods if 'solution' in p['title'].lower()), None)
-                
-                if solution_pod:
-                    answer = solution_pod['subpods'][0]['plaintext']
-                    
-                    return DoubtSolution(
-                        question=question,
-                        final_answer=answer,
-                        steps=[
-                            SolutionStep(
-                                step_number=1,
-                                title="Computational Solution",
-                                explanation=f"Using mathematical computation: {answer}",
-                                confidence=0.95
-                            )
-                        ],
-                        topic=self._extract_topic(question),
-                        difficulty="Medium",
-                        confidence_score=0.95,
-                        solution_method="wolfram",
-                        cost_incurred=0.0025,
-                        time_taken=2.0
-                    )
-            
-            # Fallback to GPT-3.5 if Wolfram fails
+            wa_answer = self._wolfram_primary_answer(question)
+            if wa_answer:
+                return DoubtSolution(
+                    question=question,
+                    final_answer=wa_answer,
+                    steps=[
+                        SolutionStep(
+                            step_number=1,
+                            title="Computational Solution",
+                            explanation=f"Using mathematical computation: {wa_answer}",
+                            confidence=0.95
+                        )
+                    ],
+                    topic=self._extract_topic(question),
+                    difficulty="Medium",
+                    confidence_score=0.95,
+                    solution_method="wolfram",
+                    cost_incurred=0.0025,
+                    time_taken=2.0
+                )
             return await self._solve_with_gpt35(question, request)
-            
         except Exception as e:
             logger.error(f"❌ Wolfram Alpha failed: {e}")
             return await self._solve_with_gpt35(question, request)
+
+    async def _compute_then_explain_with_wolfram(self, question: str, request: DoubtRequest) -> DoubtSolution:
+        """Compute with WolframAlpha, then have GPT explain using the verified result."""
+        norm_q = self._normalize_for_wolfram(question)
+        cached = self.compute_cache.get(norm_q)
+        if cached and cached.get("answer"):
+            computed_answer = cached["answer"]
+        else:
+            computed_answer = self._wolfram_primary_answer(norm_q)
+            if not computed_answer:
+                # Fallback to normal GPT path if WA fails
+                return await self._solve_with_gpt35(question, request)
+            self.compute_cache[norm_q] = {"answer": computed_answer, "ts": time.time()}
+        # Ask GPT to explain, but constrain final answer
+        explanation_solution = await self._explain_with_gpt(question, computed_answer, request)
+        # Ensure final answer matches verified compute
+        explanation_solution.final_answer = computed_answer
+        explanation_solution.solution_method = "wolfram+gpt"
+        explanation_solution.cost_incurred = (explanation_solution.cost_incurred or 0.0) + 0.0025
+        # Add a verification step at the end
+        explanation_solution.steps.append(
+            SolutionStep(
+                step_number=len(explanation_solution.steps)+1,
+                title="Verification (WolframAlpha)",
+                explanation=f"Verified result using WolframAlpha: {computed_answer}",
+                confidence=0.98,
+            )
+        )
+        return explanation_solution
+
+    def _wolfram_primary_answer(self, question: str) -> Optional[str]:
+        """Query WolframAlpha, return the best plaintext answer if available."""
+        params = {
+            'input': f"{question} assuming x is real",
+            'appid': self.wolfram_api_key,
+            'output': 'json',
+            'format': 'plaintext'
+        }
+        response = requests.get(self.wolfram_url, params=params, timeout=10)
+        data = response.json()
+        if not data or 'queryresult' not in data or not data['queryresult'].get('success'):
+            return None
+        pods = data['queryresult'].get('pods', [])
+        # Prefer solution/result pods; else fallback to first non-empty plaintext
+        preferred_titles = ["solution", "result", "definite integral", "derivative", "limit", "roots", "root"]
+        best_text = None
+        for p in pods:
+            title = p.get('title', '').lower()
+            if any(key in title for key in preferred_titles):
+                subpods = p.get('subpods', [])
+                for sp in subpods:
+                    txt = (sp.get('plaintext') or '').strip()
+                    if txt:
+                        return txt
+        # Fallback: first non-empty plaintext
+        for p in pods:
+            for sp in p.get('subpods', []):
+                txt = (sp.get('plaintext') or '').strip()
+                if txt:
+                    best_text = txt
+                    break
+            if best_text:
+                break
+        return best_text
+
+    async def _explain_with_gpt(self, question: str, verified_answer: str, request: DoubtRequest) -> DoubtSolution:
+        """Generate step-by-step explanation that conforms to the verified answer."""
+        try:
+            if not self.openai_client:
+                raise Exception("OpenAI client not initialized")
+            prompt = f"""
+You are an expert {request.subject} teacher. A verified correct result was computed by a math engine.
+
+Problem: {question}
+Verified result (must be the final answer): {verified_answer}
+
+Explain step-by-step so a student understands, and ensure FINAL ANSWER exactly matches the verified result.
+
+Format:
+UNDERSTANDING: ...
+APPROACH: ...
+STEP 1: ...
+STEP 2: ...
+FINAL ANSWER: {verified_answer}
+"""
+            response = await self.openai_client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=1000,
+                temperature=0.2
+            )
+            solution_text = response.choices[0].message.content
+            parsed = self._parse_gpt_solution(solution_text, question)
+            # Force final answer to match verified
+            parsed.final_answer = verified_answer
+            parsed.solution_method = "gpt35"
+            parsed.cost_incurred = 0.004
+            return parsed
+        except Exception as e:
+            logger.error(f"❌ GPT explain failed: {e}")
+            return DoubtSolution(
+                question=question,
+                final_answer=verified_answer,
+                steps=[
+                    SolutionStep(
+                        step_number=1,
+                        title="Verified Result",
+                        explanation=f"Verified by computation: {verified_answer}",
+                        confidence=0.98,
+                    )
+                ],
+                topic=self._extract_topic(question),
+                difficulty="Medium",
+                confidence_score=0.95,
+                solution_method="wolfram",
+                cost_incurred=0.0025,
+                time_taken=1.0
+            )
+
+    def _normalize_for_wolfram(self, question: str) -> str:
+        """Normalize input to reduce WA misreads (powers, minus sign, spacing)."""
+        if not question:
+            return ""
+        s = question
+        # Normalize minus
+        s = s.replace("−", "-")
+        # Fix missing power caret like x2 -> x^2 (only when it's a variable followed by digits)
+        s = re.sub(r"x(\d+)", r"x^\1", s)
+        s = re.sub(r"y(\d+)", r"y^\1", s)
+        s = re.sub(r"\)\s*(\d+)", r")*\1", s)  # (expr)2 -> (expr)*2 (safer)
+        # Collapse extra spaces
+        s = re.sub(r"\s+", " ", s).strip()
+        return s
     
     async def _solve_with_gpt35(self, question: str, request: DoubtRequest) -> DoubtSolution:
         """Solve problems using GPT-3.5 Turbo ($0.004/query)"""
