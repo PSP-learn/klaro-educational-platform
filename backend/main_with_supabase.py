@@ -279,11 +279,55 @@ async def login_user(
 
 @app.get("/api/user/profile")
 async def get_user_profile(current_user: Dict = Depends(get_current_user)):
-    """Get current user's profile"""
-    return {
-        "success": True,
-        "user": current_user
+    """Get current user's profile in app-friendly shape (UserProfile).
+    UserProfile = {
+      user: { userId, name, email, gradeLevel, subjects, plan, joinedDate, totalDoubtsAsked, favoriteSubjects },
+      stats: { totalQuizzes, totalTests, totalDoubts, averageScore, studyStreak, hoursStudied },
+      achievements: [...],
+      subscription: { plan, status, expiresAt, features }
     }
+    """
+    try:
+        user = {
+            "userId": current_user.get("id") or current_user.get("user_id", "unknown"),
+            "name": current_user.get("name", "Student"),
+            "email": current_user.get("email", "student@example.com"),
+            "gradeLevel": current_user.get("grade_level"),
+            "subjects": current_user.get("subjects", ["Mathematics", "Physics"]),
+            "plan": current_user.get("plan", "basic"),
+            "joinedDate": current_user.get("created_at", datetime.now().isoformat()),
+            "totalDoubtsAsked": current_user.get("total_doubts_solved", 0),
+            "favoriteSubjects": current_user.get("favorite_subjects", ["Algebra", "Trigonometry"]),
+        }
+        stats = {
+            "totalQuizzes": 0,
+            "totalTests": 0,
+            "totalDoubts": int(user.get("totalDoubtsAsked", 0)),
+            "averageScore": 0.0,
+            "studyStreak": 0,
+            "hoursStudied": 0.0,
+        }
+        achievements = [
+            {"id": "first_doubt", "name": "First Doubt", "description": "Asked your first doubt", "icon": "🎯", "unlockedAt": user.get("joinedDate")},
+        ]
+        subscription = {
+            "plan": user.get("plan", "basic"),
+            "status": "active",
+            "expiresAt": None,
+            "features": [
+                "20 doubts/month" if user.get("plan") == "basic" else "Unlimited doubts",
+                "OCR support",
+                "GPT-4 solutions" if user.get("plan") == "premium" else "GPT-3.5 solutions",
+            ],
+        }
+        return {
+            "user": user,
+            "stats": stats,
+            "achievements": achievements,
+            "subscription": subscription,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to build user profile: {str(e)}")
 
 @app.get("/api/user/analytics")
 async def get_user_analytics(
@@ -622,26 +666,130 @@ async def solve_doubt(
 async def get_doubt_history(
     limit: int = 20,
     offset: int = 0,
+    authorization: Optional[str] = None,
     current_user: Dict = Depends(get_current_user)
 ):
-    """Get user's doubt solving history"""
+    """Get user's doubt solving history.
+    App expects PaginatedResponse<DoubtSolution> = { items, total, page, limit, hasNext }.
+    """
     try:
-        doubts = await supabase_client.get_user_doubts(current_user["id"], limit, offset)
-        
+        # Try real data via Supabase
+        items: List[Dict[str, Any]] = []
+        total = 0
+        if supabase_client:
+            doubts = await supabase_client.get_user_doubts(current_user["id"], limit, offset)
+            total = len(doubts)
+            for i, d in enumerate(doubts, 1):
+                sol = d.get("solution_data") or {}
+                items.append({
+                    "question": d.get("question_text", sol.get("question", "")),
+                    "answer": (sol.get("final_answer") or sol.get("answer") or ""),
+                    "steps": [
+                        {
+                            "stepNumber": s.get("step_number", idx+1),
+                            "title": s.get("title", "Step"),
+                            "explanation": s.get("explanation", ""),
+                            "confidence": s.get("confidence", 0.9),
+                        } for idx, s in enumerate(sol.get("steps", []))
+                    ],
+                    "metadata": {
+                        "topic": sol.get("topic", d.get("subject", "Mathematics")),
+                        "difficulty": sol.get("difficulty", "Medium"),
+                        "confidence": sol.get("confidence_score", 0.8),
+                        "method": sol.get("solution_method", d.get("method_used", "gpt35")),
+                        "cost": float(sol.get("cost_incurred", d.get("cost_incurred", 0.0) or 0.0)),
+                        "timeTaken": float(sol.get("time_taken", d.get("time_taken", 0.0) or 0.0)),
+                        "retryAttempts": int(sol.get("retry_attempts", 0)),
+                    },
+                    "mobileFormat": sol.get("mobile_format") or {
+                        "shortAnswer": (sol.get("final_answer") or sol.get("answer") or ""),
+                        "keySteps": [s.get("title", "") for s in (sol.get("steps", []) or []) if s.get("title")],
+                        "visualAids": [],
+                        "practiceProblems": [],
+                    },
+                    "whatsappFormat": sol.get("whatsapp_format", ""),
+                })
+        else:
+            total = 0
+
+        # If no items and we want to support dev without auth/data, build mock page
+        if not items:
+            example = {
+                "question": "Solve 3x - 5 = 10",
+                "answer": "x = 5",
+                "steps": [
+                    {"stepNumber": 1, "title": "Add 5 to both sides", "explanation": "3x - 5 + 5 = 10 + 5 ⇒ 3x = 15", "confidence": 0.9},
+                    {"stepNumber": 2, "title": "Divide by 3", "explanation": "3x / 3 = 15 / 3 ⇒ x = 5", "confidence": 0.9},
+                ],
+                "metadata": {
+                    "topic": "General Mathematics",
+                    "difficulty": "Easy",
+                    "confidence": 0.9,
+                    "method": "gpt35",
+                    "cost": 0.004,
+                    "timeTaken": 1.2,
+                    "retryAttempts": 0,
+                },
+                "mobileFormat": {
+                    "shortAnswer": "x = 5",
+                    "keySteps": ["Add 5 to both sides", "Divide by 3"],
+                    "visualAids": [],
+                    "practiceProblems": [],
+                },
+                "whatsappFormat": "Answer: x = 5",
+            }
+            items = [example]
+            total = 1
+
+        page = (offset // max(1, limit)) + 1
+        has_next = (offset + limit) < total
         return {
-            "success": True,
-            "doubts": doubts,
-            "total": len(doubts),
+            "items": items,
+            "total": total,
+            "page": page,
             "limit": limit,
-            "offset": offset
+            "hasNext": has_next,
         }
-        
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get doubt history: {str(e)}")
 
 # ================================================================================
-# 📄 PDF Quiz Generation Endpoints
+# 📄 Quiz Presets & PDF Generation Endpoints
 # ================================================================================
+
+@app.get("/api/quiz/presets")
+async def get_quiz_presets():
+    """Return quiz presets as a map keyed by presetId (Android expects a map)."""
+    presets = {
+        "class_10_algebra_basic": {
+            "presetId": "class_10_algebra_basic",
+            "name": "Class 10 - Algebra Basics",
+            "description": "Fundamental algebraic concepts",
+            "topics": ["polynomials", "linear equations", "quadratic equations"],
+            "questions": 15,
+            "duration": 45,
+            "difficulty": ["easy", "medium"],
+        },
+        "class_10_trigonometry": {
+            "presetId": "class_10_trigonometry",
+            "name": "Class 10 - Trigonometry",
+            "description": "Trigonometric ratios and applications",
+            "topics": ["trigonometry", "trigonometric ratios"],
+            "questions": 10,
+            "duration": 60,
+            "difficulty": ["medium", "hard"],
+        },
+        "quick_revision": {
+            "presetId": "quick_revision",
+            "name": "Quick Revision Test",
+            "description": "Fast review of key concepts",
+            "topics": ["quadratic equations", "triangles", "trigonometry"],
+            "questions": 20,
+            "duration": 30,
+            "difficulty": ["easy"],
+        },
+    }
+    return presets
 
 @app.post("/api/quiz/generate")
 async def generate_quiz(
