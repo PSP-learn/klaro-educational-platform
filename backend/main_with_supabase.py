@@ -512,6 +512,37 @@ async def api_doubt_solve_image(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Image processing failed: {str(e)}")
 
+@app.get("/api/doubt/usage/{user_id}")
+async def api_doubt_usage(user_id: str):
+    """Minimal usage analytics for Android UI (no auth).
+    Returns zeros if no data is available to avoid 404s in the app.
+    """
+    try:
+        # Compute current month usage key
+        current_month = datetime.now().strftime("%Y-%m")
+        user_key = f"{user_id}_{current_month}"
+
+        usage = {}
+        if enhanced_doubt_engine and hasattr(enhanced_doubt_engine, 'usage_db'):
+            usage = enhanced_doubt_engine.usage_db.get(user_key, {})
+
+        return {
+            "totalDoubts": int(usage.get("doubts_used", 0) or 0),
+            "doubtsThisWeek": 0,
+            "averageResponseTime": float(usage.get("avg_time", 0.0) or 0.0),
+            "topSubjects": [],
+            "accuracyRate": 0.0,
+        }
+    except Exception:
+        # Safe fallback shape
+        return {
+            "totalDoubts": 0,
+            "doubtsThisWeek": 0,
+            "averageResponseTime": 0.0,
+            "topSubjects": [],
+            "accuracyRate": 0.0,
+        }
+
 # ================================================================================
 # 🤔 Doubt Solving Endpoints
 # ================================================================================
