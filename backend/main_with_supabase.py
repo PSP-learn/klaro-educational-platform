@@ -19,6 +19,7 @@ from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, Bac
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import FileResponse, JSONResponse
+from pydantic import BaseModel
 import uvicorn
 
 # Load environment variables from .env if present
@@ -67,6 +68,17 @@ except ImportError as e:
     SUPABASE_CLIENT_AVAILABLE = False
     get_supabase_client = None
     SupabaseClient = None
+
+# Try to import the enhanced doubt solving engine (JSON/Android friendly)
+try:
+    from doubt_solving_engine import DoubtSolvingEngine as EnhancedEngine, DoubtRequest as EnhancedDoubtCoreRequest, DoubtAnalytics as EnhancedDoubtAnalytics
+    ENHANCED_ENGINE_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ Enhanced doubt engine not available: {e}")
+    EnhancedEngine = None
+    EnhancedDoubtCoreRequest = None
+    EnhancedDoubtAnalytics = None
+    ENHANCED_ENGINE_AVAILABLE = False
 
 # ================================================================================
 # 🚀 FastAPI App Configuration
@@ -162,6 +174,10 @@ quiz_generator: PDFQuizGenerator = None
 jee_system: JEETestSystem = None
 supabase_client: SupabaseClient = None
 supabase_init_error: Optional[str] = None
+
+# Enhanced doubt engine globals (initialized on startup)
+enhanced_doubt_engine: Optional[EnhancedEngine] = None
+enhanced_doubt_analytics: Optional[EnhancedDoubtAnalytics] = None
 
 # ================================================================================
 # 🔐 Authentication & Authorization
@@ -265,6 +281,212 @@ async def get_user_analytics(
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get analytics: {str(e)}")
+
+# ================================================================================
+# 🤖 Enhanced Doubt Solving (Android-friendly) - No Auth
+# ================================================================================
+
+class EnhancedDoubtRequestModel(BaseModel):
+    question: str
+    subject: str = "Mathematics"
+    user_id: str
+    user_plan: str = "basic"
+    context: Optional[str] = None
+    image_data: Optional[str] = None  # base64-encoded image (optional)
+
+@app.on_event("startup")
+async def init_enhanced_doubt_engine():
+    global enhanced_doubt_engine, enhanced_doubt_analytics
+    if ENHANCED_ENGINE_AVAILABLE and EnhancedEngine:
+        try:
+            config = {
+                "openai_api_key": os.getenv("OPENAI_API_KEY"),
+                "wolfram_api_key": os.getenv("WOLFRAM_API_KEY"),
+                "mathpix_api_key": os.getenv("MATHPIX_API_KEY"),
+                "mathpix_api_secret": os.getenv("MATHPIX_API_SECRET"),
+            }
+            enhanced_doubt_engine = EnhancedEngine(config)
+            enhanced_doubt_analytics = EnhancedDoubtAnalytics(enhanced_doubt_engine.usage_db)
+            print("✅ Enhanced doubt engine initialized")
+        except Exception as e:
+            print(f"❌ Enhanced doubt engine init failed: {e}")
+            enhanced_doubt_engine = None
+            enhanced_doubt_analytics = None
+    else:
+        print("⚠️ Enhanced doubt engine not available")
+
+@app.post("/api/doubt/solve-enhanced")
+async def api_doubt_solve_enhanced(req: EnhancedDoubtRequestModel):
+    """Solve a doubt and return Android-friendly schema (no auth required)."""
+    # If engine missing, return a safe minimal payload so app doesn't crash
+    if not enhanced_doubt_engine:
+        return {
+            "question": req.question,
+            "answer": "",
+            "steps": [],
+            "metadata": {
+                "topic": req.subject,
+                "difficulty": "Unknown",
+                "confidence": 0.0,
+                "method": "unavailable",
+                "cost": 0.0,
+                "timeTaken": 0.0,
+                "retryAttempts": 0,
+            },
+            "mobileFormat": {
+                "shortAnswer": "",
+                "keySteps": [],
+                "visualAids": [],
+                "practiceProblems": [],
+            },
+            "whatsappFormat": "",
+        }
+
+    try:
+        # Build core engine request
+        core_req = EnhancedDoubtCoreRequest(
+            question_text=req.question,
+            subject=req.subject,
+            user_id=req.user_id,
+            user_plan=req.user_plan,
+            context=req.context,
+        )
+        if req.image_data:
+            import base64
+            core_req.image_data = base64.b64decode(req.image_data)
+
+        # Solve using the enhanced engine
+        solution = await enhanced_doubt_engine.solve_doubt(core_req)
+
+        # Map to Android-friendly response
+        steps = []
+        for s in (solution.steps or []):
+            steps.append({
+                "stepNumber": getattr(s, 'step_number', 0),
+                "title": getattr(s, 'title', ''),
+                "explanation": getattr(s, 'explanation', ''),
+                "confidence": getattr(s, 'confidence', 0.9),
+            })
+        if not steps:
+            steps = [{
+                "stepNumber": 1,
+                "title": "Solution",
+                "explanation": getattr(solution, 'final_answer', ''),
+                "confidence": getattr(solution, 'confidence_score', 0.8),
+            }]
+
+        metadata = {
+            "topic": getattr(solution, 'topic', req.subject),
+            "difficulty": getattr(solution, 'difficulty', 'Medium'),
+            "confidence": getattr(solution, 'confidence_score', 0.85),
+            "method": getattr(solution, 'solution_method', 'gpt'),
+            "cost": getattr(solution, 'cost_incurred', 0.0),
+            "timeTaken": getattr(solution, 'time_taken', 0.0),
+            "retryAttempts": getattr(solution, 'retry_attempts', 0),
+        }
+        mobile_format = solution.mobile_format or {
+            "shortAnswer": getattr(solution, 'final_answer', ''),
+            "keySteps": [st.get('title', '') for st in steps if st.get('title')],
+            "visualAids": [],
+            "practiceProblems": [],
+        }
+        return {
+            "question": getattr(solution, 'question', req.question),
+            "answer": getattr(solution, 'final_answer', ''),
+            "steps": steps,
+            "metadata": metadata,
+            "mobileFormat": mobile_format,
+            "whatsappFormat": getattr(solution, 'whatsapp_format', ''),
+        }
+    except Exception as e:
+        print(f"❌ Enhanced doubt solving failed: {e}")
+        return {
+            "question": req.question,
+            "answer": "",
+            "steps": [],
+            "metadata": {
+                "topic": req.subject,
+                "difficulty": "Unknown",
+                "confidence": 0.0,
+                "method": "error",
+                "cost": 0.0,
+                "timeTaken": 0.0,
+                "retryAttempts": 0,
+            },
+            "mobileFormat": {
+                "shortAnswer": "",
+                "keySteps": [],
+                "visualAids": [],
+                "practiceProblems": [],
+            },
+            "whatsappFormat": "",
+        }
+
+@app.post("/api/doubt/solve-image")
+async def api_doubt_solve_image(
+    file: UploadFile = File(...),
+    user_id: str = "demo_user",
+    user_plan: str = "basic",
+    subject: str = "Mathematics",
+):
+    """Solve image-based doubt (no auth) and return Android-friendly schema."""
+    if not enhanced_doubt_engine:
+        raise HTTPException(status_code=503, detail="Enhanced doubt engine unavailable")
+
+    try:
+        image_data = await file.read()
+        if len(image_data) > 10 * 1024 * 1024:
+            raise HTTPException(status_code=400, detail="Image too large (max 10MB)")
+
+        core_req = EnhancedDoubtCoreRequest(
+            image_data=image_data,
+            subject=subject,
+            user_id=user_id,
+            user_plan=user_plan,
+        )
+        solution = await enhanced_doubt_engine.solve_doubt(core_req)
+
+        steps = []
+        for s in (solution.steps or []):
+            steps.append({
+                "stepNumber": getattr(s, 'step_number', 0),
+                "title": getattr(s, 'title', ''),
+                "explanation": getattr(s, 'explanation', ''),
+                "confidence": getattr(s, 'confidence', 0.9),
+            })
+        if not steps:
+            steps = [{
+                "stepNumber": 1,
+                "title": "Solution",
+                "explanation": getattr(solution, 'final_answer', ''),
+                "confidence": getattr(solution, 'confidence_score', 0.8),
+            }]
+
+        metadata = {
+            "topic": getattr(solution, 'topic', subject),
+            "difficulty": getattr(solution, 'difficulty', 'Medium'),
+            "confidence": getattr(solution, 'confidence_score', 0.85),
+            "method": getattr(solution, 'solution_method', 'gpt'),
+            "cost": getattr(solution, 'cost_incurred', 0.0),
+            "timeTaken": getattr(solution, 'time_taken', 0.0),
+            "retryAttempts": getattr(solution, 'retry_attempts', 0),
+        }
+        mobile_format = solution.mobile_format or {
+            "shortAnswer": getattr(solution, 'final_answer', ''),
+            "keySteps": [st.get('title', '') for st in steps if st.get('title')],
+            "visualAids": [],
+            "practiceProblems": [],
+        }
+        return {
+            "question": getattr(solution, 'question', ''),
+            "answer": getattr(solution, 'final_answer', ''),
+            "steps": steps,
+            "metadata": metadata,
+            "mobileFormat": mobile_format,
+            "whatsappFormat": getattr(solution, 'whatsapp_format', ''),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Image processing failed: {str(e)}")
 
 # ================================================================================
 # 🤔 Doubt Solving Endpoints
