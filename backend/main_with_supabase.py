@@ -752,7 +752,7 @@ async def get_catalog_subtopics(subject: str, grade: str, chapter: str):
             .eq('grade', grade)
             .eq('chapter', chapter)
         )
-        response = query.order('subtopic').execute()
+        response = query.execute()
         rows = response.data or []
         # Support either 'subtopic' or 'topic' column name for compatibility
         subtopics = []
