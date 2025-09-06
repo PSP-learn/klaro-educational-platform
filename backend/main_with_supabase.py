@@ -1095,6 +1095,26 @@ async def health_env():
     except Exception as e:
         return JSONResponse(status_code=500, content={"status": "error", "error": str(e)})
 
+@app.get("/health/doubt")
+async def health_doubt():
+    """Report enhanced doubt engine initialization status (non-secret)."""
+    try:
+        return {
+            "status": "ok",
+            "timestamp": datetime.now().isoformat(),
+            "enhanced_engine": bool(enhanced_doubt_engine),
+            "imports": {
+                "enhanced_engine_available": ENHANCED_ENGINE_AVAILABLE,
+            },
+            "env_flags": {
+                "OPENAI_API_KEY": bool(os.getenv("OPENAI_API_KEY")),
+                "WOLFRAM_API_KEY": bool(os.getenv("WOLFRAM_API_KEY")),
+                "MATHPIX_API_KEY": bool(os.getenv("MATHPIX_API_KEY")),
+            },
+        }
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "error": str(e)})
+
 @app.get("/")
 async def root():
     """Root endpoint"""
