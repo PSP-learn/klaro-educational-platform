@@ -43,12 +43,12 @@ except ImportError as e:
     DoubtSolverEngine = None
 
 try:
-    from pdf_quiz_generator import PDFQuizGenerator
+    from smart_quiz_generator import SmartTestGenerator
     PDF_GENERATOR_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️ PDF generator not available: {e}")
+    print(f"⚠️ Smart quiz generator not available: {e}")
     PDF_GENERATOR_AVAILABLE = False
-    PDFQuizGenerator = None
+    SmartTestGenerator = None
 
 try:
     from jee_backend_wrapper import JEETestSystem
@@ -101,9 +101,13 @@ async def lifespan(app: FastAPI):
             doubt_solver = None
             print("⚠️ Doubt solver not available")
             
-        if PDF_GENERATOR_AVAILABLE and PDFQuizGenerator:
-            quiz_generator = PDFQuizGenerator()
-            print("✅ Quiz generator initialized")
+        if PDF_GENERATOR_AVAILABLE and SmartTestGenerator:
+            try:
+                quiz_generator = SmartTestGenerator("../book_db")
+                print("✅ Quiz generator initialized")
+            except Exception as e:
+                quiz_generator = None
+                print(f"❌ Quiz generator init failed: {e}")
         else:
             quiz_generator = None
             print("⚠️ Quiz generator not available")
@@ -191,7 +195,7 @@ security = HTTPBearer()
 
 # Global variables (initialized in lifespan)
 doubt_solver: DoubtSolverEngine = None
-quiz_generator: PDFQuizGenerator = None
+quiz_generator: SmartTestGenerator = None
 jee_system: JEETestSystem = None
 supabase_client: SupabaseClient = None
 supabase_init_error: Optional[str] = None
@@ -586,6 +590,114 @@ async def api_doubt_usage(user_id: str):
             "topSubjects": [],
             "accuracyRate": 0.0,
         }
+
+# ================================================================================
+# 📝 Quiz Generation (Android-friendly) - No Auth
+# ================================================================================
+
+from pydantic import BaseModel as PBaseModel
+
+class QuizRequestModel(PBaseModel):
+    topics: List[str]
+    num_questions: int = 10
+    question_types: List[str] = ["mcq", "short"]
+    difficulty_levels: List[str] = ["easy", "medium"]
+    subject: str = "Mathematics"
+    title: Optional[str] = None
+
+class QuizResponseModel(PBaseModel):
+    quiz_id: str
+    title: str
+    questions_file: Optional[str] = None
+    answers_file: Optional[str] = None
+    pdf_questions_file: Optional[str] = None
+    pdf_answers_file: Optional[str] = None
+    metadata: Dict[str, any]
+    created_at: str
+
+@app.get("/api/quiz/presets")
+async def api_quiz_presets():
+    presets = {
+        'class_10_algebra_basic': {
+            'name': 'Class 10 - Algebra Basics',
+            'description': 'Fundamental algebraic concepts',
+            'topics': ['polynomials', 'linear equations', 'quadratic equations'],
+            'types': ['mcq', 'short'],
+            'difficulty': ['easy', 'medium'],
+            'questions': 12,
+            'duration': 45
+        },
+        'class_10_trigonometry': {
+            'name': 'Class 10 - Trigonometry',
+            'description': 'Trigonometric ratios and applications',
+            'topics': ['trigonometry', 'trigonometric ratios'],
+            'types': ['mcq', 'short'],
+            'difficulty': ['medium', 'hard'],
+            'questions': 10,
+            'duration': 60
+        },
+        'quick_revision': {
+            'name': 'Quick Revision Test',
+            'description': 'Fast review of key concepts',
+            'topics': ['quadratic equations', 'triangles', 'trigonometry'],
+            'types': ['mcq'],
+            'difficulty': ['easy'],
+            'questions': 10,
+            'duration': 30
+        }
+    }
+    return {"presets": presets}
+
+@app.post("/api/quiz/create", response_model=QuizResponseModel)
+async def api_quiz_create(req: QuizRequestModel):
+    if not quiz_generator:
+        raise HTTPException(status_code=503, detail="Quiz generator unavailable")
+    try:
+        test_data = quiz_generator.create_test(
+            topics=req.topics,
+            num_questions=req.num_questions,
+            question_types=req.question_types,
+            difficulty_levels=req.difficulty_levels,
+            subject=req.subject,
+        )
+        quiz_id = f"quiz_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        prefix = quiz_id
+        q_txt, a_txt = quiz_generator.save_test(test_data, prefix)
+        try:
+            q_pdf, a_pdf = quiz_generator.save_test_pdf(test_data, prefix)
+        except Exception:
+            q_pdf, a_pdf = None, None
+        return QuizResponseModel(
+            quiz_id=quiz_id,
+            title=req.title or f"Quiz on {', '.join(req.topics)}",
+            questions_file=q_txt,
+            answers_file=a_txt,
+            pdf_questions_file=q_pdf,
+            pdf_answers_file=a_pdf,
+            metadata=test_data.get('metadata', {}),
+            created_at=datetime.now().isoformat()
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Quiz creation failed: {str(e)}")
+
+@app.get("/api/quiz/{quiz_id}/download")
+async def api_quiz_download(quiz_id: str, file_type: str = "questions"):
+    base_dir = Path("../generated_tests")
+    pdf_path = base_dir / f"{quiz_id}_{file_type}.pdf"
+    txt_path = base_dir / f"{quiz_id}_{file_type}.txt"
+    if pdf_path.exists():
+        return FileResponse(
+            path=pdf_path,
+            filename=f"{quiz_id}_{file_type}.pdf",
+            media_type="application/pdf"
+        )
+    if txt_path.exists():
+        return FileResponse(
+            path=txt_path,
+            filename=f"{quiz_id}_{file_type}.txt",
+            media_type="text/plain"
+        )
+    raise HTTPException(status_code=404, detail="Quiz file not found")
 
 # ================================================================================
 # 🤔 Doubt Solving Endpoints
