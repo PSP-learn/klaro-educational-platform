@@ -53,6 +53,7 @@ fun PdfGeneratorScreen(
     var selectedDifficulty by remember { mutableStateOf("Medium") }
     var selectedQuestionTypes by remember { mutableStateOf(setOf("MCQ")) }
     var numberOfQuestions by remember { mutableStateOf(10) }
+    var selectedSource by remember { mutableStateOf("NCERT") }
     
     Column(
         modifier = Modifier
@@ -172,7 +173,35 @@ fun PdfGeneratorScreen(
             )
         }
         
-        // Form Section 3: Quiz Configuration
+        // Form Section 3: Source Selection
+        CleanCard {
+            Text(
+                text = "Source",
+                fontSize = KlaroDesign.Typography.Title,
+                fontWeight = KlaroDesign.Typography.SemiBold,
+                color = KlaroDesign.Colors.NeutralDark
+            )
+            val sourceOptions = listOf(
+                "NCERT",
+                "CBSE reference books",
+                "IIT JEE books",
+                "IIT JEE coaching material",
+                "NEET books",
+                "NEET coaching material",
+                "PYQ boards",
+                "PYQ JEE mains",
+                "PYQ JEE advanced",
+                "PYQ NEET"
+            )
+            CleanDropdown(
+                label = "Select source",
+                selectedValue = selectedSource,
+                options = sourceOptions,
+                onValueChange = { selectedSource = it }
+            )
+        }
+
+        // Form Section 4: Quiz Configuration
         CleanCard {
             Text(
                 text = "Quiz setup",
@@ -246,7 +275,8 @@ fun PdfGeneratorScreen(
                     numQuestions = numberOfQuestions,
                     questionTypes = selectedQuestionTypes.map(typeCode),
                     difficultyLevels = listOf(selectedDifficulty.lowercase()),
-                    subject = selectedSubject
+                    subject = selectedSubject,
+                    source = selectedSource
                 )
             },
             isLoading = uiState.isGenerating,

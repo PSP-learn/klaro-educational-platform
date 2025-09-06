@@ -48,7 +48,8 @@ class PdfGeneratorViewModel @Inject constructor(
         questionTypes: List<String>,
         difficultyLevels: List<String>,
         subject: String,
-        title: String? = null
+        title: String? = null,
+        source: String? = null
     ) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isGenerating = true, error = null)
@@ -59,7 +60,8 @@ class PdfGeneratorViewModel @Inject constructor(
                 questionTypes = questionTypes,
                 difficultyLevels = difficultyLevels,
                 subject = subject,
-                title = title
+                title = title,
+                source = source
             ).fold(
                 onSuccess = { quizResponse ->
                     _uiState.value = _uiState.value.copy(

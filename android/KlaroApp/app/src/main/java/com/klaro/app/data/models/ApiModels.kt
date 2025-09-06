@@ -16,7 +16,8 @@ data class QuizRequest(
     val questionTypes: List<String> = listOf("mcq", "short"),
     val difficultyLevels: List<String> = listOf("easy", "medium"),
     val subject: String = "Mathematics",
-    val title: String? = null
+    val title: String? = null,
+    val source: String? = null
 )
 
 data class QuizResponse(

@@ -373,6 +373,7 @@ async def generate_quiz(
     topics: str = Form(...),  # Comma-separated
     questions_count: int = Form(10),
     difficulty: str = Form("mixed"),
+    source: Optional[str] = Form(None),
     current_user: Dict = Depends(get_current_user)
 ):
     """Generate a custom PDF quiz"""
@@ -399,7 +400,8 @@ async def generate_quiz(
             "topics": topic_list,
             "questions_count": questions_count,
             "difficulty_levels": [difficulty],
-            "file_url": quiz_result.get("file_url", "")
+            "file_url": quiz_result.get("file_url", ""),
+            "source": source or ""
         }
         
         background_tasks.add_task(

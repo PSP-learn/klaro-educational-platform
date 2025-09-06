@@ -46,7 +46,8 @@ class PdfGeneratorRepository @Inject constructor(
         questionTypes: List<String>,
         difficultyLevels: List<String>,
         subject: String = "Mathematics",
-        title: String? = null
+        title: String? = null,
+        source: String? = null
     ): Result<QuizResponse> = withContext(Dispatchers.IO) {
         try {
             val request = QuizRequest(
@@ -55,7 +56,8 @@ class PdfGeneratorRepository @Inject constructor(
                 questionTypes = questionTypes,
                 difficultyLevels = difficultyLevels,
                 subject = subject,
-                title = title
+                title = title,
+                source = source
             )
             
             val response = apiService.createQuiz(request)
