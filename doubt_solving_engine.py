@@ -32,6 +32,7 @@ from PIL import Image
 import io
 import aiohttp
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from fractions import Fraction
 
 # Import existing textbook search
 try:
@@ -206,6 +207,13 @@ class DoubtSolvingEngine:
             solution = await self._solve_with_gpt35(question_text, request)
         else:  # Premium users get GPT-4
             solution = await self._solve_with_gpt4(question_text, request)
+        
+        # Step 5.5: Apply math verification/guardrails for monotonicity-type questions
+        try:
+            solution = self._apply_monotonicity_guard(question_text, solution)
+        except Exception as _e:
+            # Do not fail the request if guard fails
+            pass
         
         # Step 6: Format for different interfaces
         solution = await self._format_solution(solution, request)
@@ -677,6 +685,144 @@ Make this worthy of premium tutoring service.
         solution.whatsapp_format = whatsapp_text
         
         return solution
+    
+    def _apply_monotonicity_guard(self, question: str, solution: DoubtSolution) -> DoubtSolution:
+        """Guardrail for monotonicity questions on polynomials.
+        If the question asks for increasing/decreasing intervals and includes a
+        cubic polynomial in the form ax^3 + bx^2 + cx + d, compute f'(x) and
+        correct the intervals deterministically.
+        """
+        q = (question or "").lower().replace(" ", "").replace("−", "-")
+        if not ("increasing" in q or "decreasing" in q):
+            return solution
+        # Try to extract cubic coefficients a, b, c
+        import re
+        def _coef(match: Optional[str]) -> Optional[float]:
+            if match is None:
+                return None
+            s = match.strip()
+            if s in ("", "+"): return 1.0
+            if s == "-": return -1.0
+            try:
+                return float(s)
+            except Exception:
+                return None
+        # Patterns for terms
+        a_m = re.search(r"([+\-]?[0-9]*\.?[0-9]*)x\^3", q)
+        b_m = re.search(r"([+\-]?[0-9]*\.?[0-9]*)x\^2", q)
+        c_m = re.search(r"([+\-]?[0-9]*\.?[0-9]*)x(?!\^)", q)
+        a = _coef(a_m.group(1)) if a_m else None
+        b = _coef(b_m.group(1)) if b_m else 0.0
+        c = _coef(c_m.group(1)) if c_m else 0.0
+        if a is None:
+            # Try quadratic (ax^2+bx+c) guard if no cubic term
+            aq_m = re.search(r"([+\-]?[0-9]*\.?[0-9]*)x\^2", q)
+            bq_m = re.search(r"([+\-]?[0-9]*\.?[0-9]*)x(?!\^)", q)
+            cq_m = re.search(r"([+\-]?[0-9]+\.?[0-9]*)($|[^x^0-9])", q)
+            aq = _coef(aq_m.group(1)) if aq_m else None
+            bq = _coef(bq_m.group(1)) if bq_m else 0.0
+            cq = _coef(cq_m.group(1)) if cq_m else 0.0
+            if aq is None:
+                return solution
+            # f'(x) = 2aq x + bq  → linear, decreasing where derivative < 0
+            A1, B1 = 2*aq, bq
+            # If A1 == 0, derivative constant
+            if abs(A1) < 1e-12:
+                if B1 < 0 and "decreasing" in q:
+                    solution.final_answer = "Decreasing on (-∞, ∞)"
+                elif B1 > 0 and "increasing" in q:
+                    solution.final_answer = "Increasing on (-∞, ∞)"
+                return solution
+            x0 = -B1 / A1
+            if "decreasing" in q:
+                # For linear derivative with positive slope, derivative <0 for x < x0
+                # with negative slope, derivative <0 for x > x0
+                if A1 > 0:
+                    interval = f"(-∞, {self._nice_num(x0)})"
+                else:
+                    interval = f"({self._nice_num(x0)}, ∞)"
+                solution.final_answer = f"Decreasing on {interval}"
+            else:
+                if A1 > 0:
+                    interval = f"({self._nice_num(x0)}, ∞)"
+                else:
+                    interval = f"(-∞, {self._nice_num(x0)})"
+                solution.final_answer = f"Increasing on {interval}"
+            # Append verification step
+            solution.steps.append(SolutionStep(
+                step_number=len(solution.steps)+1,
+                title="Verification (derivative)",
+                explanation=f"Computed derivative and sign to verify monotonicity.",
+                confidence=0.98,
+            ))
+            return solution
+        # Derivative f'(x) = 3a x^2 + 2b x + c
+        A, B, C = 3.0*a, 2.0*b, c
+        if abs(A) < 1e-12:
+            # Falls back to linear derivative case
+            if abs(B) < 1e-12:
+                return solution
+            x0 = -C / B
+            if "decreasing" in q:
+                interval = f"(-∞, {self._nice_num(x0)})" if B > 0 else f"({self._nice_num(x0)}, ∞)"
+                solution.final_answer = f"Decreasing on {interval}"
+            else:
+                interval = f"({self._nice_num(x0)}, ∞)" if B > 0 else f"(-∞, {self._nice_num(x0)})"
+                solution.final_answer = f"Increasing on {interval}"
+            solution.steps.append(SolutionStep(
+                step_number=len(solution.steps)+1,
+                title="Verification (derivative)",
+                explanation=f"Computed derivative and sign to verify monotonicity.",
+                confidence=0.98,
+            ))
+            return solution
+        disc = B*B - 4*A*C
+        if disc >= 0:
+            import math
+            r1 = (-B - math.sqrt(disc)) / (2*A)
+            r2 = (-B + math.sqrt(disc)) / (2*A)
+            lo, hi = (r1, r2) if r1 <= r2 else (r2, r1)
+            if "decreasing" in q:
+                interval = f"({self._nice_num(lo)}, {self._nice_num(hi)})"
+                solution.final_answer = f"Decreasing on {interval}"
+            if "increasing" in q:
+                interval = f"(-∞, {self._nice_num(lo)}) ∪ ({self._nice_num(hi)}, ∞)"
+                solution.final_answer = f"Increasing on {interval}"
+            solution.steps.append(SolutionStep(
+                step_number=len(solution.steps)+1,
+                title="Verification (derivative roots)",
+                explanation=f"f'(x)=0 at x={self._nice_num(lo)}, {self._nice_num(hi)}; sign between gives monotonicity.",
+                confidence=0.98,
+            ))
+            return solution
+        else:
+            # No real roots: derivative keeps a constant sign
+            x0 = -B/(2*A)
+            min_val = A*x0*x0 + B*x0 + C
+            if min_val > 0:
+                # Derivative > 0 for all x
+                solution.final_answer = "Increasing on (-∞, ∞)"
+            elif min_val < 0:
+                solution.final_answer = "Decreasing on (-∞, ∞)"
+            solution.steps.append(SolutionStep(
+                step_number=len(solution.steps)+1,
+                title="Verification (no real critical points)",
+                explanation=f"f'(x) has no real roots; sign is constant across ℝ.",
+                confidence=0.98,
+            ))
+            return solution
+    
+    def _nice_num(self, x: float) -> str:
+        """Render a number as a simple fraction if near-rational, else 3-decimal float."""
+        try:
+            frac = Fraction(x).limit_denominator(24)
+            if abs(float(frac) - x) < 1e-6:
+                if frac.denominator == 1:
+                    return f"{frac.numerator}"
+                return f"{frac.numerator}/{frac.denominator}"
+        except Exception:
+            pass
+        return f"{x:.3f}"
     
     def _extract_topic(self, question: str) -> str:
         """Extract mathematical topic from question"""
