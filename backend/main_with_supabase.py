@@ -19,7 +19,7 @@ from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, Bac
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import FileResponse, JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, ConfigDict
 import uvicorn
 
 # Load environment variables from .env if present
@@ -308,12 +308,15 @@ async def get_user_analytics(
 # ================================================================================
 
 class EnhancedDoubtRequestModel(BaseModel):
+    # Accept both snake_case and camelCase from Android client
+    model_config = ConfigDict(populate_by_name=True)
+
     question: str
     subject: str = "Mathematics"
-    user_id: str
-    user_plan: str = "basic"
+    user_id: str = Field(..., alias="userId")
+    user_plan: str = Field("basic", alias="userPlan")
     context: Optional[str] = None
-    image_data: Optional[str] = None  # base64-encoded image (optional)
+    image_data: Optional[str] = Field(default=None, alias="imageData")  # base64-encoded image (optional)
 
 @app.on_event("startup")
 async def init_enhanced_doubt_engine():
