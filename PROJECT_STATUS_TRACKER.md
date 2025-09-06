@@ -251,3 +251,25 @@ Now we just need to build the Android frontend that uses our robust backend.
 
 *Last Updated: 2025-08-31 04:20 by AI Assistant*
 *Next Update: After API integration*
+
+---
+
+### 2025-09-06 12:02 UTC - Seed coverage extended to Classes 9–10 across subjects
+COMPLETED:
+- ✅ Added new grade-wise chapters for Class 9 & 10 (Physics/Chemistry/Biology): `backend/db/seed/seed_grade_9_10_chapters_science.sql`
+- ✅ Added subtopic seeds for Class 9 & 10 across all subjects:
+  - Mathematics: `seed_class9_math_subtopics.sql`, `seed_class10_math_subtopics.sql`
+  - Physics: `seed_class9_physics_subtopics.sql`, `seed_class10_physics_subtopics.sql`
+  - Chemistry: `seed_class9_chemistry_subtopics.sql`, `seed_class10_chemistry_subtopics.sql`
+  - Biology: `seed_class9_biology_subtopics.sql`, `seed_class10_biology_subtopics.sql`
+- ✅ Biology chapter coverage added to existing grade-wise chapters for Classes 11 & 12
+
+NOTES:
+- All seed files are idempotent via ON CONFLICT (subject_id, grade_id, name, parent_id).
+- Run order: chapters first, then subtopics.
+
+STATUS:
+- 📚 DB content ready for Classes 9–12 across Mathematics, Physics, Chemistry, Biology.
+- 📱 Android dropdowns can now populate for all classes/subjects once data is present.
+
+*Last Updated: 2025-09-06 12:02 UTC by AI Assistant*

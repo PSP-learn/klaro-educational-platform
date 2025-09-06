@@ -86,3 +86,18 @@ insert into topics (subject_id, grade_id, name, parent_id) values ((select id fr
 insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Chemistry'), (select id from grades where name='Class 12'), 'Electrochemistry', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
 insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Chemistry'), (select id from grades where name='Class 12'), 'Chemical Kinetics', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
 
+-- ========================= Biology =========================
+-- Class 11
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 11'), 'Diversity of Living Organisms', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 11'), 'Structural Organization in Plants and Animals', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 11'), 'Cell: Structure and Function', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 11'), 'Plant Physiology', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 11'), 'Human Physiology', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+
+-- Class 12
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 12'), 'Reproduction', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 12'), 'Genetics & Evolution', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 12'), 'Biology and Human Welfare', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 12'), 'Biotechnology', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+insert into topics (subject_id, grade_id, name, parent_id) values ((select id from subjects where name='Biology'), (select id from grades where name='Class 12'), 'Ecology & Environment', null) on conflict (subject_id, grade_id, name, parent_id) do nothing;
+
