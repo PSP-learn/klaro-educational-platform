@@ -15,7 +15,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Dict, List, Optional
 
-from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, BackgroundTasks
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, BackgroundTasks, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import FileResponse, JSONResponse
@@ -666,8 +666,7 @@ async def solve_doubt(
 async def get_doubt_history(
     limit: int = 20,
     offset: int = 0,
-    authorization: Optional[str] = None,
-    current_user: Dict = Depends(get_current_user)
+    authorization: Optional[str] = Header(default=None)
 ):
     """Get user's doubt solving history.
     App expects PaginatedResponse<DoubtSolution> = { items, total, page, limit, hasNext }.
@@ -676,9 +675,18 @@ async def get_doubt_history(
         # Try real data via Supabase
         items: List[Dict[str, Any]] = []
         total = 0
-        if supabase_client:
-            doubts = await supabase_client.get_user_doubts(current_user["id"], limit, offset)
-            total = len(doubts)
+        if supabase_client and authorization:
+            try:
+                token = authorization.split(" ")[-1]
+                user_response = supabase_client.client.auth.get_user(token)
+                if user_response and user_response.user:
+                    user_id = user_response.user.id
+                    doubts = await supabase_client.get_user_doubts(user_id, limit, offset)
+                    total = len(doubts)
+                else:
+                    doubts = []
+            except Exception:
+                doubts = []
             for i, d in enumerate(doubts, 1):
                 sol = d.get("solution_data") or {}
                 items.append({
