@@ -80,6 +80,8 @@ class QuizResponse(BaseModel):
     title: str
     questions_file: str
     answers_file: str
+    pdf_questions_file: Optional[str] = None
+    pdf_answers_file: Optional[str] = None
     metadata: Dict[str, Any]
     created_at: datetime
 
@@ -166,10 +168,18 @@ async def create_quiz(
         
         # Generate unique quiz ID
         quiz_id = f"quiz_{current_user['user_id']}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-        output_prefix = quiz_request.title.replace(' ', '_').lower() if quiz_request.title else quiz_id
+        # Always use quiz_id as filename prefix to ensure downloads work
+        output_prefix = quiz_id
         
-        # Save files
+        # Save files (TXT)
         test_file, answer_file = quiz_generator.save_test(test_data, output_prefix)
+        
+        # Also generate PDFs
+        try:
+            from smart_quiz_generator import SmartTestGenerator
+            pdf_q, pdf_a = quiz_generator.save_test_pdf(test_data, output_prefix)
+        except Exception as _e:
+            pdf_q, pdf_a = None, None
         
         # Create response
         quiz_response = QuizResponse(
@@ -177,6 +187,8 @@ async def create_quiz(
             title=quiz_request.title or f"Quiz on {', '.join(quiz_request.topics)}",
             questions_file=test_file,
             answers_file=answer_file,
+            pdf_questions_file=pdf_q,
+            pdf_answers_file=pdf_a,
             metadata=test_data['metadata'],
             created_at=datetime.now()
         )
@@ -257,19 +269,27 @@ async def download_quiz(
     file_type: str = "questions",  # "questions" or "answers"
     current_user: dict = Depends(get_current_user)
 ):
-    """Download quiz file"""
-    
-    file_suffix = "_questions.txt" if file_type == "questions" else "_answers.txt"
-    file_path = Path("../generated_tests") / f"{quiz_id}{file_suffix}"
-    
-    if not file_path.exists():
-        raise HTTPException(status_code=404, detail="Quiz file not found")
-    
-    return FileResponse(
-        path=file_path,
-        filename=f"{quiz_id}_{file_type}.txt",
-        media_type="text/plain"
-    )
+    """Download quiz file. Prefers PDF if available; falls back to TXT."""
+    base_dir = Path("../generated_tests")
+    # Prefer PDF
+    pdf_suffix = "_questions.pdf" if file_type == "questions" else "_answers.pdf"
+    txt_suffix = "_questions.txt" if file_type == "questions" else "_answers.txt"
+    pdf_path = base_dir / f"{quiz_id}{pdf_suffix}"
+    txt_path = base_dir / f"{quiz_id}{txt_suffix}"
+
+    if pdf_path.exists():
+        return FileResponse(
+            path=pdf_path,
+            filename=f"{quiz_id}_{file_type}.pdf",
+            media_type="application/pdf"
+        )
+    if txt_path.exists():
+        return FileResponse(
+            path=txt_path,
+            filename=f"{quiz_id}_{file_type}.txt",
+            media_type="text/plain"
+        )
+    raise HTTPException(status_code=404, detail="Quiz file not found")
 
 # ================================================================================
 # 🤖 Enhanced Doubt Solving Endpoints

@@ -19,6 +19,12 @@ from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass, asdict
 from datetime import datetime
 
+# PDF generation
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import cm
+
 from book_search import BookVectorDB, TextChunk
 
 @dataclass
@@ -524,7 +530,7 @@ class SmartTestGenerator:
         return dist
     
     def save_test(self, test_data: Dict, filename_prefix: str) -> Tuple[str, str]:
-        """Save test paper and answer key"""
+        """Save test paper and answer key (TXT)."""
         
         # Generate test paper content
         test_content = self._format_test_paper(test_data)
@@ -549,6 +555,96 @@ class SmartTestGenerator:
             json.dump(metadata, f, indent=2, default=str)
         
         return str(test_file), str(answer_file)
+
+    def save_test_pdf(self, test_data: Dict, filename_prefix: str) -> Tuple[str, str]:
+        """Save test paper and answer key as PDF using reportlab."""
+        pdf_questions = self.output_dir / f"{filename_prefix}_questions.pdf"
+        pdf_answers = self.output_dir / f"{filename_prefix}_answers.pdf"
+        
+        # Build Questions PDF
+        self._build_questions_pdf(test_data, pdf_questions)
+        # Build Answers PDF
+        self._build_answers_pdf(test_data, pdf_answers)
+        
+        return str(pdf_questions), str(pdf_answers)
+
+    def _build_questions_pdf(self, test_data: Dict, out_path: Path):
+        doc = SimpleDocTemplate(str(out_path), pagesize=A4,
+                                rightMargin=2*cm, leftMargin=2*cm, topMargin=2*cm, bottomMargin=2*cm)
+        styles = getSampleStyleSheet()
+        elements = []
+        
+        title = test_data.get('title') or 'Test Paper'
+        elements.append(Paragraph(title, styles['Heading1']))
+        meta = f"Subject: {test_data.get('subject','')} | Topics: {', '.join(test_data.get('topics', []))} | Duration: {test_data.get('duration_minutes','')} min | Total Points: {test_data.get('total_points','')}"
+        elements.append(Paragraph(meta, styles['Normal']))
+        elements.append(Spacer(1, 12))
+        
+        # Instructions
+        elements.append(Paragraph('Instructions:', styles['Heading2']))
+        instructions = [
+            'Read all questions carefully before starting.',
+            'Show all your work for mathematical calculations.',
+            'For MCQs, choose the BEST answer.',
+            'Write clearly and manage your time effectively.'
+        ]
+        for inst in instructions:
+            elements.append(Paragraph(f"• {inst}", styles['Normal']))
+        elements.append(Spacer(1, 12))
+        
+        # Questions
+        for i, q in enumerate(test_data['questions'], 1):
+            header = f"Q{i}. {q.question_text}"
+            sub = f"[Topic: {q.topic.title()}, Difficulty: {q.difficulty.title()}, Points: {q.points}]"
+            elements.append(Paragraph(header, styles['BodyText']))
+            elements.append(Paragraph(sub, styles['Italic']))
+            if q.options:
+                for j, opt in enumerate(q.options):
+                    elements.append(Paragraph(f"{chr(65+j)}. {opt}", styles['Normal']))
+            # Answer space
+            elements.append(Spacer(1, 6))
+            elements.append(Paragraph("Answer:", styles['Normal']))
+            elements.append(Spacer(1, 14))
+            elements.append(Paragraph("_" * 90, styles['Normal']))
+            elements.append(Spacer(1, 18))
+        
+        doc.build(elements)
+
+    def _build_answers_pdf(self, test_data: Dict, out_path: Path):
+        doc = SimpleDocTemplate(str(out_path), pagesize=A4,
+                                rightMargin=2*cm, leftMargin=2*cm, topMargin=2*cm, bottomMargin=2*cm)
+        styles = getSampleStyleSheet()
+        elements = []
+        
+        title = f"ANSWER KEY - {test_data.get('title') or 'Test'}"
+        elements.append(Paragraph(title, styles['Heading1']))
+        elements.append(Spacer(1, 12))
+        
+        for i, q in enumerate(test_data['questions'], 1):
+            elements.append(Paragraph(f"Q{i}. {q.correct_answer}", styles['BodyText']))
+            if q.explanation:
+                elements.append(Paragraph(f"Explanation: {q.explanation}", styles['Normal']))
+            elements.append(Paragraph(f"Source: {q.source_book}, Page {q.source_page}", styles['Normal']))
+            if q.formula_used:
+                elements.append(Paragraph(f"Formula: {q.formula_used}", styles['Normal']))
+            elements.append(Paragraph(f"Points: {q.points}", styles['Normal']))
+            elements.append(Spacer(1, 8))
+        
+        # Statistics
+        elements.append(PageBreak())
+        elements.append(Paragraph("TEST STATISTICS", styles['Heading2']))
+        elements.append(Paragraph(f"Total Questions: {test_data['total_questions']}", styles['Normal']))
+        elements.append(Paragraph(f"Total Points: {test_data['total_points']}", styles['Normal']))
+        elements.append(Spacer(1, 6))
+        elements.append(Paragraph("Difficulty Distribution:", styles['Normal']))
+        for difficulty, count in test_data['difficulty_distribution'].items():
+            elements.append(Paragraph(f"- {difficulty.title()}: {count} questions", styles['Normal']))
+        elements.append(Spacer(1, 6))
+        elements.append(Paragraph("Topic Distribution:", styles['Normal']))
+        for topic, count in test_data['topic_distribution'].items():
+            elements.append(Paragraph(f"- {topic.title()}: {count} questions", styles['Normal']))
+        
+        doc.build(elements)
     
     def _format_test_paper(self, test_data: Dict) -> str:
         """Format test paper for printing"""
