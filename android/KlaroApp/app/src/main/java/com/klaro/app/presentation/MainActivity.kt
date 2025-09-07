@@ -47,17 +47,24 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun KlaroApp() {
     val navController = rememberNavController()
-    
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     Scaffold(
         bottomBar = {
-            KlaroBottomBar(navController = navController)
+            if (currentRoute != Screen.Login.route) {
+                KlaroBottomBar(navController = navController)
+            }
         }
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.Login.route,
             modifier = Modifier.padding(paddingValues)
         ) {
+            composable(Screen.Login.route) {
+                LoginScreen(navController = navController)
+            }
             composable(Screen.Home.route) {
                 HomeScreen(navController = navController)
             }
@@ -128,6 +135,7 @@ fun KlaroBottomBar(navController: androidx.navigation.NavController) {
 // ================================================================================
 
 sealed class Screen(val route: String, val title: String, val icon: ImageVector) {
+    object Login : Screen("login", "Login", Icons.Filled.Login)
     object Home : Screen("home", "Home", Icons.Filled.Home)
     object PdfGenerator : Screen("pdf_generator", "PDF Quiz", Icons.Filled.Assignment)
     object JeeTest : Screen("jee_test", "JEE Tests", Icons.Filled.Quiz)

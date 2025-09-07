@@ -99,8 +99,16 @@ interface KlaroApiService {
     // 🤔 Doubt Solving Endpoints
     // ================================================================================
 
+    // Production (Supabase-auth): text doubt via form-encoded field 'question'
+    @FormUrlEncoded
+    @POST("doubts/solve")
+    suspend fun solveDoubtAuth(
+        @Field("question") question: String
+    ): Response<Map<String, Any>>
+
+    // Legacy enhanced JSON (kept for compatibility with older backend variants)
     @POST("doubt/solve-enhanced")
-    suspend fun solveDoubt(@Body request: DoubtRequest): Response<DoubtSolution>
+    suspend fun solveDoubt(@Body request: DoubtRequest): Response<Map<String, Any>>
 
     @Multipart
     @POST("doubt/solve-image")

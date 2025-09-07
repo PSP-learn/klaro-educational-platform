@@ -13,6 +13,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.klaro.app.presentation.ui.design.*
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.klaro.app.presentation.auth.AuthViewModel
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
 
 /**
  * 👤 Profile - Student-Focused Simplicity
@@ -25,7 +29,9 @@ import com.klaro.app.presentation.ui.design.*
  */
 @Composable
 fun ProfileScreen(navController: NavController) {
-    
+    val authViewModel: AuthViewModel = hiltViewModel()
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -109,7 +115,7 @@ fun ProfileScreen(navController: NavController) {
             }
         }
         
-        // Essential Settings Only
+        // Essential Settings + Sign out
         CleanCard {
             Text(
                 text = "Settings",
@@ -135,6 +141,25 @@ fun ProfileScreen(navController: NavController) {
                 title = "About",
                 subtitle = "App information"
             )
+
+            Spacer(modifier = Modifier.height(KlaroDesign.Spacing.Large))
+            Button(
+                onClick = {
+                    authViewModel.signOut()
+                    Toast.makeText(context, "Signed out", Toast.LENGTH_SHORT).show()
+                    navController.navigate("login") {
+                        popUpTo(0)
+                        launchSingleTop = true
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = KlaroDesign.Colors.LearningBlue.copy(alpha = 0.1f)
+                )
+            ) {
+                Icon(Icons.Filled.Logout, contentDescription = null)
+                Spacer(modifier = Modifier.width(KlaroDesign.Spacing.Small))
+                Text("Sign out")
+            }
         }
     }
 }

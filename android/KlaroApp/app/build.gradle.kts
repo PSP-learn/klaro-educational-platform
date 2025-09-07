@@ -10,6 +10,10 @@ android {
     namespace = "com.klaro.app"
     compileSdk = 34
 
+    // Load Supabase configuration from gradle.properties (safe defaults provided)
+    val supabaseUrlProp = project.findProperty("SUPABASE_URL") as String? ?: "https://YOUR_PROJECT_ID.supabase.co"
+    val supabaseAnonKeyProp = project.findProperty("SUPABASE_ANON_KEY") as String? ?: "YOUR_SUPABASE_ANON_KEY"
+
     defaultConfig {
         applicationId = "com.klaro.app"
         minSdk = 24
@@ -25,9 +29,9 @@ android {
         // API Configuration
         buildConfigField("String", "BASE_API_URL", "\"https://klaro-educational-platform-production.up.railway.app/api/\"")
         buildConfigField("String", "APP_NAME", "\"Klaro\"")
-        // Supabase (set actual values via CI or local gradle.properties)
-        buildConfigField("String", "SUPABASE_URL", "\"https://YOUR_PROJECT_ID.supabase.co\"")
-        buildConfigField("String", "SUPABASE_ANON_KEY", "\"YOUR_SUPABASE_ANON_KEY\"")
+        // Supabase (provided via gradle.properties)
+        buildConfigField("String", "SUPABASE_URL", "\"${supabaseUrlProp}\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"${supabaseAnonKeyProp}\"")
     }
 
     buildTypes {
@@ -38,14 +42,12 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_API_URL", "\"https://api.klaro.app/api/\"")
-            buildConfigField("String", "SUPABASE_URL", "\"https://YOUR_PROJECT_ID.supabase.co\"")
-            buildConfigField("String", "SUPABASE_ANON_KEY", "\"YOUR_SUPABASE_ANON_KEY\"")
+            // Supabase config inherited from defaultConfig
         }
         debug {
             isDebuggable = true
             buildConfigField("String", "BASE_API_URL", "\"https://klaro-educational-platform-production.up.railway.app/api/\"")
-            buildConfigField("String", "SUPABASE_URL", "\"https://YOUR_PROJECT_ID.supabase.co\"")
-            buildConfigField("String", "SUPABASE_ANON_KEY", "\"YOUR_SUPABASE_ANON_KEY\"")
+            // Supabase config inherited from defaultConfig
         }
     }
 
@@ -105,6 +107,17 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // ================================================================================
+    // 🔐 Supabase Auth (GoTrue) + Ktor engine
+    // ================================================================================
+    implementation(platform("io.github.jan-tennert.supabase:bom:2.5.4"))
+    implementation("io.github.jan-tennert.supabase:supabase-kt")
+    implementation("io.github.jan-tennert.supabase:gotrue-kt")
+    // Optional future modules
+    // implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    // implementation("io.github.jan-tennert.supabase:storage-kt")
+    implementation("io.ktor:ktor-client-okhttp:2.3.7")
 
     // ================================================================================
     // 💉 Dependency Injection
