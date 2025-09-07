@@ -25,6 +25,9 @@ android {
         // API Configuration
         buildConfigField("String", "BASE_API_URL", "\"https://klaro-educational-platform-production.up.railway.app/api/\"")
         buildConfigField("String", "APP_NAME", "\"Klaro\"")
+        // Supabase (set actual values via CI or local gradle.properties)
+        buildConfigField("String", "SUPABASE_URL", "\"https://YOUR_PROJECT_ID.supabase.co\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"YOUR_SUPABASE_ANON_KEY\"")
     }
 
     buildTypes {
@@ -35,10 +38,14 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_API_URL", "\"https://api.klaro.app/api/\"")
+            buildConfigField("String", "SUPABASE_URL", "\"https://YOUR_PROJECT_ID.supabase.co\"")
+            buildConfigField("String", "SUPABASE_ANON_KEY", "\"YOUR_SUPABASE_ANON_KEY\"")
         }
         debug {
             isDebuggable = true
             buildConfigField("String", "BASE_API_URL", "\"https://klaro-educational-platform-production.up.railway.app/api/\"")
+            buildConfigField("String", "SUPABASE_URL", "\"https://YOUR_PROJECT_ID.supabase.co\"")
+            buildConfigField("String", "SUPABASE_ANON_KEY", "\"YOUR_SUPABASE_ANON_KEY\"")
         }
     }
 

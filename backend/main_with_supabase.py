@@ -928,45 +928,91 @@ async def generate_quiz(
         # Parse topics
         topic_list = [topic.strip() for topic in topics.split(",")]
         
-        # Generate quiz
-        quiz_result = await quiz_generator.generate_quiz(
-            title=title,
+        # Generate quiz using SmartTestGenerator
+        # Build test data
+        test_data = quiz_generator.create_test(
             topics=topic_list,
-            questions_count=questions_count,
-            difficulty_levels=[difficulty] if difficulty != "mixed" else ["easy", "medium", "hard"]
+            num_questions=questions_count,
+            question_types=["mcq", "short"],
+            difficulty_levels=[difficulty] if difficulty != "mixed" else ["easy", "medium", "hard"],
+            subject="Mathematics"
         )
-        
+
+        # Persist PDFs locally
+        quiz_id = f"quiz_{current_user['id']}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        q_pdf_path, a_pdf_path = quiz_generator.save_test_pdf(test_data, quiz_id)
+
+        # Upload PDFs to Supabase Storage (bucket: pdf-quizzes)
+        bucket = "pdf-quizzes"
+        q_storage_path = f"{current_user['id']}/{quiz_id}_questions.pdf"
+        a_storage_path = f"{current_user['id']}/{quiz_id}_answers.pdf"
+        storage_client = supabase_client.admin_client or supabase_client.client
+        with open(q_pdf_path, "rb") as f:
+            storage_client.storage.from_(bucket).upload(q_storage_path, f.read())
+        with open(a_pdf_path, "rb") as f:
+            storage_client.storage.from_(bucket).upload(a_storage_path, f.read())
+        q_url = storage_client.storage.from_(bucket).get_public_url(q_storage_path).get("publicUrl", "")
+        a_url = storage_client.storage.from_(bucket).get_public_url(a_storage_path).get("publicUrl", "")
+
         # Calculate metrics
         processing_time = time.time() - start_time
-        
-        # Save to database in background
-        quiz_data = {
-            "title": title,
-            "topics": topic_list,
-            "questions_count": questions_count,
-            "difficulty_levels": [difficulty],
-            "file_url": quiz_result.get("file_url", ""),
-            "source": source or ""
-        }
-        
-        background_tasks.add_task(
-            supabase_client.save_quiz,
-            current_user["id"],
-            quiz_data
-        )
-        
+
+        # Save quiz history and files metadata (admin to bypass RLS in server)
+        db = supabase_client.admin_client or supabase_client.client
+        # Insert quiz_history row
+        ins = db.table('quiz_history').insert({
+            'user_id': current_user['id'],
+            'quiz_title': title,
+            'topics': topic_list,
+            'questions_count': questions_count,
+            'difficulty_levels': [difficulty] if difficulty != "mixed" else ["easy", "medium", "hard"],
+            'quiz_file_url': q_url,
+        }).execute()
+        created_row = (ins.data or [{}])[0]
+        quiz_row_id = created_row.get('id', quiz_id)
+        # Insert file_metadata rows
+        db.table('file_metadata').insert([
+            {
+                'user_id': current_user['id'],
+                'file_name': f"{quiz_id}_questions.pdf",
+                'file_type': 'pdf_quiz',
+                'file_size': int(os.path.getsize(q_pdf_path)),
+                'storage_path': q_storage_path,
+                'public_url': q_url,
+                'is_public': True,
+            },
+            {
+                'user_id': current_user['id'],
+                'file_name': f"{quiz_id}_answers.pdf",
+                'file_type': 'pdf_quiz',
+                'file_size': int(os.path.getsize(a_pdf_path)),
+                'storage_path': a_storage_path,
+                'public_url': a_url,
+                'is_public': True,
+            },
+        ]).execute()
+
+        # Record usage asynchronously
         background_tasks.add_task(
             supabase_client.record_usage,
             current_user["id"],
             "quiz",
             "pdf_generation",
-            quiz_result.get("cost", 0.0),
+            0.0,
             True
         )
-        
+
         return {
             "success": True,
-            "quiz": quiz_result,
+            "quiz": {
+                'id': quiz_row_id,
+                'title': title,
+                'questions_url': q_url,
+                'answers_url': a_url,
+                'topics': topic_list,
+                'questions_count': questions_count,
+                'difficulty': difficulty,
+            },
             "processing_time": processing_time
         }
         
@@ -1005,29 +1051,22 @@ async def download_quiz(
     quiz_id: str,
     current_user: Dict = Depends(get_current_user)
 ):
-    """Download a generated quiz PDF"""
+    """Return the public URL for the questions PDF for a quiz the user owns."""
     try:
-        # Verify user owns this quiz
-        quizzes = await supabase_client.get_user_quizzes(current_user["id"], 100)
-        user_quiz = next((q for q in quizzes if q["id"] == quiz_id), None)
-        
-        if not user_quiz:
+        # Verify ownership and fetch record
+        db = supabase_client.client
+        resp = db.table('quiz_history').select('id, quiz_file_url').eq('user_id', current_user['id']).eq('id', quiz_id).limit(1).execute()
+        rows = resp.data or []
+        if not rows:
             raise HTTPException(status_code=404, detail="Quiz not found")
-        
-        # Return file download
-        file_path = f"generated_quizzes/{quiz_id}.pdf"
-        
-        if os.path.exists(file_path):
-            return FileResponse(
-                file_path,
-                media_type="application/pdf",
-                filename=f"{user_quiz['quiz_title']}.pdf"
-            )
-        else:
-            raise HTTPException(status_code=404, detail="Quiz file not found")
-            
+        url = rows[0].get('quiz_file_url')
+        if not url:
+            raise HTTPException(status_code=404, detail="Quiz URL not available")
+        return {"url": url}
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to download quiz: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get quiz URL: {str(e)}")
 
 # ================================================================================
 # 🎯 JEE Test System Endpoints
