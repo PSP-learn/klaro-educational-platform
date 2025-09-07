@@ -37,24 +37,27 @@ class SupabaseClient:
     
     def __init__(self):
         # Initialize Supabase client
-        # Accept common environment variable names to be forgiving across platforms
-        self.supabase_url = (
-            os.getenv("SUPABASE_URL")
-            or os.getenv("NEXT_PUBLIC_SUPABASE_URL")
-        )
-        self.supabase_key = (
-            os.getenv("SUPABASE_ANON_KEY")
-            or os.getenv("SUPABASE_KEY")
-            or os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY")
-            or os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
-        )
-        self.service_role_key = (
-            os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-            or os.getenv("SUPABASE_SERVICE_KEY")
-        )
+        # Accept common environment variable names (upper/lowercase) to be forgiving across platforms
+        def getenv_any(names):
+            for n in names:
+                v = os.getenv(n)
+                if v:
+                    return v, n
+            return None, None
+
+        self.supabase_url, self.supabase_url_env = getenv_any([
+            "SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_URL", "supabase_url"
+        ])
+        self.supabase_key, self.supabase_key_env = getenv_any([
+            # Prefer explicit KEY over ANON when both exist
+            "SUPABASE_KEY", "SUPABASE_ANON_KEY", "NEXT_PUBLIC_SUPABASE_ANON_KEY", "NEXT_PUBLIC_SUPABASE_KEY", "supabase_key"
+        ])
+        self.service_role_key, self.service_role_env = getenv_any([
+            "SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SERVICE_KEY", "supabase_service_role_key"
+        ])
         
         if not all([self.supabase_url, self.supabase_key]):
-            raise ValueError("Supabase credentials not found in environment")
+            raise ValueError("Supabase credentials not found in environment (SUPABASE_URL/SUPABASE_KEY or lowercase variants)")
         
         # Client for user operations (with RLS)
         self.client: Client = create_client(self.supabase_url, self.supabase_key)
@@ -62,12 +65,12 @@ class SupabaseClient:
         # Admin client for service operations (bypasses RLS) - optional
         if self.service_role_key:
             self.admin_client: Client = create_client(self.supabase_url, self.service_role_key)
-            print("🟢 Supabase client initialized with admin access")
+            print(f"🟢 Supabase admin client enabled via {self.service_role_env}")
         else:
             self.admin_client = None
-            print("🟡 Supabase client initialized without admin access (service role key not provided)")
+            print("🟡 Supabase admin client not provided (SUPABASE_SERVICE_ROLE_KEY). Using user client for storage/DB ops.")
         
-        print("🟢 Supabase client initialized successfully (env fallbacks enabled)")
+        print(f"🟢 Supabase client initialized (url from {self.supabase_url_env}, key from {self.supabase_key_env})")
     
     # ================================================================================
     # 👤 User Management

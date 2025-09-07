@@ -1436,14 +1436,9 @@ async def health_env():
         def present(name: str) -> bool:
             return bool(os.getenv(name))
         env_status = {
-            "SUPABASE_URL": present("SUPABASE_URL"),
-            "NEXT_PUBLIC_SUPABASE_URL": present("NEXT_PUBLIC_SUPABASE_URL"),
-            "SUPABASE_ANON_KEY": present("SUPABASE_ANON_KEY"),
-            "SUPABASE_KEY": present("SUPABASE_KEY"),
-            "NEXT_PUBLIC_SUPABASE_ANON_KEY": present("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
-            "NEXT_PUBLIC_SUPABASE_KEY": present("NEXT_PUBLIC_SUPABASE_KEY"),
-            "SUPABASE_SERVICE_ROLE_KEY": present("SUPABASE_SERVICE_ROLE_KEY"),
-            "SUPABASE_SERVICE_KEY": present("SUPABASE_SERVICE_KEY"),
+            "SUPABASE_URL": present("SUPABASE_URL") or present("NEXT_PUBLIC_SUPABASE_URL") or present("supabase_url"),
+            "SUPABASE_KEY": present("SUPABASE_KEY") or present("SUPABASE_ANON_KEY") or present("NEXT_PUBLIC_SUPABASE_ANON_KEY") or present("NEXT_PUBLIC_SUPABASE_KEY") or present("supabase_key"),
+            "SUPABASE_SERVICE_ROLE_KEY": present("SUPABASE_SERVICE_ROLE_KEY") or present("SUPABASE_SERVICE_KEY") or present("supabase_service_role_key"),
             "OPENAI_API_KEY": present("OPENAI_API_KEY"),
             "ENVIRONMENT": os.getenv("ENVIRONMENT", "").lower() or "unset",
             "supabase_client": bool(supabase_client),
