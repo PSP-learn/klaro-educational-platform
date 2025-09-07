@@ -181,24 +181,6 @@ app = FastAPI(
     redoc_url="/redoc" if os.getenv("ENVIRONMENT") != "production" else None
 )
 
-# Basic health and root endpoints for Railway health checks
-@app.get("/health")
-async def health_check():
-    return {
-        "status": "healthy",
-        "timestamp": datetime.now().isoformat(),
-        "environment": os.getenv("ENVIRONMENT", "production")
-    }
-
-@app.get("/")
-async def root():
-    return {
-        "message": "🟢 Klaro Educational Platform API",
-        "version": "2.0.0",
-        "status": "running",
-        "docs": "/docs" if os.getenv("ENVIRONMENT") != "production" else "disabled"
-    }
-
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
