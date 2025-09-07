@@ -3,6 +3,7 @@ package com.klaro.app.data.api
 import com.klaro.app.data.models.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -20,17 +21,36 @@ interface KlaroApiService {
     @GET("quiz/presets")
     suspend fun getQuizPresets(): Response<Map<String, QuizPreset>>
 
+    // Legacy JSON create (may be disabled in prod); kept for backward compat
     @POST("quiz/create")
     suspend fun createQuiz(@Body request: QuizRequest): Response<QuizResponse>
+
+    // Authenticated generate (production): x-www-form-urlencoded
+    @FormUrlEncoded
+    @POST("quiz/generate")
+    suspend fun generateQuiz(
+        @Field("title") title: String,
+        @Field("topics") topics: String, // comma-separated: "topic1,topic2"
+        @Field("questions_count") questionsCount: Int = 10,
+        @Field("difficulty") difficulty: String = "mixed",
+        @Field("source") source: String? = null
+    ): Response<Map<String, Any>>
 
     @POST("quiz/preset/{presetName}")
     suspend fun createQuizFromPreset(@Path("presetName") presetName: String): Response<QuizResponse>
 
+    // New authenticated download path
+    @GET("quiz/download/{quizId}")
+    suspend fun downloadQuizAuth(
+        @Path("quizId") quizId: String
+    ): Response<ResponseBody>
+
+    // Old download path (kept for compatibility with older backend variants)
     @GET("quiz/{quizId}/download")
     suspend fun downloadQuiz(
         @Path("quizId") quizId: String,
         @Query("file_type") fileType: String = "questions"
-    ): Response<okhttp3.ResponseBody>
+    ): Response<ResponseBody>
 
     // ================================================================================
     // 📚 Catalog Endpoints
@@ -90,79 +110,4 @@ interface KlaroApiService {
         @Part("user_plan") userPlan: RequestBody,
         @Part("subject") subject: RequestBody
     ): Response<DoubtSolution>
-
-    @GET("doubt/usage/{userId}")
-    suspend fun getDoubtUsage(@Path("userId") userId: String): Response<UserAnalytics>
-
-    // ================================================================================
-    // 👤 User Management Endpoints
-    // ================================================================================
-
-    @POST("auth/register")
-    suspend fun registerUser(
-        @Field("email") email: String,
-        @Field("name") name: String,
-        @Field("password") password: String
-    ): Response<ApiResponse<User>>
-
-    @POST("auth/login")
-    suspend fun loginUser(
-        @Field("email") email: String,
-        @Field("password") password: String
-    ): Response<ApiResponse<Map<String, String>>>
-
-    @GET("user/profile")
-    suspend fun getUserProfile(): Response<UserProfile>
-
-    @PUT("user/profile")
-    suspend fun updateUserProfile(@Body profileData: Map<String, Any>): Response<ApiResponse<String>>
-
-    @GET("user/quizzes")
-    suspend fun getUserQuizzes(): Response<PaginatedResponse<QuizResponse>>
-
-    // ================================================================================
-    // 📊 Analytics Endpoints
-    // ================================================================================
-
-    @GET("analytics/user")
-    suspend fun getUserAnalytics(): Response<UserAnalytics>
-
-    @GET("analytics/dashboard")
-    suspend fun getDashboardAnalytics(): Response<Map<String, Any>>
-
-    // ================================================================================
-    // 💳 Subscription Endpoints
-    // ================================================================================
-
-    @POST("subscription/upgrade")
-    suspend fun upgradeSubscription(
-        @Body upgrade: Map<String, String>
-    ): Response<ApiResponse<SubscriptionInfo>>
-
-    @GET("subscription/status")
-    suspend fun getSubscriptionStatus(): Response<SubscriptionInfo>
-
-    // ================================================================================
-    // 📚 History & Saved Items
-    // ================================================================================
-
-    @GET("doubts/history")
-    suspend fun getDoubtHistory(
-        @Query("limit") limit: Int = 20,
-        @Query("offset") offset: Int = 0,
-        @Query("subject") subject: String? = null
-    ): Response<PaginatedResponse<DoubtSolution>>
-
-    @POST("doubts/{doubtId}/save")
-    suspend fun saveDoubt(@Path("doubtId") doubtId: String): Response<ApiResponse<String>>
-
-    // ================================================================================
-    // 🏥 Health & System Status
-    // ================================================================================
-
-    @GET("health")
-    suspend fun healthCheck(): Response<Map<String, Any>>
-
-    @GET("system/stats")
-    suspend fun getSystemStats(): Response<Map<String, Any>>
 }

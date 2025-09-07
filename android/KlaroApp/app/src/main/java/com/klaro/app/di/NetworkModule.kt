@@ -1,10 +1,15 @@
 package com.klaro.app.di
 
+import android.content.Context
 import com.klaro.app.BuildConfig
 import com.klaro.app.data.api.KlaroApiService
+import com.klaro.app.security.AuthorizationInterceptor
+import com.klaro.app.security.TokenProvider
+import com.klaro.app.security.DefaultTokenProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,10 +44,25 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideTokenProvider(
+        @ApplicationContext context: Context
+    ): TokenProvider = DefaultTokenProvider(context)
+
+    @Provides
+    @Singleton
+    fun provideAuthorizationInterceptor(
+        tokenProvider: TokenProvider
+    ): AuthorizationInterceptor = AuthorizationInterceptor(tokenProvider)
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
+        authorizationInterceptor: AuthorizationInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
+            // Add auth header first so it's captured in logs too
+            .addInterceptor(authorizationInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
