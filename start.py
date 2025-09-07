@@ -20,7 +20,7 @@ def main():
     print(f"🔌 Port: {port}")
     print(f"📁 Working Directory: {os.getcwd()}")
     print(f"🐍 Python Version: {sys.version}")
-    print(f"🚀 Deployed: 2025-08-31T10:02:00Z - Full AI Features Enabled")
+    print(f"🚀 Deployed: 2025-09-07T00:57:00Z - Full AI Features Enabled (PDF quiz + SymPy)")
     
     # Start uvicorn with full-featured app
     uvicorn.run(
