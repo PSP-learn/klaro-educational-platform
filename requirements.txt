@@ -27,4 +27,5 @@ pydantic==2.5.0
 aiohttp==3.9.1
 Pillow==10.4.0
 sympy==1.12
-reportlab==3.6.13
+# Use a version with prebuilt wheels for Python 3.12 on Linux to avoid building from source
+reportlab==4.2.0
