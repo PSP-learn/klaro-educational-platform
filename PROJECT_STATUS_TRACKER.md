@@ -273,3 +273,39 @@ STATUS:
 - 📱 Android dropdowns can now populate for all classes/subjects once data is present.
 
 *Last Updated: 2025-09-06 12:02 UTC by AI Assistant*
+
+---
+
+### 2025-09-08 02:00 UTC - Android Auth + Doubt Solving Stabilized (Production Baseline)
+
+COMPLETED TODAY:
+- ✅ Android: Google sign-in via Supabase GoTrue (manual authorize redirect + deep link `klaroauth://callback`).
+- ✅ Android: Token capture hardened (onNewIntent + fragment/query parsing) and persisted; Authorization header injected via OkHttp.
+- ✅ Android: Doubt solving end-to-end working using `/api/doubts/solve` (auth) with graceful fallback to `/api/doubt/solve-enhanced` (legacy). Response mapping supports both shapes (nested `solution` and flat structure).
+- ✅ Android: Retrofit paths normalized to be relative to `BASE_API_URL` (`/api/`).
+- ✅ Android: Manifest cleanup (duplicate camera feature removed); UI banner when not signed in disables “Get Answer”.
+- ✅ Android: Debug-only DNS pin for Railway host to bypass local DNS issues; release unaffected.
+- ✅ Backend: Production deployment healthy; verified `/`, `/docs`, `/api/quiz/presets`, `/api/catalog/*`, `/health`.
+
+NEXT ACTIONS (Prioritized):
+1) Release readiness
+   - [ ] Enable `minifyEnabled true` for release, add proguard rules for Hilt, Retrofit/OkHttp, Ktor/Supabase (if used at runtime).
+   - [ ] Confirm Crashlytics initialization; add minimal non-PII breadcrumbing for auth/doubts UX paths.
+   - [ ] Restrict CORS to trusted origins and set `ENVIRONMENT=production` (hide docs) in Railway.
+   - [ ] Keep `BASE_API_URL` for release as `https://api.klaro.app/api/`; validate DNS and TLS.
+2) Auth hardening
+   - [ ] Option A: Keep implicit OAuth; add re-auth flow on 401 responses.
+   - [ ] Option B (recommended): Switch to PKCE with supabase-kt GoTrue to support session refresh & persistence natively.
+3) QA and reliability
+   - [ ] Add instrumentation tests for Catalog + Doubt flows (happy-path + 401 + network error cases).
+   - [ ] Add lightweight error banners and retry affordances across network calls.
+   - [ ] Add backend logging/metrics for `/api/doubts/solve` (latency, error rate, method used, cost).
+4) Content and UX
+   - [ ] Seed/verify subject/topic coverage beyond Class 10 where needed.
+   - [ ] Optional: CTA on Doubt screen to route to Login when signed-out.
+
+STATUS:
+- 📱 Android: Auth + Doubts stabilized; Catalog working; Debug build verified.
+- 🌐 Backend: Routes healthy in production; Supabase integration functional.
+
+*Last Updated: 2025-09-08 02:00 UTC by AI Assistant*
