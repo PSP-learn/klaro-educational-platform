@@ -7,9 +7,6 @@
     
     <!-- Declare that camera is not strictly required -->
     <uses-feature android:name="android.hardware.camera" android:required="false" />
-    
-    <!-- Declare that camera is not strictly required -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:name=".KlaroApplication"

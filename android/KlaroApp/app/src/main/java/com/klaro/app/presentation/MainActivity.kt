@@ -1,8 +1,10 @@
 package com.klaro.app.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -20,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.klaro.app.presentation.ui.theme.KlaroTheme
 import com.klaro.app.presentation.screens.*
+import com.klaro.app.presentation.auth.AuthViewModel
 
 /**
  * 🎓 Klaro Main Activity
@@ -31,6 +34,9 @@ import com.klaro.app.presentation.screens.*
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    // Receive Supabase OAuth deep links even when Activity is already running
+    private val authViewModel: AuthViewModel by viewModels()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +45,16 @@ class MainActivity : ComponentActivity() {
             KlaroTheme {
                 KlaroApp()
             }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val data = intent?.data
+        if (data != null) {
+            authViewModel.handleDeepLink(data)
+            // Prevent reprocessing
+            intent.data = null
         }
     }
 }

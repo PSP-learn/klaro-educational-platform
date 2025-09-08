@@ -23,44 +23,96 @@ class DoubtSolvingRepository @Inject constructor(
 ) {
 
     private fun mapSolutionFromBody(body: Map<String, Any>?, question: String, subject: String): DoubtSolution? {
-        val solution = body?.get("solution") as? Map<*, *> ?: return null
-        val answer = (solution["final_answer"] as? String)
-            ?: (solution["answer"] as? String)
-            ?: (solution["shortAnswer"] as? String)
+        if (body == null) return null
+
+        // Two possible backend shapes:
+        // 1) { success: true, solution: { final_answer|answer, steps[], ... }, processing_time, cost }
+        // 2) { question, answer|final_answer, steps[], metadata{...}, mobileFormat{...}, whatsappFormat }
+        val hasNested = body["solution"] is Map<*, *>
+        val solutionMap = if (hasNested) body["solution"] as Map<*, *> else body
+
+        // Answer
+        val answer = (solutionMap["final_answer"] as? String)
+            ?: (solutionMap["answer"] as? String)
+            ?: (solutionMap["shortAnswer"] as? String)
             ?: ""
-        val stepsRaw = (solution["steps"] as? List<*>) ?: emptyList<Any>()
+
+        // Steps (support stepNumber or step_number)
+        val stepsRaw = (solutionMap["steps"] as? List<*>) ?: emptyList<Any>()
         val steps = stepsRaw.mapIndexed { idx, it ->
             val m = it as? Map<*, *> ?: emptyMap<String, Any>()
+            val stepNum = (m["stepNumber"] as? Number)?.toInt() ?: (m["step_number"] as? Number)?.toInt()
+            val title = (m["title"] as? String) ?: (m["heading"] as? String) ?: "Step ${idx + 1}"
+            val explanation = (m["explanation"] as? String) ?: (m["detail"] as? String) ?: ""
+            val confidence = (m["confidence"] as? Number)?.toDouble() ?: 0.0
             SolutionStep(
-                stepNumber = (m["stepNumber"] as? Number)?.toInt() ?: (idx + 1),
-                title = (m["title"] as? String) ?: (m["heading"] as? String) ?: "Step ${idx + 1}",
-                explanation = (m["explanation"] as? String) ?: (m["detail"] as? String) ?: "",
-                confidence = (m["confidence"] as? Number)?.toDouble() ?: 0.0
+                stepNumber = stepNum ?: (idx + 1),
+                title = title,
+                explanation = explanation,
+                confidence = confidence
             )
         }
-        val whatsappFormat = (solution["whatsapp_format"] as? String)
-            ?: (solution["whatsappFormat"] as? String)
+
+        // Whatsapp format
+        val whatsappFormat = (solutionMap["whatsapp_format"] as? String)
+            ?: (solutionMap["whatsappFormat"] as? String)
+            ?: (body["whatsappFormat"] as? String)
             ?: answer
-        val mobileFormat = MobileFormat(
-            shortAnswer = (solution["shortAnswer"] as? String) ?: answer,
-            keySteps = steps.map { it.title },
-            visualAids = emptyList(),
-            practiceProblems = emptyList()
-        )
-        val metadata = DoubtMetadata(
-            topic = (solution["topic"] as? String) ?: subject,
-            difficulty = (solution["difficulty"] as? String) ?: "",
-            confidence = (solution["confidence"] as? Number)?.toDouble() ?: 0.0,
-            method = (solution["method"] as? String) ?: (solution["solution_method"] as? String) ?: "unknown",
-            cost = (body?.get("cost") as? Number)?.toDouble()
-                ?: (solution["cost_incurred"] as? Number)?.toDouble()
-                ?: (solution["cost"] as? Number)?.toDouble() ?: 0.0,
-            timeTaken = (body?.get("processing_time") as? Number)?.toDouble()
-                ?: (solution["time_taken"] as? Number)?.toDouble() ?: 0.0,
-            retryAttempts = 0
-        )
+
+        // Mobile format
+        val mobileFormatObj = (solutionMap["mobile_format"] as? Map<*, *>)
+            ?: (solutionMap["mobileFormat"] as? Map<*, *>)
+            ?: (body["mobileFormat"] as? Map<*, *>)
+        val mobileFormat = if (mobileFormatObj != null) {
+            MobileFormat(
+                shortAnswer = (mobileFormatObj["shortAnswer"] as? String) ?: answer,
+                keySteps = (mobileFormatObj["keySteps"] as? List<*>)?.mapNotNull { it as? String } ?: steps.map { it.title },
+                visualAids = (mobileFormatObj["visualAids"] as? List<*>)?.mapNotNull { it as? String } ?: emptyList(),
+                practiceProblems = (mobileFormatObj["practiceProblems"] as? List<*>)?.mapNotNull { it as? String } ?: emptyList()
+            )
+        } else {
+            MobileFormat(
+                shortAnswer = answer,
+                keySteps = steps.map { it.title },
+                visualAids = emptyList(),
+                practiceProblems = emptyList()
+            )
+        }
+
+        // Metadata (prefer explicit metadata node if present)
+        val metadataObj = (solutionMap["metadata"] as? Map<*, *>) ?: (body["metadata"] as? Map<*, *>)
+        val metadata = if (metadataObj != null) {
+            DoubtMetadata(
+                topic = (metadataObj["topic"] as? String) ?: subject,
+                difficulty = (metadataObj["difficulty"] as? String) ?: "",
+                confidence = (metadataObj["confidence"] as? Number)?.toDouble() ?: 0.0,
+                method = (metadataObj["method"] as? String) ?: (solutionMap["solution_method"] as? String) ?: "unknown",
+                cost = (metadataObj["cost"] as? Number)?.toDouble()
+                    ?: (body["cost"] as? Number)?.toDouble()
+                    ?: (solutionMap["cost_incurred"] as? Number)?.toDouble()
+                    ?: (solutionMap["cost"] as? Number)?.toDouble() ?: 0.0,
+                timeTaken = (metadataObj["timeTaken"] as? Number)?.toDouble()
+                    ?: (body["processing_time"] as? Number)?.toDouble()
+                    ?: (solutionMap["time_taken"] as? Number)?.toDouble() ?: 0.0,
+                retryAttempts = (metadataObj["retryAttempts"] as? Number)?.toInt() ?: 0
+            )
+        } else {
+            DoubtMetadata(
+                topic = (solutionMap["topic"] as? String) ?: subject,
+                difficulty = (solutionMap["difficulty"] as? String) ?: "",
+                confidence = (solutionMap["confidence"] as? Number)?.toDouble() ?: 0.0,
+                method = (solutionMap["method"] as? String) ?: (solutionMap["solution_method"] as? String) ?: "unknown",
+                cost = (body["cost"] as? Number)?.toDouble()
+                    ?: (solutionMap["cost_incurred"] as? Number)?.toDouble()
+                    ?: (solutionMap["cost"] as? Number)?.toDouble() ?: 0.0,
+                timeTaken = (body["processing_time"] as? Number)?.toDouble()
+                    ?: (solutionMap["time_taken"] as? Number)?.toDouble() ?: 0.0,
+                retryAttempts = 0
+            )
+        }
+
         return DoubtSolution(
-            question = question,
+            question = (solutionMap["question"] as? String) ?: question,
             answer = answer,
             steps = steps,
             metadata = metadata,

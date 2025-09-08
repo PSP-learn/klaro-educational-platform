@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -33,6 +34,16 @@ fun DoubtSolverScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val currentSolution by viewModel.currentSolution.collectAsStateWithLifecycle()
+
+    // Basic auth presence check (token stored by AuthViewModel)
+    val ctx = LocalContext.current
+    val tokenProvider = remember(ctx) { com.klaro.app.security.DefaultTokenProvider(ctx) }
+    val hasToken = remember { mutableStateOf(!tokenProvider.getToken().isNullOrBlank()) }
+
+    // Refresh token presence when composable recomposes
+    LaunchedEffect(uiState.isSolving) {
+        hasToken.value = !tokenProvider.getToken().isNullOrBlank()
+    }
     
     var doubtText by remember { mutableStateOf("") }
     var selectedSubject by remember { mutableStateOf("Mathematics") }
@@ -116,15 +127,23 @@ fun DoubtSolverScreen(
             }
         }
         
+        // Auth reminder if not signed in
+        if (!hasToken.value) {
+            MessageCard(
+                message = "Sign in required to solve doubts.",
+                type = MessageType.INFO
+            )
+        }
+
         // Get Answer Button
         PrimaryActionButton(
-            text = "Get Answer",
+            text = if (hasToken.value) "Get Answer" else "Sign in to solve",
             onClick = {
-                if (doubtText.isNotBlank()) {
+                if (doubtText.isNotBlank() && hasToken.value) {
                     viewModel.solveTextDoubt(doubtText, selectedSubject)
                 }
             },
-            enabled = doubtText.isNotBlank(),
+            enabled = doubtText.isNotBlank() && hasToken.value,
             isLoading = uiState.isSolving,
             icon = Icons.Filled.Psychology
         )

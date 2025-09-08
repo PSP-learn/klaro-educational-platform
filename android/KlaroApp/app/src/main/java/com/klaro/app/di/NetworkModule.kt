@@ -11,10 +11,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Dns
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.InetAddress
+import java.net.URI
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -60,14 +63,33 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor,
         authorizationInterceptor: AuthorizationInterceptor
     ): OkHttpClient {
-        return OkHttpClient.Builder()
+        val builder = OkHttpClient.Builder()
             // Add auth header first so it's captured in logs too
             .addInterceptor(authorizationInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
+
+        // Temporary dev-only DNS pinning to bypass local DNS resolution issues
+        if (BuildConfig.DEBUG) {
+            val host = try { URI(BuildConfig.BASE_API_URL).host ?: "" } catch (e: Exception) { "" }
+            if (host.equals("klaro-educational-platform-production.up.railway.app", ignoreCase = true)) {
+                val pinnedIp = "66.33.22.241"
+                val debugDns = object : Dns {
+                    override fun lookup(hostname: String): List<InetAddress> {
+                        return if (hostname.equals(host, ignoreCase = true)) {
+                            listOf(InetAddress.getByName(pinnedIp))
+                        } else {
+                            Dns.SYSTEM.lookup(hostname)
+                        }
+                    }
+                }
+                builder.dns(debugDns)
+            }
+        }
+
+        return builder.build()
     }
 
     @Provides

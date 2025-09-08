@@ -42,21 +42,28 @@ class AuthViewModel @Inject constructor(
     }
 
     fun handleDeepLink(uri: Uri) {
-        // With FlowType.IMPLICIT, Supabase redirects with access_token in the URI fragment
+        // With FlowType.IMPLICIT, Supabase may put tokens in the URI fragment OR query
+        val parseParams: (String) -> Map<String, String> = { source ->
+            source.split('&')
+                .mapNotNull { pair ->
+                    val idx = pair.indexOf('=')
+                    if (idx > 0) pair.substring(0, idx) to pair.substring(idx + 1) else null
+                }
+                .toMap()
+        }
         val fragment = uri.fragment ?: ""
-        if (fragment.isNotBlank()) {
-            val params = fragment.split('&').mapNotNull { pair ->
-                val idx = pair.indexOf('=')
-                if (idx > 0) pair.substring(0, idx) to pair.substring(idx + 1) else null
-            }.toMap()
-            val accessToken = params["access_token"]
-            if (!accessToken.isNullOrBlank()) {
-                tokenProvider.setToken(accessToken)
-                _isLoggedIn.value = true
-                _lastMessage.value = "Signed in successfully"
-            } else {
-                _lastMessage.value = "Sign-in callback missing token"
-            }
+        val query = uri.query ?: ""
+        val fragParams = if (fragment.isNotBlank()) parseParams(fragment) else emptyMap()
+        val queryParams = if (query.isNotBlank()) parseParams(query) else emptyMap()
+        val accessToken = fragParams["access_token"]
+            ?: queryParams["access_token"]
+            ?: queryParams["token"]
+        if (!accessToken.isNullOrBlank()) {
+            tokenProvider.setToken(accessToken)
+            _isLoggedIn.value = true
+            _lastMessage.value = "Signed in successfully"
+        } else {
+            _lastMessage.value = "Sign-in callback missing token"
         }
     }
 

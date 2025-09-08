@@ -56,13 +56,13 @@ interface KlaroApiService {
     // 📚 Catalog Endpoints
     // ================================================================================
 
-    @GET("/api/catalog/chapters")
+    @GET("catalog/chapters")
     suspend fun getChapters(
         @Query("subject") subject: String,
         @Query("grade") grade: String
     ): Response<ChaptersResponse>
 
-    @GET("/api/catalog/subtopics")
+    @GET("catalog/subtopics")
     suspend fun getSubtopics(
         @Query("subject") subject: String,
         @Query("grade") grade: String,
