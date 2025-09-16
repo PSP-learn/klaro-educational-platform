@@ -1,7 +1,7 @@
 {
   "model_name": "all-MiniLM-L6-v2",
   "embedding_dim": 384,
-  "total_chunks": 494,
-  "total_books": 28,
-  "last_updated": "2025-08-30T01:02:06.068320"
+  "total_chunks": 1171,
+  "total_books": 53,
+  "last_updated": "2025-09-07T21:00:52.816762"
 }

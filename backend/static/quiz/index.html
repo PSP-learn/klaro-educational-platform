@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Builder</title>
+  <link rel="stylesheet" href="/static/quiz/style.css" />
+</head>
+<body>
+  <div class="container two-col">
+    <div class="main">
+<h1>Practice Test Builder</h1>
+
+      <section class="bar">
+        <div class="row">
+<div class="field"><label>Domain</label><select id="domain"><option selected>CBSE</option><option>JEE</option><option>NEET</option></select></div>
+          <div class="field"><label>Grade</label><select id="grade"><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
+          <div class="field"><label>Subject</label><select id="subject"><option selected>Mathematics</option><option>Science</option><option>Physics</option><option>Chemistry</option><option>Biology</option></select></div>
+          <div class="field"><label>Language</label><select id="language"><option selected>English</option><option>Hindi</option></select></div>
+          <div class="field"><label>Date</label><input type="date" id="exam_date" /></div>
+        </div>
+      </section>
+
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-btn" data-acc="#acc-source">1) Source material</button>
+          <div id="acc-source" class="acc-panel">
+            <div class="grid">
+              <div class="field"><label>Books Directory</label><input id="books_dir" type="text" placeholder="data/textbooks/ncert" /></div>
+              <div class="field"><label>Scope Filter</label><input id="scope" type="text" placeholder="e.g. class_10" /></div>
+              <div class="field"><label>Centers</label><input id="centers" type="text" placeholder="comma-separated" /></div>
+              <div class="field"><label>Streams</label><input id="streams" type="text" placeholder="e.g. science,math" /></div>
+              <div class="field"><label>Mode</label><select id="mode"><option selected>mixed</option><option>source</option></select></div>
+              <div class="field"><label>Render</label><select id="render"><option selected>auto</option><option>image</option><option>text</option></select></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" data-acc="#acc-topics">2) Subjects & Topics</button>
+<div id="acc-topics" class="acc-panel">
+            <div class="grid">
+              <div class="field"><label>Subjects (JEE/NEET)</label><input id="subjects" type="text" placeholder="Physics, Chemistry, Mathematics" /></div>
+              <div class="field"><label>Science Streams (CBSE)</label><input id="cbse_science_streams" type="text" placeholder="Physics, Chemistry, Biology or All" /></div>
+              <div class="field"><label>Topics</label><input id="topics" type="text" placeholder="quadratic equations, trigonometry" /></div>
+              <div class="field"><label>Subtopics</label><input id="subtopics" type="text" placeholder="optional, comma-separated" /></div>
+              <div class="field"><label>Tags</label><input id="tags" type="text" placeholder="optional, comma-separated" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" data-acc="#acc-blueprint">3) Blueprint</button>
+<div id="acc-blueprint" class="acc-panel">
+            <div class="grid">
+              <div class="field"><label>Total Questions</label><input id="bp_total" type="number" min="1" value="25" /></div>
+              <div class="field"><label>MCQ</label><input id="bp_mcq" type="number" min="0" value="10" /></div>
+              <div class="field"><label>Short</label><input id="bp_short" type="number" min="0" value="10" /></div>
+              <div class="field"><label>Long</label><input id="bp_long" type="number" min="0" value="5" /></div>
+              <div class="field"><label>Easy</label><input id="bp_easy" type="number" min="0" value="10" /></div>
+              <div class="field"><label>Medium</label><input id="bp_medium" type="number" min="0" value="10" /></div>
+              <div class="field"><label>Hard</label><input id="bp_hard" type="number" min="0" value="5" /></div>
+              <div class="field"><label>Duration (min)</label><input id="bp_duration" type="number" min="0" placeholder="auto" /></div>
+            </div>
+            <hr/>
+            <div class="grid">
+              <div class="field"><label>CBSE: Single Correct (1M)</label><input id="bp_single_correct" type="number" min="0" value="0" /></div>
+              <div class="field"><label>CBSE: Assertion-Reason (1M)</label><input id="bp_assertion_reason" type="number" min="0" value="0" /></div>
+              <div class="field"><label>CBSE: Short Answer (2M)</label><input id="bp_short2" type="number" min="0" value="0" /></div>
+              <div class="field"><label>CBSE: Long Answer (3M)</label><input id="bp_long3" type="number" min="0" value="0" /></div>
+              <div class="field"><label>CBSE: Very Long (5M)</label><input id="bp_verylong5" type="number" min="0" value="0" /></div>
+              <div class="field"><label>CBSE: Case Study (4M)</label><input id="bp_case_study" type="number" min="0" value="0" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" data-acc="#acc-sections">4) Sections</button>
+          <div id="acc-sections" class="acc-panel">
+            <div id="sections">
+              <!-- default sections -->
+            </div>
+            <button type="button" id="add_section">+ Add Section</button>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" data-acc="#acc-scoring">5) Scoring & marking</button>
+<div id="acc-scoring" class="acc-panel">
+            <div class="grid">
+              <div class="field"><label>Marks per MCQ</label><input id="marks_mcq" type="number" min="0" value="1" /></div>
+              <div class="field"><label>Marks per Short</label><input id="marks_short" type="number" min="0" value="3" /></div>
+              <div class="field"><label>Marks per Long</label><input id="marks_long" type="number" min="0" value="5" /></div>
+            </div>
+            <hr/>
+            <div class="grid">
+              <div class="field"><label>CBSE Marks: Single Correct</label><input id="marks_single_correct" type="number" min="0" value="1" /></div>
+              <div class="field"><label>CBSE Marks: Assertion-Reason</label><input id="marks_assertion_reason" type="number" min="0" value="1" /></div>
+              <div class="field"><label>CBSE Marks: Short (2M)</label><input id="marks_short2" type="number" min="0" value="2" /></div>
+              <div class="field"><label>CBSE Marks: Long (3M)</label><input id="marks_long3" type="number" min="0" value="3" /></div>
+              <div class="field"><label>CBSE Marks: Very Long (5M)</label><input id="marks_verylong5" type="number" min="0" value="5" /></div>
+              <div class="field"><label>CBSE Marks: Case Study</label><input id="marks_case_study" type="number" min="0" value="4" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" data-acc="#acc-render">6) Rendering & formatting</button>
+<div id="acc-render" class="acc-panel">
+            <div class="grid">
+              <div class="field"><label>Include Solutions</label><select id="include_solutions"><option>No</option><option>Yes</option></select></div>
+              <div class="field"><label>Output Engine</label><select id="output_engine"><option selected>reportlab</option><option>latex</option></select></div>
+              <div class="field"><label>Header / Institute Name</label><input id="header" type="text" placeholder="Your School / Institute" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" data-acc="#acc-instructions">7) Instructions</button>
+          <div id="acc-instructions" class="acc-panel">
+            <textarea id="instructions" rows="5" placeholder="One instruction per line"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="btn_preview" type="button">Preview</button>
+        <button id="btn_generate" type="button">Generate PDF</button>
+      </div>
+
+      <div id="result" class="result hidden"></div>
+    </div>
+
+    <aside class="summary">
+      <div class="sticky">
+        <h2>Summary</h2>
+        <div id="summary_totals">Totals will appear here.</div>
+        <div id="summary_warnings" class="warnings"></div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="/static/quiz/app.js"></script>
+</body>
+</html>
+

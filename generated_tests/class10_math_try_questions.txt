@@ -1,0 +1,105 @@
+================================================================================
+📝 Mathematics Test - quadratic equations, polynomials, trigonometry
+================================================================================
+Subject: Mathematics
+Topics: quadratic equations, polynomials, trigonometry
+Duration: 30 minutes
+Total Points: 17
+Total Questions: 10
+
+📋 INSTRUCTIONS:
+• Read all questions carefully before starting
+• Show all your work for mathematical calculations
+• For MCQs, choose the BEST answer
+• Write clearly and legibly
+• Manage your time effectively
+
+================================================================================
+
+Q1. Outline the procedure for triangle.
+     [Topic: Trigonometry, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q2. Solve: Check whether –2 and 2 are zeroes of the polynomial x + 2
+     [Topic: Algebra, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q3. The mathematical expression for equation is:
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. An answer that confuses equation with another term
+     B. An incorrect but plausible answer about equation
+     C. The correct answer related to equation
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
+
+Q4. To find roots, we use the formula:
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. The correct answer related to roots
+     B. A concept from a different mathematical area
+     C. An incorrect but plausible answer about roots
+     D. An answer that confuses roots with another term
+
+     Answer:
+     __________________________________________________
+
+Q5. To find coordinate, we use the formula:
+     [Topic: Coordinate_Geometry, Difficulty: Easy, Points: 1]
+     A. The correct answer related to coordinate
+     B. An incorrect but plausible answer about coordinate
+     C. A concept from a different mathematical area
+     D. An answer that confuses coordinate with another term
+
+     Answer:
+     __________________________________________________
+
+Q6. How do you approach geometry problems?
+     [Topic: Geometry, Difficulty: Medium, Points: 4]
+
+     Answer:
+     __________________________________________________
+
+Q7. Which formula is used to calculate quadratic?
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. The correct answer related to quadratic
+     B. A concept from a different mathematical area
+     C. An incorrect but plausible answer about quadratic
+     D. An answer that confuses quadratic with another term
+
+     Answer:
+     __________________________________________________
+
+Q8. Which formula is used to calculate ratios?
+     [Topic: Trigonometry, Difficulty: Medium, Points: 1]
+     A. An incorrect but plausible answer about ratios
+     B. An answer that confuses ratios with another term
+     C. The correct answer related to ratios
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
+
+Q9. To find roots, we use the formula:
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. An answer that confuses roots with another term
+     B. A concept from a different mathematical area
+     C. An incorrect but plausible answer about roots
+     D. The correct answer related to roots
+
+     Answer:
+     __________________________________________________
+
+Q10. To find equation, we use the formula:
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. An incorrect but plausible answer about equation
+     B. A concept from a different mathematical area
+     C. An answer that confuses equation with another term
+     D. The correct answer related to equation
+
+     Answer:
+     __________________________________________________

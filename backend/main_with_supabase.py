@@ -13,7 +13,7 @@ import time
 import asyncio
 from contextlib import asynccontextmanager
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 
 from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, BackgroundTasks, Header
 from fastapi.middleware.cors import CORSMiddleware
@@ -594,6 +594,307 @@ async def api_doubt_usage(user_id: str):
 # ================================================================================
 # 📝 Quiz Generation (Android-friendly) - No Auth
 # ================================================================================
+
+# Data models for quiz builder (Android-friendly JSON)
+class BlueprintConfig(BaseModel):
+    total_questions: Optional[int] = None
+    by_type: Optional[Dict[str, int]] = None  # e.g., {"mcq": 10, "short": 8, "long": 2}
+    by_difficulty: Optional[Dict[str, int]] = None  # {"easy": 10, "medium": 8, "hard": 2}
+    duration_minutes: Optional[int] = None
+
+class SectionConfig(BaseModel):
+    name: str
+    types: List[str]
+    count: int
+    difficulty: Optional[Dict[str, int]] = None
+    negative_marking: Optional[float] = 0.0
+
+class QuizRequest(BaseModel):
+    # Core generation parameters
+    topics: List[str]
+    num_questions: int = 10
+    question_types: List[str] = ["mcq", "short"]
+    difficulty_levels: List[str] = ["easy", "medium"]
+    subject: str = "Mathematics"
+    duration: Optional[int] = None
+    title: Optional[str] = None
+    # Customization fields
+    domain: Optional[str] = None  # CBSE | JEE | NEET
+    grade: Optional[str] = None
+    subjects: Optional[List[str]] = None
+    header: Optional[str] = None
+    instructions: Optional[List[str]] = None
+    # Advanced generation mode
+    mode: Optional[str] = "mixed"  # mixed | source
+    scope_filter: Optional[str] = None
+    render: Optional[str] = "auto"  # auto | image | text
+    books_dir: Optional[str] = None
+    output_engine: Optional[str] = "reportlab"  # reportlab | latex
+    include_solutions: Optional[bool] = False
+    blueprint: Optional[BlueprintConfig] = None
+    sections: Optional[List[SectionConfig]] = None
+    marks: Optional[Dict[str, int]] = None  # marks per type
+    # UI metadata (optional)
+    streams: Optional[List[str]] = None
+    class_filter: Optional[List[str]] = None
+    topic_tags: Optional[List[str]] = None
+    subtopics: Optional[List[str]] = None
+    levels: Optional[List[str]] = None
+    source_material: Optional[List[str]] = None
+    language: Optional[str] = None
+    centers: Optional[List[str]] = None
+
+class PreviewResponse(BaseModel):
+    valid: bool
+    totals: Dict[str, int]
+    duration_estimate: int
+    warnings: List[str] = Field(default_factory=list)
+    normalized_blueprint: Optional[BlueprintConfig] = None
+
+class QuizResponse(BaseModel):
+    quiz_id: str
+    title: str
+    questions_file: Optional[str]
+    answers_file: Optional[str]
+    pdf_questions_file: Optional[str] = None
+    pdf_answers_file: Optional[str] = None
+    pdf_marking_scheme_file: Optional[str] = None
+    metadata: Dict[str, Any]
+    created_at: datetime
+
+# Preview endpoint (no auth)
+@app.post("/api/quiz/preview")
+async def preview_quiz(quiz_request: QuizRequest):
+    """Validate blueprint and return estimates/warnings. Does not generate files."""
+    bp = quiz_request.blueprint or BlueprintConfig()
+    warnings: List[str] = []
+
+    # Calculate totals
+    total_from_types = sum((bp.by_type or {}).values()) if bp.by_type else None
+    total_from_diff = sum((bp.by_difficulty or {}).values()) if bp.by_difficulty else None
+
+    # Decide total
+    total = bp.total_questions or total_from_types or total_from_diff or quiz_request.num_questions
+
+    if bp.total_questions and total_from_types and bp.total_questions != total_from_types:
+        warnings.append(f"total_questions ({bp.total_questions}) != sum(by_type) ({total_from_types})")
+    if bp.total_questions and total_from_diff and bp.total_questions != total_from_diff:
+        warnings.append(f"total_questions ({bp.total_questions}) != sum(by_difficulty) ({total_from_diff})")
+    if total_from_types and total_from_diff and total_from_types != total_from_diff:
+        warnings.append(f"sum(by_type) ({total_from_types}) != sum(by_difficulty) ({total_from_diff})")
+
+    # Sections check
+    if quiz_request.sections:
+        section_total = sum(s.count for s in quiz_request.sections)
+        if section_total != total:
+            warnings.append(f"sum(sections.count) ({section_total}) != total ({total})")
+
+    # Duration estimate
+    per_type_minutes = {"mcq": 1.5, "short": 3.0, "long": 6.0, "numerical": 2.0, "proof": 8.0}
+    duration_estimate = 0
+    if bp.by_type:
+        for t, c in bp.by_type.items():
+            duration_estimate += int(round(per_type_minutes.get(t, 3.0) * c))
+    else:
+        duration_estimate = int(round(3.0 * total))
+
+    # Total marks estimate (if marks mapping provided)
+    total_marks = None
+    if bp.by_type and quiz_request.marks:
+        total_marks = 0
+        for t, c in bp.by_type.items():
+            per_mark = int(quiz_request.marks.get(t, 1))
+            total_marks += per_mark * int(c)
+
+    normalized = BlueprintConfig(
+        total_questions=total,
+        by_type=bp.by_type,
+        by_difficulty=bp.by_difficulty,
+        duration_minutes=bp.duration_minutes or duration_estimate
+    )
+
+    totals_payload: Dict[str, int] = {"total_questions": total}
+    if total_marks is not None:
+        totals_payload["total_marks"] = total_marks
+
+    return PreviewResponse(
+        valid=len(warnings) == 0,
+        totals=totals_payload,
+        duration_estimate=normalized.duration_minutes or duration_estimate,
+        warnings=warnings,
+        normalized_blueprint=normalized
+    )
+
+# Create endpoint (no auth) matching Android contract
+@app.post("/api/quiz/create")
+async def create_quiz_android(
+    quiz_request: QuizRequest,
+    background_tasks: BackgroundTasks,
+):
+    """Create a new quiz based on user specifications (no auth required)."""
+    if not quiz_generator:
+        raise HTTPException(status_code=500, detail="Quiz generator not available")
+
+    try:
+        # Normalize totals and type counts
+        type_counts = None
+        total_q = quiz_request.num_questions
+        original_by_type = None
+        if quiz_request.blueprint and quiz_request.blueprint.by_type:
+            original_by_type = {k: int(v) for k, v in quiz_request.blueprint.by_type.items() if v and int(v) > 0}
+            type_counts = original_by_type.copy()
+            # If CBSE types present, map them to underlying generator types
+            cbse_keys = {"single_correct", "assertion_reason", "short2", "long3", "verylong5", "case_study"}
+            if any(k in cbse_keys for k in type_counts.keys()):
+                mapping = {
+                    "single_correct": "mcq",
+                    "assertion_reason": "mcq",
+                    "case_study": "mcq",
+                    "short2": "short",
+                    "long3": "long",
+                    "verylong5": "long",
+                }
+                # Build underlying counts
+                new_counts: Dict[str, int] = {}
+                for k, v in type_counts.items():
+                    tgt = mapping.get(k) or k
+                    new_counts[tgt] = new_counts.get(tgt, 0) + int(v)
+                type_counts = {k: v for k, v in new_counts.items() if v > 0}
+            if type_counts:
+                total_q = sum(type_counts.values())
+        elif quiz_request.blueprint and quiz_request.blueprint.total_questions:
+            total_q = quiz_request.blueprint.total_questions
+
+        # Adjust question_types to keys of type_counts if provided
+        qtypes = quiz_request.question_types
+        if type_counts:
+            qtypes = list(type_counts.keys())
+
+        # Generate quiz using SmartTestGenerator
+        test_data = quiz_generator.create_test(
+            topics=quiz_request.topics,
+            num_questions=total_q,
+            question_types=qtypes,
+            difficulty_levels=quiz_request.difficulty_levels,
+            subject=quiz_request.subject,
+            mode=quiz_request.mode or "mixed",
+            scope_filter=quiz_request.scope_filter,
+            render=quiz_request.render or "auto",
+            books_dir=quiz_request.books_dir,
+            type_counts=type_counts
+        )
+
+        # Apply marks per type if provided
+        if quiz_request.marks:
+            try:
+                for q in test_data.get('questions', []):
+                    dt = getattr(q, 'display_type', None)
+                    ut = getattr(q, 'question_type', None)
+                    if dt and dt in quiz_request.marks:
+                        setattr(q, 'points', int(quiz_request.marks[dt]))
+                    elif ut and ut in quiz_request.marks:
+                        setattr(q, 'points', int(quiz_request.marks[ut]))
+                # Recompute totals
+                test_data['total_points'] = sum(getattr(q, 'points', 1) for q in test_data.get('questions', []))
+                test_data['marks_per_type'] = {k: int(v) for k, v in quiz_request.marks.items()}
+            except Exception:
+                pass
+
+        # Attach header/instructions/labels
+        if quiz_request.header:
+            test_data['header'] = quiz_request.header
+        if quiz_request.instructions and isinstance(quiz_request.instructions, list) and quiz_request.instructions:
+            test_data['instructions'] = quiz_request.instructions
+        else:
+            if (quiz_request.domain or '').upper() == 'CBSE':
+                test_data['instructions'] = [
+                    'All questions are compulsory.',
+                    'Read the questions carefully and write neatly.',
+                    'Use appropriate units and significant figures.',
+                ]
+        subj_label = quiz_request.subject or 'Mathematics'
+        if quiz_request.domain:
+            parts = [quiz_request.domain]
+            if quiz_request.grade:
+                parts.append(f"Grade {quiz_request.grade}")
+            if quiz_request.subjects:
+                parts.append(', '.join(quiz_request.subjects))
+            elif quiz_request.subject:
+                parts.append(quiz_request.subject)
+            subj_label = ' - '.join(parts)
+        test_data['subject'] = subj_label
+        if not test_data.get('title'):
+            test_data['title'] = quiz_request.title or f"Practice Test - {quiz_request.domain or quiz_request.subject}"
+
+        # Generate unique quiz ID and filenames
+        quiz_id = f"quiz_anon_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        output_prefix = quiz_id
+
+        # Save TXT files
+        test_file, answer_file = quiz_generator.save_test(test_data, output_prefix)
+
+        # Generate PDFs (ReportLab by default; LaTeX optional)
+        from pathlib import Path as _Path
+        pdf_q, pdf_a, pdf_ms = None, None, None
+        try:
+            if (quiz_request.output_engine or 'reportlab') == 'latex':
+                from latex_renderer import render_quiz_pdfs, render_marking_scheme_pdf
+                try:
+                    pdf_q, pdf_a = render_quiz_pdfs(test_data, output_prefix, output_dir="generated_tests")
+                    pdf_ms = render_marking_scheme_pdf(test_data, output_prefix, output_dir="generated_tests")
+                except Exception:
+                    pdf_q, pdf_a = quiz_generator.save_test_pdf(test_data, output_prefix)
+            else:
+                pdf_q, pdf_a = quiz_generator.save_test_pdf(test_data, output_prefix)
+        except Exception:
+            pdf_q, pdf_a, pdf_ms = None, None, None
+
+        # Respect include_solutions flag in response (hide answers link if false)
+        if not (quiz_request.include_solutions or False):
+            pdf_a = None
+
+        # Response payload
+        return QuizResponse(
+            quiz_id=quiz_id,
+            title=quiz_request.title or f"Quiz on {', '.join(quiz_request.topics)}",
+            questions_file=test_file,
+            answers_file=answer_file,
+            pdf_questions_file=pdf_q,
+            pdf_answers_file=pdf_a,
+            pdf_marking_scheme_file=pdf_ms,
+            metadata=test_data,
+            created_at=datetime.now()
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Quiz creation failed: {str(e)}")
+
+# File download endpoint expected by Android (no auth)
+@app.get("/api/quiz/{quiz_id}/download")
+async def download_quiz_android(
+    quiz_id: str,
+    file_type: str = "questions",  # "questions" | "answers" | "marking_scheme"
+):
+    """Download quiz file. Prefers PDF if available; falls back to TXT for questions/answers."""
+    base_dir = Path("generated_tests")
+    # Marking scheme PDF
+    if file_type == "marking_scheme":
+        scheme_path = base_dir / f"{quiz_id}_marking_scheme.pdf"
+        if scheme_path.exists():
+            return FileResponse(path=scheme_path, filename=f"{quiz_id}_marking_scheme.pdf", media_type="application/pdf")
+        raise HTTPException(status_code=404, detail="Marking scheme not found")
+
+    # Questions/Answers
+    pdf_suffix = "_questions.pdf" if file_type == "questions" else "_answers.pdf"
+    txt_suffix = "_questions.txt" if file_type == "questions" else "_answers.txt"
+    pdf_path = base_dir / f"{quiz_id}{pdf_suffix}"
+    txt_path = base_dir / f"{quiz_id}{txt_suffix}"
+
+    if pdf_path.exists():
+        return FileResponse(path=pdf_path, filename=f"{quiz_id}_{file_type}.pdf", media_type="application/pdf")
+    if txt_path.exists():
+        return FileResponse(path=txt_path, filename=f"{quiz_id}_{file_type}.txt", media_type="text/plain")
+    raise HTTPException(status_code=404, detail="Quiz file not found")
 
 # ================================================================================
 # 🤔 Doubt Solving Endpoints

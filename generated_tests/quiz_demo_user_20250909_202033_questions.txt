@@ -1,0 +1,85 @@
+================================================================================
+📝 Mathematics Test - quadratic equations, factorization
+================================================================================
+Subject: Mathematics
+Topics: quadratic equations, factorization
+Duration: 30 minutes
+Total Points: 14
+Total Questions: 8
+
+📋 INSTRUCTIONS:
+• Read all questions carefully before starting
+• Show all your work for mathematical calculations
+• For MCQs, choose the BEST answer
+• Write clearly and legibly
+• Manage your time effectively
+
+================================================================================
+
+Q1. Find the roots of the quadratic equation $ x^{2} - 3 x - 28 = 0 $.
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. (4, -7)
+     B. (-3, 6)
+     C. (7, -4)
+     D. (-4, 7)
+
+     Answer:
+     __________________________________________________
+
+Q2. Find the roots of the quadratic equation $ x^{2} + 12 x + 27 = 0 $.
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. (-8, -4)
+     B. (9, 3)
+     C. (-9, -3)
+     D. (-3, -9)
+
+     Answer:
+     __________________________________________________
+
+Q3. Find the roots of the quadratic equation $ 2 x^{2} + 8 x - 64 = 0 $.
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. (8, -4)
+     B. (-8, 4)
+     C. (-7, 3)
+     D. (4, -8)
+
+     Answer:
+     __________________________________________________
+
+Q4. Find the roots of the quadratic equation $ x^{2} - 2 x - 35 = 0 $.
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. (5, -7)
+     B. (-4, 6)
+     C. (7, -5)
+     D. (-5, 7)
+
+     Answer:
+     __________________________________________________
+
+Q5. Find the roots of the quadratic equation $ x^{2} - 4 x - 32 = 0 $.
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. (4, -8)
+     B. (8, -4)
+     C. (-4, 8)
+     D. (-3, 7)
+
+     Answer:
+     __________________________________________________
+
+Q6. Factorize $ x^{2} - 4 x + 3 $.
+     [Topic: Algebra, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q7. Factorize $ x^{2} + 9 x + 20 $.
+     [Topic: Algebra, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q8. Factorize $ x^{2} - 16 $.
+     [Topic: Algebra, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________

@@ -1,0 +1,93 @@
+================================================================================
+📝 Mathematics Test - quadratic equations, polynomials, trigonometry
+================================================================================
+Subject: Mathematics
+Topics: quadratic equations, polynomials, trigonometry
+Duration: 30 minutes
+Total Points: 26
+Total Questions: 10
+
+📋 INSTRUCTIONS:
+• Read all questions carefully before starting
+• Show all your work for mathematical calculations
+• For MCQs, choose the BEST answer
+• Write clearly and legibly
+• Manage your time effectively
+
+================================================================================
+
+Q1. To find polynomial, we use the formula:
+     [Topic: Algebra, Difficulty: Easy, Points: 1]
+     A. An incorrect but plausible answer about polynomial
+     B. The correct answer related to polynomial
+     C. An answer that confuses polynomial with another term
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
+
+Q2. Outline the procedure for sine.
+     [Topic: Trigonometry, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q3. Solve: , 2 + i3, (– 1) + 3 i , 1 4 11 i −   +     are complex numbers
+     [Topic: Algebra, Difficulty: Medium, Points: 4]
+
+     Answer:
+     __________________________________________________
+
+Q4. What is the formula for angles?
+     [Topic: Trigonometry, Difficulty: Easy, Points: 1]
+     A. An answer that confuses angles with another term
+     B. The correct answer related to angles
+     C. A concept from a different mathematical area
+     D. An incorrect but plausible answer about angles
+
+     Answer:
+     __________________________________________________
+
+Q5. The mathematical expression for ratios is:
+     [Topic: Trigonometry, Difficulty: Easy, Points: 1]
+     A. An answer that confuses ratios with another term
+     B. The correct answer related to ratios
+     C. A concept from a different mathematical area
+     D. An incorrect but plausible answer about ratios
+
+     Answer:
+     __________________________________________________
+
+Q6. Solve: Find the equation of the parabola with focus (2,0) and directrix x = – 2
+     [Topic: Coordinate_Geometry, Difficulty: Medium, Points: 4]
+
+     Answer:
+     __________________________________________________
+
+Q7. Solve: , 4x + 2 is a polynomial in the variable x of degree 1, 2y2 – 3y + 4 is a polynomial in the variable y of degree 2, 5x3 – 4x2 + x – 2 is a polynomial in the variable x of degree 3 and 7u6 – 4 2 3 4 8 2u u u    is a polynomial in the variable u of degree 6
+     [Topic: Algebra, Difficulty: Medium, Points: 4]
+
+     Answer:
+     __________________________________________________
+
+Q8. Solve: s
+     [Topic: Algebra, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q9. The mathematical expression for quadratic is:
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. A concept from a different mathematical area
+     B. The correct answer related to quadratic
+     C. An answer that confuses quadratic with another term
+     D. An incorrect but plausible answer about quadratic
+
+     Answer:
+     __________________________________________________
+
+Q10. What steps are involved in solving triangles?
+     [Topic: Geometry, Difficulty: Medium, Points: 4]
+
+     Answer:
+     __________________________________________________

@@ -1,0 +1,270 @@
+{
+  "title": "Mathematics Test - quadratic equations, polynomials, trigonometry",
+  "subject": "Mathematics",
+  "topics": [
+    "quadratic equations",
+    "polynomials",
+    "trigonometry"
+  ],
+  "questions": [
+    {
+      "question_text": "Solve: Find the roots of the equation 2x2 \u2013 5x + 3 = 0, by factorisation",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "roots",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of roots with proper mathematical reasoning",
+      "explanation": "Refer to Chap\u20134 (8th Nov.) fian, page 5",
+      "source_content": "42 MATHEMATICS (ii) The product of two consecutive positive integers is 306. We need to find the integers. (iii) Rohan\u2019s mother is 26 years older than him. The product of their ages (in years) 3 years from now will be 360. We would like to find Rohan\u2019s present age. (iv) A train travels a distance of...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 5,
+      "points": 3,
+      "keywords": [
+        "Equation",
+        "polynomials",
+        "quadratic",
+        "polynomial",
+        "roots"
+      ],
+      "formula_used": "c = 0, a \uf0b9 0 if a \uf0612 + b\uf061 + c = 0"
+    },
+    {
+      "question_text": "What steps are involved in solving equation?",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "equation",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of equation with proper mathematical reasoning",
+      "explanation": "Refer to Chap-2 (8th Nov.), page 4",
+      "source_content": "POLYNOMIALS 13 Table 2.1 x \u2013 2 \u20131 0 1 2 3 4 5 y = x2 \u2013 3x \u2013 4 6 0 \u2013 4 \u2013 6 \u2013 6 \u2013 4 0 6 If we locate the points listed above on a graph paper and draw the graph, it will actually look like the one given in Fig. 2.2. In fact, for any quadratic polynomial ax2 + bx + c, a \uf0b9 0, the graph of the correspond...",
+      "source_book": "Chap-2 (8th Nov.)",
+      "source_page": 4,
+      "points": 3,
+      "keywords": [
+        "POLYNOMIALS",
+        "quadratic",
+        "polynomial",
+        "equation"
+      ],
+      "formula_used": "y = x2 \u2013 3x \u2013 4 6 0 \u2013 4 \u2013 6 \u2013 6 \u2013 4 0 6 If we locate the points listed above on a graph paper and draw the graph, it will actually look like the one given in Fig"
+    },
+    {
+      "question_text": "What steps are involved in solving axis?",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "coordinate_geometry",
+      "subtopic": "axis",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of axis with proper mathematical reasoning",
+      "explanation": "Refer to Chap-2 (8th Nov.), page 5",
+      "source_content": "14 MATHEMATICS Case (i) : Here, the graph cuts x-axis at two distinct points A and A\uf0a2. The x-coordinates of A and A\uf0a2 are the two zeroes of the quadratic polynomial ax2 + bx + c in this case (see Fig. 2.3). Fig. 2.3 Case (ii) : Here, the graph cuts the x-axis at exactly one point, i.e., at two coinci...",
+      "source_book": "Chap-2 (8th Nov.)",
+      "source_page": 5,
+      "points": 3,
+      "keywords": [
+        "coordinates",
+        "axis",
+        "graph",
+        "coordinate"
+      ],
+      "formula_used": "2025-26"
+    },
+    {
+      "question_text": "The mathematical expression for linear is:",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "linear",
+      "options": [
+        "An answer that confuses linear with another term",
+        "A concept from a different mathematical area",
+        "The correct answer related to linear",
+        "An incorrect but plausible answer about linear"
+      ],
+      "correct_answer": "C",
+      "explanation": "Based on content from D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd, page 7",
+      "source_content": "POLYNOMIALS 31 Now, 2x + 1 = 0 gives us x = 1 \u2013 2 So, 1 \u2013 2 is a zero of the polynomial 2x + 1. Now, if p(x) = ax + b, a \u2260 0, is a linear polynomial, how can we find a zero of p(x)? Example 4 may have...",
+      "source_book": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd",
+      "source_page": 7,
+      "points": 1,
+      "keywords": [
+        "polynomials",
+        "POLYNOMIALS",
+        "polynomial",
+        "linear",
+        "equation"
+      ],
+      "formula_used": "x = 1 \u2013 2 So, 1 \u2013 2 is a zero of the polynomial 2x + 1"
+    },
+    {
+      "question_text": "What is the formula for angles?",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "geometry",
+      "subtopic": "angles",
+      "options": [
+        "A concept from a different mathematical area",
+        "An incorrect but plausible answer about angles",
+        "An answer that confuses angles with another term",
+        "The correct answer related to angles"
+      ],
+      "correct_answer": "D",
+      "explanation": "Based on content from Chap\u20138 (11th Nov.), page 9",
+      "source_content": "INTRODUCTION TO TRIGONOMETRY 121 EXERCISE 8.1 1. In \uf044 ABC, right-angled at B, AB = 24 cm, BC = 7 cm. Determine : (i) sin A, cos A (ii) sin C, cos C 2. In Fig. 8.13, find tan P \u2013 cot R. 3. If sin A = 3...",
+      "source_book": "Chap\u20138 (11th Nov.)",
+      "source_page": 9,
+      "points": 1,
+      "keywords": [
+        "angle",
+        "Angles",
+        "angles",
+        "angled",
+        "triangle"
+      ],
+      "formula_used": "B = 24 cm, BC = 7 cm"
+    },
+    {
+      "question_text": "What is the formula for triangle?",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "trigonometry",
+      "subtopic": "triangle",
+      "options": [
+        "An answer that confuses triangle with another term",
+        "A concept from a different mathematical area",
+        "The correct answer related to triangle",
+        "An incorrect but plausible answer about triangle"
+      ],
+      "correct_answer": "C",
+      "explanation": "Based on content from Chap\u20139 (11th Nov.), page 4",
+      "source_content": "136 MATHEMATICS Example 2 : An electrician has to repair an electric fault on a pole of height 5 m. She needs to reach a point 1.3m below the top of the pole to undertake the repair work (see Fig. 9.5...",
+      "source_book": "Chap\u20139 (11th Nov.)",
+      "source_page": 4,
+      "points": 1,
+      "keywords": [
+        "ratio",
+        "triangle",
+        "hypotenuse",
+        "angle"
+      ],
+      "formula_used": "m = 3"
+    },
+    {
+      "question_text": "What is the formula for EQUATIONS?",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "EQUATIONS",
+      "options": [
+        "An answer that confuses EQUATIONS with another term",
+        "An incorrect but plausible answer about EQUATIONS",
+        "The correct answer related to EQUATIONS",
+        "A concept from a different mathematical area"
+      ],
+      "correct_answer": "C",
+      "explanation": "Based on content from Chap\u20134 (8th Nov.) fian, page 8",
+      "source_content": "QUADRATIC EQUATIONS 45 If b2 \u2013 4ac = 0, then x = 0 2 b a \uf02d \uf0b1 , i.e., or \u2013 2 2 b b x a a \uf03d\uf02d \uf0d7 So, the roots of the equation ax2 + bx + c = 0 are both 2 b a \uf02d\uf0d7 Therefore, we say that the quadratic equat...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 8,
+      "points": 1,
+      "keywords": [
+        "QUADRATIC",
+        "quadratic",
+        "EQUATIONS",
+        "discriminant",
+        "roots"
+      ],
+      "formula_used": "c = 0, then x = 0 2 b a \uf02d \uf0b1 , i"
+    },
+    {
+      "question_text": "Solve: may have given you some idea",
+      "question_type": "short",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "POLYNOMIALS",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of POLYNOMIALS with proper mathematical reasoning",
+      "explanation": "Refer to D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd, page 7",
+      "source_content": "POLYNOMIALS 31 Now, 2x + 1 = 0 gives us x = 1 \u2013 2 So, 1 \u2013 2 is a zero of the polynomial 2x + 1. Now, if p(x) = ax + b, a \u2260 0, is a linear polynomial, how can we find a zero of p(x)? Example 4 may have given you some idea. Finding a zero of the polynomial p(x), amounts to solving the polynomial equat...",
+      "source_book": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd",
+      "source_page": 7,
+      "points": 4,
+      "keywords": [
+        "polynomials",
+        "POLYNOMIALS",
+        "polynomial",
+        "linear",
+        "equation"
+      ],
+      "formula_used": "x = 1 \u2013 2 So, 1 \u2013 2 is a zero of the polynomial 2x + 1"
+    },
+    {
+      "question_text": "Which formula is used to calculate coordinates?",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "coordinate_geometry",
+      "subtopic": "coordinates",
+      "options": [
+        "A concept from a different mathematical area",
+        "An answer that confuses coordinates with another term",
+        "An incorrect but plausible answer about coordinates",
+        "The correct answer related to coordinates"
+      ],
+      "correct_answer": "D",
+      "explanation": "Based on content from D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_10\\Conic Section.PMD, page 11",
+      "source_content": "186 MATHEMATICS Example 6 Find the equation of the parabola with focus (2,0) and directrix x = \u2013 2. Solution Since the focus (2,0) lies on the x-axis, the x-axis itself is the axis of the parabola. He...",
+      "source_book": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_10\\Conic Section.PMD",
+      "source_page": 11,
+      "points": 1,
+      "keywords": [
+        "coordinates",
+        "origin",
+        "axis"
+      ],
+      "formula_used": "x = \u2013 2"
+    },
+    {
+      "question_text": "The mathematical expression for polynomials is:",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "polynomials",
+      "options": [
+        "An incorrect but plausible answer about polynomials",
+        "The correct answer related to polynomials",
+        "An answer that confuses polynomials with another term",
+        "A concept from a different mathematical area"
+      ],
+      "correct_answer": "B",
+      "explanation": "Based on content from Chap-2 (8th Nov.), page 1",
+      "source_content": "10 MATHEMATICS 2 2.1 Introduction In Class IX, you have studied polynomials in one variable and their degrees. Recall that if p(x) is a polynomial in x, the highest power of x in p(x) is called the de...",
+      "source_book": "Chap-2 (8th Nov.)",
+      "source_page": 1,
+      "points": 1,
+      "keywords": [
+        "variable",
+        "coefficients",
+        "polynomials",
+        "quadratic",
+        "POLYNOMIALS"
+      ],
+      "formula_used": "3 + 1"
+    }
+  ],
+  "total_questions": 10,
+  "total_points": 19,
+  "duration_minutes": 30,
+  "difficulty_distribution": {
+    "easy": 8,
+    "medium": 2
+  },
+  "topic_distribution": {
+    "algebra": 6,
+    "coordinate_geometry": 2,
+    "geometry": 1,
+    "trigonometry": 1
+  },
+  "created_at": "2025-09-07T21:24:12.223453"
+}

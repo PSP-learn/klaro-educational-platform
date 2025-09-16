@@ -1,0 +1,44 @@
+/* Minimal styles to match the clean filter look */
+:root {
+  --border: #e3e3e3;
+  --text: #222;
+  --muted: #666;
+  --accent: #4a90e2;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  margin: 0; padding: 0; color: var(--text);
+}
+.container { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+.two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+.main { min-width: 0; }
+.summary { position: relative; }
+.sticky { position: sticky; top: 16px; border: 1px solid var(--border); border-radius: 8px; padding: 12px; background: #fff; }
+h1 { font-size: 22px; margin: 8px 0 16px; }
+.bar .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+label { font-size: 13px; color: var(--muted); }
+input[type="text"], input[type="number"], select, textarea { border: 1px solid var(--border); border-radius: 6px; padding: 9px 10px; font-size: 14px; background: #fff; }
+textarea { width: 100%; }
+.actions { margin-top: 16px; display: flex; gap: 10px; }
+button { background: var(--accent); color: #fff; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+button:hover { filter: brightness(0.95); }
+.result { margin-top: 20px; padding: 12px; border: 1px solid var(--border); border-radius: 6px; }
+.hidden { display: none; }
+.link { color: var(--accent); text-decoration: none; }
+.link:hover { text-decoration: underline; }
+
+/* Accordion */
+.accordion { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
+.acc-item + .acc-item { border-top: 1px solid var(--border); }
+.acc-btn { width: 100%; text-align: left; padding: 12px; background: #f8f8f8; border: none; font-weight: 600; cursor: pointer; }
+.acc-btn:hover { background: #f1f1f1; }
+.acc-panel { padding: 12px; display: none; }
+.acc-panel.open { display: block; }
+
+.warnings { color: #b00020; margin-top: 8px; }
+
+@media (max-width: 1000px) { .two-col { grid-template-columns: 1fr; } .bar .row { grid-template-columns: 1fr; } .grid { grid-template-columns: 1fr; } }
+

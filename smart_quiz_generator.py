@@ -18,14 +18,34 @@ from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass, asdict
 from datetime import datetime
+import re
+import random
+from typing import Optional
 
 # PDF generation
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import cm
 
-from book_search import BookVectorDB, TextChunk
+# Try to import the book database; allow running without it (e.g., in lightweight deployments)
+BOOK_DB_AVAILABLE = True
+try:
+    from book_search import BookVectorDB, TextChunk  # type: ignore
+except Exception as _e:
+    BOOK_DB_AVAILABLE = False
+    BookVectorDB = None  # type: ignore
+    # Minimal fallback TextChunk for type hints when book_search isn't available
+    @dataclass
+    class TextChunk:  # type: ignore
+        text: str
+        book_title: str
+        page_number: int
+        file_path: str
+        chunk_id: str
+        chunk_index: int
+
+from param_question_factory import select_for_topics, Generated
 
 @dataclass
 class MathQuestion:
@@ -44,6 +64,9 @@ class MathQuestion:
     points: int = 1
     keywords: List[str] = None
     formula_used: str = ""
+    # Rendering controls
+    render_mode: str = "text"  # 'text' or 'image'
+    render_image_path: str = ""
 
 class MathContentAnalyzer:
     """Analyzes mathematical content to extract concepts and generate questions"""
@@ -436,64 +459,322 @@ class SmartTestGenerator:
     """Generate tests using smart question generation"""
     
     def __init__(self, db_dir: str = "book_db"):
-        self.book_db = BookVectorDB(db_dir=db_dir)
-        self.question_generator = SmartQuestionGenerator(self.book_db)
+        # Resolve a usable DB path if possible (works in containers and local)
+        self.book_db = None
+        chosen_dir = None
+        if BOOK_DB_AVAILABLE:
+            candidates = []
+            if db_dir:
+                candidates.append(Path(db_dir))
+            # Relative to this file (repo layout: backend/.. -> book_db)
+            try:
+                candidates.append(Path(__file__).resolve().parents[1] / "book_db")
+            except Exception:
+                pass
+            # CWD fallback
+            candidates.append(Path.cwd() / "book_db")
+            for cand in candidates:
+                try:
+                    if cand.exists():
+                        self.book_db = BookVectorDB(db_dir=str(cand))  # type: ignore
+                        chosen_dir = str(cand)
+                        break
+                except Exception:
+                    self.book_db = None
+                    continue
+        # Question generator depends on book_db; only instantiate when available
+        self.question_generator = SmartQuestionGenerator(self.book_db) if self.book_db else None
         self.output_dir = Path("generated_tests")
         self.output_dir.mkdir(exist_ok=True)
+        if not self.book_db:
+            print("ℹ️ SmartTestGenerator: Book DB not available; parametric (AI-only) mode will be used as fallback.")
+        else:
+            print(f"✅ SmartTestGenerator: Book DB ready at {chosen_dir}")
     
     def create_test(self, 
                    topics: List[str],
                    num_questions: int = 10,
                    question_types: List[str] = ['mcq', 'short'],
                    difficulty_levels: List[str] = ['easy', 'medium'],
-                   subject: str = "Mathematics") -> Dict:
-        """Create a smart test paper"""
+                   subject: str = "Mathematics",
+                   mode: str = "mixed",
+                   scope_filter: Optional[str] = None,
+                   render: str = "auto",
+                   books_dir: Optional[str] = None,
+                   type_counts: Optional[Dict[str, int]] = None) -> Dict:
+        """Create a smart test paper.
+        mode:
+          - "mixed": synthesize from textbook content (uses DB when available)
+          - "source": extract question-like blocks from the source text (exercises/examples)
+          - "parametric": AI-only parametric generation (new questions using SymPy), no DB required
+        scope_filter: optional substring to restrict to certain files (e.g., "class_10")
+        type_counts: optional mapping of question_type -> desired count (e.g., {"mcq": 10, "short": 5})
+        """
         
-        print(f"🔍 Searching for content on: {', '.join(topics)}")
-        
-        # Collect relevant content
-        all_chunks = []
-        for topic in topics:
-            results = self.book_db.search(topic, top_k=15)
-            for chunk, score in results:
-                if score > 0.3:  # Only use highly relevant content
-                    all_chunks.append((chunk, score))
-        
-        if not all_chunks:
-            raise ValueError(f"No relevant content found for topics: {topics}")
+        print(f"🔍 Requested topics: {', '.join(topics)} | mode={mode}")
+
+        # Helper to convert parametric Generated -> MathQuestion
+        def _from_generated(gen: Generated, qtype_fallback: Optional[str] = None) -> MathQuestion:
+            qt = qtype_fallback or gen.qtype
+            return MathQuestion(
+                question_text=gen.text,
+                question_type=qt,
+                difficulty=gen.difficulty,
+                topic=gen.topic,
+                subtopic='',
+                options=gen.options,
+                correct_answer=gen.answer,
+                explanation="Parametric generator (verified)",
+                source_content="",
+                source_book="",
+                source_page=0,
+                points={'mcq': 1, 'short': 3, 'long': 6, 'numerical': 2, 'proof': 8}.get(qt, 1),
+                keywords=[],
+                formula_used=""
+            )
+
+        def _from_generated_seed(gen: Generated, qtype_fallback: Optional[str], seed_chunk: Optional[TextChunk]) -> MathQuestion:
+            mq = _from_generated(gen, qtype_fallback)
+            if seed_chunk:
+                mq.explanation = f"Parametric variant inspired by {seed_chunk.book_title}, page {seed_chunk.page_number}"
+                mq.source_book = seed_chunk.book_title
+                mq.source_page = seed_chunk.page_number
+            return mq
+
+        # PARAMETRIC (AI-only) MODE — generate everything via factories, independent of DB
+        if mode == "parametric":
+            questions: List[MathQuestion] = []
+            # Build seed concepts from DB if available to make questions similar to textbook content
+            seeds: List[Tuple[TextChunk, Dict[str, List[str]]]] = []  # (chunk, analysis parts)
+            analyzer = self.question_generator.analyzer if self.question_generator else MathContentAnalyzer()
+            if self.book_db:
+                seed_chunks: List[Tuple[TextChunk, float]] = []
+                for topic in topics:
+                    seed_chunks.extend(self.book_db.search(topic, top_k=10))  # type: ignore
+                # dedupe by chunk_id keeping highest score
+                seen: Dict[str, Tuple[TextChunk, float]] = {}
+                for ch, sc in seed_chunks:
+                    if ch.chunk_id not in seen or sc > seen[ch.chunk_id][1]:
+                        seen[ch.chunk_id] = (ch, sc)
+                top_chunks = sorted(seen.values(), key=lambda x: x[1], reverse=True)[:12]
+                for ch, _ in top_chunks:
+                    anal = analyzer.analyze_content(ch.text)
+                    seeds.append((ch, {
+                        'main': [anal.get('main_topic') or ''],
+                        'keys': anal.get('key_concepts') or []
+                    }))
+            # Fallback if no seeds
+            if not seeds:
+                # Create a dummy seed so select_for_topics can still match by requested topics
+                seeds = [(None, {'main': topics, 'keys': topics})]  # type: ignore
+
+            def _gen_for_type(qtype: str) -> Optional[MathQuestion]:
+                # Iterate through seeds to condition generation on textbook concepts
+                random.shuffle(seeds)
+                for seed in seeds:
+                    chunk = seed[0]
+                    words = (seed[1]['main'] + seed[1]['keys']) if seed[1] else topics
+                    # Try exact type; degrade if unsupported
+                    for t in [qtype, 'short' if qtype == 'long' else ('mcq' if qtype == 'short' else 'short'), 'mcq']:
+                        g = select_for_topics(words, t)
+                        if g:
+                            return _from_generated_seed(g, qtype_fallback=t, seed_chunk=chunk)
+                return None
+            if type_counts and sum(type_counts.values()) > 0:
+                for t, cnt in type_counts.items():
+                    produced = 0
+                    attempts = 0
+                    while produced < int(cnt) and attempts < max(40, int(cnt) * 6):
+                        attempts += 1
+                        mq = _gen_for_type(t)
+                        if mq and all(mq.question_text != q.question_text for q in questions):
+                            questions.append(mq)
+                            produced += 1
+                            print(f"  ✓ Generated (AI-only) {t}")
+            else:
+                pool = question_types or ['mcq', 'short']
+                while len(questions) < num_questions:
+                    t = random.choice(pool)
+                    mq = _gen_for_type(t)
+                    if mq and all(mq.question_text != q.question_text for q in questions):
+                        questions.append(mq)
+            if not questions:
+                raise ValueError("Parametric mode failed to generate questions")
+            # Build test data
+            test_data = {
+                'title': f"{subject} Test - {', '.join(topics)}",
+                'subject': subject,
+                'topics': topics,
+                'questions': questions,
+                'total_questions': len(questions),
+                'total_points': sum(q.points for q in questions),
+                'duration_minutes': max(30, len(questions) * 3),
+                'difficulty_distribution': self._get_difficulty_distribution(questions),
+                'topic_distribution': self._get_topic_distribution(questions),
+                'created_at': datetime.now().isoformat()
+            }
+            print(f"✅ Generated {len(questions)} AI-only questions ({test_data['total_points']} points)")
+            return test_data
+
+        # For modes that may use DB, gracefully handle missing DB
+        db_ready = self.book_db is not None and BOOK_DB_AVAILABLE
+
+        # Collect relevant content (only if DB is available)
+        all_chunks: List[Tuple[TextChunk, float]] = []
+        if db_ready:
+            for topic in topics:
+                results = self.book_db.search(topic, top_k=15)  # type: ignore
+                for chunk, score in results:
+                    if score > 0.3:  # Only use highly relevant content
+                        all_chunks.append((chunk, score))
         
         # Remove duplicates and sort by relevance
-        unique_chunks = {}
+        unique_chunks: Dict[str, Tuple[TextChunk, float]] = {}
         for chunk, score in all_chunks:
             if chunk.chunk_id not in unique_chunks or unique_chunks[chunk.chunk_id][1] < score:
                 unique_chunks[chunk.chunk_id] = (chunk, score)
+        sorted_chunks: List[Tuple[TextChunk, float]] = sorted(unique_chunks.values(), key=lambda x: x[1], reverse=True)
         
-        sorted_chunks = sorted(unique_chunks.values(), key=lambda x: x[1], reverse=True)
+        # Optionally restrict to a scope (e.g., class_10 only)
+        if scope_filter:
+            sorted_chunks = [cs for cs in sorted_chunks if scope_filter.lower() in cs[0].file_path.lower()]
         
-        print(f"📚 Found {len(sorted_chunks)} relevant content chunks")
-        print(f"🎯 Generating {num_questions} questions...")
+        print(f"📚 Found {len(sorted_chunks)} relevant content chunks (DB ready={db_ready})")
         
-        # Generate questions
-        questions = []
-        attempts = 0
-        max_attempts = len(sorted_chunks) * 2
-        
-        while len(questions) < num_questions and attempts < max_attempts:
-            attempts += 1
-            
-            # Pick random chunk, question type, and difficulty
-            chunk, score = random.choice(sorted_chunks)
-            question_type = random.choice(question_types)
-            difficulty = random.choice(difficulty_levels)
-            
-            # Generate question
-            question = self.question_generator.generate_question_from_chunk(
-                chunk, question_type, difficulty
-            )
-            
-            if question and question not in questions:
-                questions.append(question)
-                print(f"  ✓ Generated {question_type} question about {question.subtopic}")
+        # Source-only extraction mode (pull real questions from the book text)
+        if mode == "source":
+            if not db_ready or not sorted_chunks:
+                print("⚠️ Source mode requested but content DB is unavailable. Falling back to AI-only parametric generation.")
+                # Fallback to parametric
+                return self.create_test(topics, num_questions, question_types, difficulty_levels, subject,
+                                        mode="parametric", scope_filter=scope_filter, render=render,
+                                        books_dir=books_dir, type_counts=type_counts)
+            questions = self._extract_source_questions(sorted_chunks, topics, num_questions)
+            # Try to upgrade to image rendering if requested
+            if render in ("auto", "image"):
+                try:
+                    from source_question_extractor import PDFQuestionExtractor
+                    extractor = PDFQuestionExtractor()
+                    # Build candidate files list from chunks
+                    candidate_files = []
+                    for chunk, _ in sorted_chunks:
+                        candidate_files.append((chunk.file_path, chunk.book_title))
+                    # Deduplicate while preserving order
+                    seen = set()
+                    unique_candidates = []
+                    for fp, title in candidate_files:
+                        key = (fp, title)
+                        if key not in seen:
+                            seen.add(key)
+                            unique_candidates.append((fp, title))
+                    # Try each candidate to extract and render images
+                    image_questions: List[MathQuestion] = []
+                    for fp, title in unique_candidates:
+                        if len(image_questions) >= num_questions:
+                            break
+                        resolved = extractor.try_resolve_file(fp, books_dir, [title])
+                        if not resolved:
+                            continue
+                        sqs = extractor.extract_questions_from_file(resolved, topics=topics,
+                                                                    max_questions=max(3, num_questions // 2))
+                        for sq in sqs:
+                            if len(image_questions) >= num_questions:
+                                break
+                            img = extractor.render_question_image(resolved, sq.page_number, sq.bbox)
+                            if not img:
+                                continue
+                            mq = MathQuestion(
+                                question_text=sq.text,
+                                question_type='short' if not sq.options else 'mcq',
+                                difficulty='medium',
+                                topic=self.question_generator.analyzer._determine_main_topic(sq.text) if self.question_generator else 'general',
+                                subtopic='',
+                                options=sq.options if sq.options else None,
+                                correct_answer="",
+                                explanation=f"From {Path(resolved).name}, page {sq.page_number}",
+                                source_content=sq.text[:300] + "...",
+                                source_book=Path(resolved).stem,
+                                source_page=sq.page_number,
+                                points=self._calculate_points('medium', 'short' if not sq.options else 'mcq'),
+                                keywords=(self.question_generator.analyzer._extract_key_concepts(sq.text, self.question_generator.analyzer._determine_main_topic(sq.text)) if self.question_generator else []),
+                                formula_used="",
+                                render_mode='image',
+                                render_image_path=img
+                            )
+                            image_questions.append(mq)
+                    if image_questions:
+                        questions = image_questions[:num_questions]
+                except Exception as e:
+                    print(f"⚠️ Image rendering failed, falling back to text-only: {e}")
+        else:
+            # MIXED generation (prefers DB; falls back to parametric)
+            if not db_ready or not sorted_chunks:
+                print("ℹ️ Content DB not available or empty. Using AI-only parametric generation for mixed mode.")
+                return self.create_test(topics, num_questions, question_types, difficulty_levels, subject,
+                                        mode="parametric", scope_filter=scope_filter, render=render,
+                                        books_dir=books_dir, type_counts=type_counts)
+            # When counts per type provided, honor them
+            if type_counts and sum(type_counts.values()) > 0:
+                total_needed = sum(type_counts.values())
+                print(f"🎯 Generating by type counts: {type_counts} (total {total_needed})")
+                questions = []
+                for qtype, qcount in type_counts.items():
+                    produced = 0
+                    attempts = 0
+                    max_attempts = max(qcount * 8, 40)
+                    # Try parametric first to ensure quality/variety
+                    while produced < qcount and attempts < max_attempts:
+                        attempts += 1
+                        gen = select_for_topics(topics, qtype)
+                        if gen:
+                            mq = _from_generated(gen, qtype_fallback=qtype)
+                            if mq and all(mq.question_text != q.question_text for q in questions):
+                                questions.append(mq)
+                                produced += 1
+                                print(f"  ✓ Generated (parametric) {qtype}")
+                                continue
+                        # Otherwise fallback to chunk-based synthesis
+                        chunk, score = random.choice(sorted_chunks)
+                        difficulty = random.choice(difficulty_levels)
+                        q = self.question_generator.generate_question_from_chunk(chunk, qtype, difficulty) if self.question_generator else None
+                        if q and all(q.question_text != qq.question_text for qq in questions):
+                            questions.append(q)
+                            produced += 1
+                            print(f"  ✓ Generated {qtype} (chunk) about {q.subtopic}")
+                # Fallback: if we couldn't reach target, fill randomly
+                if len(questions) < total_needed:
+                    print(f"⚠️ Could not reach target per-type counts. Filling remaining {total_needed - len(questions)} randomly.")
+                    attempts = 0
+                    max_attempts = len(sorted_chunks) * 2
+                    while len(questions) < total_needed and attempts < max_attempts:
+                        attempts += 1
+                        chunk, score = random.choice(sorted_chunks)
+                        qtype = random.choice(list(type_counts.keys()))
+                        difficulty = random.choice(difficulty_levels)
+                        q = self.question_generator.generate_question_from_chunk(chunk, qtype, difficulty) if self.question_generator else None
+                        if q and all(q.question_text != qq.question_text for qq in questions):
+                            questions.append(q)
+                            print(f"  ✓ Generated {qtype} (chunk) about {q.subtopic}")
+            else:
+                print(f"🎯 Generating {num_questions} questions (mixed)...")
+                # Generate questions (templated synthesis)
+                questions = []
+                attempts = 0
+                max_attempts = len(sorted_chunks) * 2
+                
+                while len(questions) < num_questions and attempts < max_attempts:
+                    attempts += 1
+                    # Pick random chunk, question type, and difficulty
+                    chunk, score = random.choice(sorted_chunks)
+                    question_type = random.choice(question_types)
+                    difficulty = random.choice(difficulty_levels)
+                    # Generate question
+                    question = self.question_generator.generate_question_from_chunk(
+                        chunk, question_type, difficulty
+                    ) if self.question_generator else None
+                    if question and all(question.question_text != qq.question_text for qq in questions):
+                        questions.append(question)
+                        print(f"  ✓ Generated {question_type} (chunk) about {question.subtopic}")
         
         if not questions:
             raise ValueError("Failed to generate any questions from the content")
@@ -515,6 +796,62 @@ class SmartTestGenerator:
         print(f"✅ Generated {len(questions)} questions ({test_data['total_points']} points)")
         return test_data
     
+    def _extract_source_questions(self, sorted_chunks: List[Tuple[TextChunk, float]], topics: List[str], num_questions: int) -> List[MathQuestion]:
+        """Extract exercise/example-like questions directly from the source text.
+        Heuristics: detect enumerated lines (1., Q1, Example 1) and gather block until next header/blank.
+        """
+        results: List[MathQuestion] = []
+        topic_set = set(t.lower() for t in topics)
+        for chunk, score in sorted_chunks:
+            if len(results) >= num_questions:
+                break
+            lines = [ln.strip() for ln in chunk.text.splitlines()]
+            i = 0
+            while i < len(lines) and len(results) < num_questions:
+                ln = lines[i]
+                header = re.match(r"^(?:Q\.?\s*\d+|\d+\.|\(\d+\)|Example\s*\d+|EXERCISE\s*\d+(?:\.\d+)?)\b", ln, flags=re.IGNORECASE)
+                if header:
+                    # Collect subsequent non-empty lines until a stopping condition
+                    block = [ln]
+                    j = i + 1
+                    while j < len(lines):
+                        nxt = lines[j]
+                        if not nxt:
+                            break
+                        # Stop if next header starts
+                        if re.match(r"^(?:Q\.?\s*\d+|\d+\.|\(\d+\)|Example\s*\d+|EXERCISE\s*\d+(?:\.\d+)?)\b", nxt, flags=re.IGNORECASE):
+                            break
+                        block.append(nxt)
+                        j += 1
+                    text_block = " ".join(block)
+                    # Basic topical filter
+                    if any(t in text_block.lower() for t in topic_set) or any(t in chunk.book_title.lower() for t in topic_set):
+                        q_text = re.sub(r"^EXERCISE[^:]*:\s*", "", text_block, flags=re.IGNORECASE)
+                        q_text = re.sub(r"^Example\s*\d+\s*:?\s*", "", q_text, flags=re.IGNORECASE)
+                        q_text = re.sub(r"^Q\.?\s*\d+\s*:?\s*", "", q_text, flags=re.IGNORECASE)
+                        q_text = re.sub(r"^\d+\.|^\(\d+\)\s*", "", q_text).strip()
+                        if len(q_text) > 25:  # avoid extremely short headers
+                            mq = MathQuestion(
+                                question_text=q_text,
+                                question_type='short',
+                                difficulty='medium',
+                                topic=self.question_generator.analyzer._determine_main_topic(text_block) or 'general',
+                                subtopic='',
+                                correct_answer="",
+                                explanation=f"From {chunk.book_title}, page {chunk.page_number}",
+                                source_content=chunk.text[:300] + "...",
+                                source_book=chunk.book_title,
+                                source_page=chunk.page_number,
+                                points=self._calculate_points('medium', 'short'),
+                                keywords=self.question_generator.analyzer._extract_key_concepts(text_block, self.question_generator.analyzer._determine_main_topic(text_block)),
+                                formula_used=""
+                            )
+                            results.append(mq)
+                    i = j
+                else:
+                    i += 1
+        return results
+
     def _get_difficulty_distribution(self, questions: List[MathQuestion]) -> Dict[str, int]:
         """Get distribution of questions by difficulty"""
         dist = {}
@@ -594,13 +931,27 @@ class SmartTestGenerator:
         
         # Questions
         for i, q in enumerate(test_data['questions'], 1):
-            header = f"Q{i}. {q.question_text}"
+            header = f"Q{i}."
+            elements.append(Paragraph(header, styles['Heading3']))
             sub = f"[Topic: {q.topic.title()}, Difficulty: {q.difficulty.title()}, Points: {q.points}]"
-            elements.append(Paragraph(header, styles['BodyText']))
             elements.append(Paragraph(sub, styles['Italic']))
-            if q.options:
-                for j, opt in enumerate(q.options):
-                    elements.append(Paragraph(f"{chr(65+j)}. {opt}", styles['Normal']))
+            if getattr(q, 'render_mode', 'text') == 'image' and getattr(q, 'render_image_path', ''):
+                try:
+                    img = Image(q.render_image_path)
+                    # Scale to page width (A4 minus margins ~ 17 cm)
+                    max_width = 17 * cm
+                    scale = min(1.0, max_width / img.drawWidth)
+                    img.drawWidth = img.drawWidth * scale
+                    img.drawHeight = img.drawHeight * scale
+                    elements.append(img)
+                except Exception:
+                    # Fallback to text
+                    elements.append(Paragraph(q.question_text, styles['BodyText']))
+            else:
+                elements.append(Paragraph(q.question_text, styles['BodyText']))
+                if q.options:
+                    for j, opt in enumerate(q.options):
+                        elements.append(Paragraph(f"{chr(65+j)}. {opt}", styles['Normal']))
             # Answer space
             elements.append(Spacer(1, 6))
             elements.append(Paragraph("Answer:", styles['Normal']))

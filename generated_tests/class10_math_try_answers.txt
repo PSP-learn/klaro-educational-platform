@@ -1,0 +1,79 @@
+================================================================================
+📚 ANSWER KEY - Mathematics Test - quadratic equations, polynomials, trigonometry
+================================================================================
+
+Q1. Answer should demonstrate understanding of triangle with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–8 (11th Nov.), page 3
+     📍 Source: Chap–8 (11th Nov.), Page 3
+     📐 Formula: A = side opposite to angle A BC hypotenuse AC  cosine of  A = side adjacent to angle A AB hypotenuse AC  tangent of  A = side opposite to angle A BC side adjacent to angle A AB  cosecant of  A = 1 hypotenuse AC sine of A side opposite to angle A BC    secant of  A = 1 hypotenuse AC cosine of A side adjacent to angle A AB    cotangent of  A = 1 side adjacent to angle A AB tangent of A side opposite to angle A BC    The ratios defined above are abbreviated as sin A, cos A, tan A, cosec A, sec A and cot A respectively
+     💯 Points: 3
+
+Q2. Answer should demonstrate understanding of polynomial with proper mathematical reasoning
+     📖 Explanation: Refer to D:\Textbooks\Rationalised Textbooks 2022-23\0962-Mathematics\1 Source Files\Chapter-2\Chapter-2.pmd, page 6
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\0962-Mathematics\1 Source Files\Chapter-2\Chapter-2.pmd, Page 6
+     📐 Formula: x = 1 is given by p(1) = 5(1)2 – 3(1) + 7 = 5 – 3 + 7 = 9 (ii) q(y) = 3y3 – 4y + 11 The value of the polynomial q(y) at y = 2 is given by q(2) = 3(2)3 – 4(2) + 11 = 24 – 8 + 11 = 16 + 11 (iii) p(t) = 4t4 + 5t3 – t2 + 6 The value of the polynomial p(t) at t = a is given by p(a) = 4a4 + 5a3 – a2 + 6 Now, consider the polynomial p(x) = x – 1
+     💯 Points: 3
+
+Q3. C
+     📖 Explanation: Based on content from Chap–4 (8th Nov.) fian, page 2
+     📍 Source: Chap–4 (8th Nov.) fian, Page 2
+     📐 Formula: c = 0, where a, b, c are real numbers, a  0
+     💯 Points: 1
+
+Q4. A
+     📖 Explanation: Based on content from Chap–4 (8th Nov.) fian, page 5
+     📍 Source: Chap–4 (8th Nov.) fian, Page 5
+     📐 Formula: c = 0, a  0 if a 2 + b + c = 0
+     💯 Points: 1
+
+Q5. A
+     📖 Explanation: Based on content from Chap-2 (8th Nov.), page 5
+     📍 Source: Chap-2 (8th Nov.), Page 5
+     📐 Formula: 2025-26
+     💯 Points: 1
+
+Q6. Answer should demonstrate understanding of angle with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–8 (11th Nov.), page 11
+     📍 Source: Chap–8 (11th Nov.), Page 11
+     📐 Formula: B = 2a
+     💯 Points: 4
+
+Q7. A
+     📖 Explanation: Based on content from D:\Textbooks\Rationalised Textbooks 2022-23\0962-Mathematics\1 Source Files\Chapter-2\Chapter-2.pmd, page 5
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\0962-Mathematics\1 Source Files\Chapter-2\Chapter-2.pmd, Page 5
+     📐 Formula: x = 1 is 4
+     💯 Points: 1
+
+Q8. C
+     📖 Explanation: Based on content from Chap–8 (11th Nov.), page 12
+     📍 Source: Chap–8 (11th Nov.), Page 12
+     📐 Formula: A = BC AC is very close to 0
+     💯 Points: 1
+
+Q9. D
+     📖 Explanation: Based on content from Chap–4 (8th Nov.) fian, page 2
+     📍 Source: Chap–4 (8th Nov.) fian, Page 2
+     📐 Formula: c = 0, where a, b, c are real numbers, a  0
+     💯 Points: 1
+
+Q10. D
+     📖 Explanation: Based on content from Chap–4 (8th Nov.) fian, page 1
+     📍 Source: Chap–4 (8th Nov.) fian, Page 1
+     📐 Formula: l = (2x + 1)
+     💯 Points: 1
+
+================================================================================
+📊 TEST STATISTICS
+================================================================================
+Total Questions: 10
+Total Points: 17
+
+Difficulty Distribution:
+  Easy: 3 questions
+  Medium: 7 questions
+
+Topic Distribution:
+  Trigonometry: 2 questions
+  Algebra: 6 questions
+  Coordinate_Geometry: 1 questions
+  Geometry: 1 questions

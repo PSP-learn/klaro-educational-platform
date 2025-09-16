@@ -2,8 +2,7 @@ package com.klaro.app.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.klaro.app.data.models.QuizPreset
-import com.klaro.app.data.models.QuizResponse
+import com.klaro.app.data.models.*
 import com.klaro.app.data.repository.PdfGeneratorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -42,35 +41,38 @@ class PdfGeneratorViewModel @Inject constructor(
     // Public Methods
     // ================================================================================
     
-    fun generateQuiz(
-        topics: List<String>,
-        numQuestions: Int,
-        questionTypes: List<String>,
-        difficultyLevels: List<String>,
-        subject: String,
-        title: String? = null,
-        source: String? = null
-    ) {
+    fun previewQuiz(request: QuizRequest) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isPreviewing = true, error = null, success = null)
+            repository.previewQuiz(request).fold(
+                onSuccess = { preview ->
+                    _uiState.value = _uiState.value.copy(
+                        isPreviewing = false,
+                        preview = preview,
+                        success = "Preview ready."
+                    )
+                },
+                onFailure = { e ->
+                    _uiState.value = _uiState.value.copy(
+                        isPreviewing = false,
+                        error = "Failed to preview: ${e.message}"
+                    )
+                }
+            )
+        }
+    }
+
+    fun generateQuizAdvanced(request: QuizRequest) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isGenerating = true, error = null)
-            
-            repository.createQuiz(
-                topics = topics,
-                numQuestions = numQuestions,
-                questionTypes = questionTypes,
-                difficultyLevels = difficultyLevels,
-                subject = subject,
-                title = title,
-                source = source
-            ).fold(
+            repository.createQuiz(request).fold(
                 onSuccess = { quizResponse ->
                     _uiState.value = _uiState.value.copy(
                         isGenerating = false,
                         lastGeneratedQuiz = quizResponse,
-                        success = "Quiz generated successfully! Ready for download."
+                        success = "Quiz generated successfully! Ready for download.",
+                        preview = null
                     )
-                    
-                    // Add to recent quizzes
                     _recentQuizzes.value = listOf(quizResponse) + _recentQuizzes.value.take(9)
                 },
                 onFailure = { error ->
@@ -95,7 +97,6 @@ class PdfGeneratorViewModel @Inject constructor(
                         success = "Quiz generated from preset successfully!"
                     )
                     
-                    // Add to recent quizzes
                     _recentQuizzes.value = listOf(quizResponse) + _recentQuizzes.value.take(9)
                 },
                 onFailure = { error ->
@@ -111,19 +112,19 @@ class PdfGeneratorViewModel @Inject constructor(
     fun downloadQuiz(quizId: String, fileType: String = "questions") {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isDownloading = true, error = null)
-            
-            repository.downloadQuiz(quizId, fileType).fold(
+repository.downloadQuiz(quizId, fileType).fold(
                 onSuccess = { responseBody ->
                     _uiState.value = _uiState.value.copy(
                         isDownloading = false,
                         downloadedFile = responseBody,
-                        success = "Quiz downloaded successfully!"
+                        lastDownloadType = fileType,
+                        success = "Downloaded $fileType successfully!"
                     )
                 },
                 onFailure = { error ->
                     _uiState.value = _uiState.value.copy(
                         isDownloading = false,
-                        error = "Failed to download quiz: ${error.message}"
+                        error = "Failed to download $fileType: ${error.message}"
                     )
                 }
             )
@@ -132,6 +133,10 @@ class PdfGeneratorViewModel @Inject constructor(
     
     fun clearMessages() {
         _uiState.value = _uiState.value.copy(error = null, success = null)
+    }
+
+    fun clearDownloadedFile() {
+        _uiState.value = _uiState.value.copy(downloadedFile = null, lastDownloadType = null)
     }
 
     fun loadChapters(subject: String, grade: String) {
@@ -207,14 +212,17 @@ class PdfGeneratorViewModel @Inject constructor(
 // ================================================================================
 
 data class PdfGeneratorUiState(
+    val isPreviewing: Boolean = false,
     val isGenerating: Boolean = false,
     val isDownloading: Boolean = false,
     val isChaptersLoading: Boolean = false,
     val isSubtopicsLoading: Boolean = false,
     val chapters: List<String> = emptyList(),
     val subtopics: List<String> = emptyList(),
+    val preview: PreviewResponse? = null,
     val lastGeneratedQuiz: QuizResponse? = null,
     val downloadedFile: okhttp3.ResponseBody? = null,
+    val lastDownloadType: String? = null,
     val error: String? = null,
     val success: String? = null
 )

@@ -75,10 +75,16 @@ object MockDataProvider {
     fun mockQuizResponse(): QuizResponse = QuizResponse(
         quizId = "mock_quiz_${System.currentTimeMillis()}",
         title = "Sample Quiz",
-        totalQuestions = 10,
-        totalPoints = 100,
-        createdAt = "2025-09-01T19:15:00Z",
-        downloadUrl = "https://mock.klaro.app/quiz/download/mock_quiz.pdf"
+        questionsFile = null,
+        answersFile = null,
+        pdfQuestionsFile = null,
+        pdfAnswersFile = null,
+        pdfMarkingSchemeFile = null,
+        metadata = mapOf(
+            "total_questions" to 10,
+            "total_points" to 100
+        ),
+        createdAt = "2025-09-01T19:15:00Z"
     )
 
     fun mockDoubtSolution(question: String): DoubtSolution = DoubtSolution(

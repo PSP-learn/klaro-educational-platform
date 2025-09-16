@@ -30,6 +30,20 @@ import faiss
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
+# Safe unpickling across script/module boundaries
+class _ClassMappingUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        """Tolerant class resolver for historical pickles.
+        Some pickles were created when scripts ran as __main__ or when class locations changed.
+        Always map TextChunk and BookMetadata to the current definitions in this module.
+        """
+        if name == 'TextChunk':
+            return TextChunk
+        if name == 'BookMetadata':
+            return BookMetadata
+        # Fallback to default
+        return super().find_class(module, name)
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -346,9 +360,13 @@ class BookVectorDB:
             # Load FAISS index
             self.index = faiss.read_index(str(index_path))
             
-            # Load chunks
+            # Load chunks (tolerate pickles created via __main__)
             with open(chunks_path, 'rb') as f:
-                self.chunks = pickle.load(f)
+                try:
+                    self.chunks = pickle.load(f)
+                except Exception:
+                    f.seek(0)
+                    self.chunks = _ClassMappingUnpickler(f).load()
             
             # Load book metadata
             with open(books_path, 'r') as f:

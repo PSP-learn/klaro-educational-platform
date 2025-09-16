@@ -1,0 +1,200 @@
+{
+  "title": "Mathematics Test - quadratic equations, factorization",
+  "subject": "Mathematics",
+  "topics": [
+    "quadratic equations",
+    "factorization"
+  ],
+  "questions": [
+    {
+      "question_text": "Find the roots of the quadratic equation $ x^{2} + x - 72 = 0 $.",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "",
+      "options": [
+        "(-9, 8)",
+        "(9, -8)",
+        "(8, -9)",
+        "(-8, 7)"
+      ],
+      "correct_answer": "A",
+      "explanation": "Parametric generator (verified)",
+      "source_content": "",
+      "source_book": "",
+      "source_page": 0,
+      "points": 1,
+      "keywords": [],
+      "formula_used": "",
+      "render_mode": "text",
+      "render_image_path": ""
+    },
+    {
+      "question_text": "Find the roots of the quadratic equation $ x^{2} + 11 x + 24 = 0 $.",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "",
+      "options": [
+        "(-3, -8)",
+        "(8, 3)",
+        "(-7, -4)",
+        "(-8, -3)"
+      ],
+      "correct_answer": "D",
+      "explanation": "Parametric generator (verified)",
+      "source_content": "",
+      "source_book": "",
+      "source_page": 0,
+      "points": 1,
+      "keywords": [],
+      "formula_used": "",
+      "render_mode": "text",
+      "render_image_path": ""
+    },
+    {
+      "question_text": "Find the roots of the quadratic equation $ x^{2} - 10 x + 16 = 0 $.",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "",
+      "options": [
+        "(8, 2)",
+        "(-2, -8)",
+        "(2, 8)",
+        "(3, 7)"
+      ],
+      "correct_answer": "C",
+      "explanation": "Parametric generator (verified)",
+      "source_content": "",
+      "source_book": "",
+      "source_page": 0,
+      "points": 1,
+      "keywords": [],
+      "formula_used": "",
+      "render_mode": "text",
+      "render_image_path": ""
+    },
+    {
+      "question_text": "Find the roots of the quadratic equation $ 2 x^{2} + 26 x + 84 = 0 $.",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "",
+      "options": [
+        "(-7, -6)",
+        "(-6, -7)",
+        "(7, 6)",
+        "(-6, -7)"
+      ],
+      "correct_answer": "A",
+      "explanation": "Parametric generator (verified)",
+      "source_content": "",
+      "source_book": "",
+      "source_page": 0,
+      "points": 1,
+      "keywords": [],
+      "formula_used": "",
+      "render_mode": "text",
+      "render_image_path": ""
+    },
+    {
+      "question_text": "Find the roots of the quadratic equation $ x^{2} + 8 x + 7 = 0 $.",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "",
+      "options": [
+        "(-6, -2)",
+        "(-1, -7)",
+        "(7, 1)",
+        "(-7, -1)"
+      ],
+      "correct_answer": "D",
+      "explanation": "Parametric generator (verified)",
+      "source_content": "",
+      "source_book": "",
+      "source_page": 0,
+      "points": 1,
+      "keywords": [],
+      "formula_used": "",
+      "render_mode": "text",
+      "render_image_path": ""
+    },
+    {
+      "question_text": "Factorize $ x^{2} - 2 x - 15 $.",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "",
+      "options": null,
+      "correct_answer": "(x - 5)(x - -3)",
+      "explanation": "Parametric generator (verified)",
+      "source_content": "",
+      "source_book": "",
+      "source_page": 0,
+      "points": 3,
+      "keywords": [],
+      "formula_used": "",
+      "render_mode": "text",
+      "render_image_path": ""
+    },
+    {
+      "question_text": "Factorize $ x^{2} - 4 x + 3 $.",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "",
+      "options": null,
+      "correct_answer": "(x - 3)(x - 1)",
+      "explanation": "Parametric generator (verified)",
+      "source_content": "",
+      "source_book": "",
+      "source_page": 0,
+      "points": 3,
+      "keywords": [],
+      "formula_used": "",
+      "render_mode": "text",
+      "render_image_path": ""
+    },
+    {
+      "question_text": "Factorize $ x^{2} - 25 $.",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "",
+      "options": null,
+      "correct_answer": "(x - -5)(x - 5)",
+      "explanation": "Parametric generator (verified)",
+      "source_content": "",
+      "source_book": "",
+      "source_page": 0,
+      "points": 3,
+      "keywords": [],
+      "formula_used": "",
+      "render_mode": "text",
+      "render_image_path": ""
+    }
+  ],
+  "total_questions": 8,
+  "total_points": 14,
+  "duration_minutes": 30,
+  "difficulty_distribution": {
+    "medium": 5,
+    "easy": 3
+  },
+  "topic_distribution": {
+    "algebra": 8
+  },
+  "created_at": "2025-09-09T00:15:05.768051",
+  "ui_filters": {
+    "streams": null,
+    "class": null,
+    "topic_tags": null,
+    "subtopics": null,
+    "levels": null,
+    "source_material": null,
+    "language": null,
+    "centers": null
+  }
+}

@@ -1,0 +1,45 @@
+% Marking Scheme LaTeX template (exam class)
+\documentclass[12pt]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{lmodern}
+\pagestyle{headandfoot}
+\firstpageheader{ {{ header or subject }} }{\textbf{ MARKING SCHEME - {{ title }} }}{}
+\runningheader{ {{ subject }} }{ MARKING SCHEME }{Page \thepage}
+\runningheadrule
+
+\begin{document}
+\begin{center}
+{% if header %}\LARGE\textbf{ {{ header }} } \\[6pt]{% endif %}
+\Large\textbf{ MARKING SCHEME - {{ title }} } \\[6pt]
+\normalsize Subject: {{ subject }} \hspace{1cm} Total Questions: {{ total_questions }} \hspace{1cm} Total Marks: {{ total_marks }}
+\end{center}
+\vspace{0.6em}
+
+{% if notes and notes|length > 0 %}
+\textbf{Notes:}
+\begin{itemize}
+{% for n in notes %}  \item {{ n }}
+{% endfor %}\end{itemize}
+\vspace{0.6em}
+{% endif %}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{7cm} r r r}
+\toprule
+\textbf{Question Type} & \textbf{Count} & \textbf{Marks/Item} & \textbf{Subtotal} \\
+\midrule
+{% for row in rows %}
+{{ row.label }} & {{ row.count }} & {{ row.per_mark }} & {{ row.subtotal }} \\
+{% endfor %}
+\midrule
+\textbf{TOTAL} & {{ total_questions }} & -- & \textbf{{{ total_marks }}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}
+

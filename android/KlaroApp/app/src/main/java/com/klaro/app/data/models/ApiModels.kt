@@ -1,5 +1,7 @@
 package com.klaro.app.data.models
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * 📊 API Data Models
  * 
@@ -10,23 +12,73 @@ package com.klaro.app.data.models
 // 📄 Quiz/PDF Generation Models
 // ================================================================================
 
+data class BlueprintConfig(
+    @SerializedName("total_questions") val totalQuestions: Int? = null,
+    @SerializedName("by_type") val byType: Map<String, Int>? = null,
+    @SerializedName("by_difficulty") val byDifficulty: Map<String, Int>? = null,
+    @SerializedName("duration_minutes") val durationMinutes: Int? = null
+)
+
+data class SectionConfig(
+    val name: String,
+    val types: List<String>,
+    val count: Int,
+    val difficulty: Map<String, Int>? = null,
+    @SerializedName("negative_marking") val negativeMarking: Double? = 0.0
+)
+
 data class QuizRequest(
     val topics: List<String>,
-    val numQuestions: Int = 10,
-    val questionTypes: List<String> = listOf("mcq", "short"),
-    val difficultyLevels: List<String> = listOf("easy", "medium"),
+    @SerializedName("num_questions") val numQuestions: Int = 10,
+    @SerializedName("question_types") val questionTypes: List<String> = listOf("mcq", "short"),
+    @SerializedName("difficulty_levels") val difficultyLevels: List<String> = listOf("easy", "medium"),
     val subject: String = "Mathematics",
+    val duration: Int? = null,
     val title: String? = null,
-    val source: String? = null
+    // New customization fields
+    val domain: String? = null, // CBSE | JEE | NEET
+    val grade: String? = null,
+    val subjects: List<String>? = null,
+    val header: String? = null,
+    val instructions: List<String>? = null,
+    val mode: String? = "mixed",
+    @SerializedName("scope_filter") val scopeFilter: String? = null,
+    val render: String? = "auto",
+    @SerializedName("books_dir") val booksDir: String? = null,
+    @SerializedName("output_engine") val outputEngine: String? = "reportlab",
+    @SerializedName("include_solutions") val includeSolutions: Boolean? = false,
+    val blueprint: BlueprintConfig? = null,
+    val sections: List<SectionConfig>? = null,
+    val marks: Map<String, Int>? = null,
+    // UI metadata only
+    val streams: List<String>? = null,
+    @SerializedName("class_filter") val classFilter: List<String>? = null,
+    @SerializedName("topic_tags") val topicTags: List<String>? = null,
+    val subtopics: List<String>? = null,
+    val levels: List<String>? = null,
+    @SerializedName("source_material") val sourceMaterial: List<String>? = null,
+    val language: String? = null,
+    val centers: List<String>? = null
 )
 
 data class QuizResponse(
-    val quizId: String,
+    @SerializedName("quiz_id") val quizId: String,
     val title: String,
-    val totalQuestions: Int,
-    val totalPoints: Int,
-    val createdAt: String,
-    val downloadUrl: String
+    @SerializedName("questions_file") val questionsFile: String?,
+    @SerializedName("answers_file") val answersFile: String?,
+    @SerializedName("pdf_questions_file") val pdfQuestionsFile: String?,
+    @SerializedName("pdf_answers_file") val pdfAnswersFile: String?,
+    @SerializedName("pdf_marking_scheme_file") val pdfMarkingSchemeFile: String?,
+    val metadata: Map<String, Any>?,
+    @SerializedName("created_at") val createdAt: String
+)
+
+data class PreviewResponse(
+    val valid: Boolean,
+    val totals: Map<String, Int>,
+    @SerializedName("duration_estimate") val durationEstimate: Int,
+    val warnings: List<String> = emptyList(),
+    @SerializedName("normalized_blueprint") val normalizedBlueprint: BlueprintConfig?
 )
 
 // ================================================================================
@@ -86,10 +138,10 @@ data class JEETestResponse(
 data class DoubtRequest(
     val question: String,
     val subject: String = "Mathematics",
-    val userId: String,
-    val userPlan: String = "basic",
+    @SerializedName(value = "user_id", alternate = ["userId"]) val userId: String,
+    @SerializedName(value = "user_plan", alternate = ["userPlan"]) val userPlan: String = "basic",
     val context: String? = null,
-    val imageData: String? = null
+    @SerializedName(value = "image_data", alternate = ["imageData"]) val imageData: String? = null
 )
 
 data class DoubtSolution(
@@ -98,7 +150,9 @@ data class DoubtSolution(
     val steps: List<SolutionStep>,
     val metadata: DoubtMetadata,
     val mobileFormat: MobileFormat,
-    val whatsappFormat: String
+    val whatsappFormat: String,
+    val handwrittenImages: List<String>? = null,
+    val handwrittenPdfUrl: String? = null
 )
 
 data class SolutionStep(

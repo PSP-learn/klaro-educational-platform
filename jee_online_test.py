@@ -153,7 +153,12 @@ class JEEOnlineTest:
                     "correct": "+4",
                     "incorrect": "-1" if config.negative_marking else "0",
                     "unattempted": "0"
-                }
+                },
+                "instructions": [
+                    "Each subject (Physics, Chemistry, Mathematics) contains 20 MCQ (+4/−1) and 5 Numerical (+4/0).",
+                    "Numerical answers are evaluated with appropriate rounding based on the specified format.",
+                    "Mark for review is available; ensure you submit before time ends."
+                ]
             },
             
             "nta_abhyas_interface": {
@@ -520,7 +525,38 @@ class JEEScoring:
     
     @staticmethod
     def calculate_score(answers: Dict, questions: List[Dict], config: JEETestConfig) -> Dict:
-        """Calculate JEE score with detailed analysis"""
+        """Calculate JEE score with detailed analysis
+        - MCQ: strict option match (A/B/C/D), apply negative marking if enabled
+        - Numerical: numeric normalization with tolerance and rounding based on answer_format when provided
+        """
+        
+        def _decimals_from_format(fmt: str) -> int:
+            if not fmt or "." not in fmt:
+                return 0
+            return len(fmt.split(".")[-1])
+        
+        def _try_float(s: str) -> Optional[float]:
+            try:
+                return float(str(s).strip())
+            except Exception:
+                return None
+        
+        def _numeric_equal(user: str, correct: str, fmt: Optional[str]) -> bool:
+            # Determine decimals from format if available
+            decimals = _decimals_from_format(fmt) if fmt else None
+            uf = _try_float(user)
+            cf = _try_float(correct)
+            if uf is None or cf is None:
+                # Fallback to exact string match if not parseable
+                return (str(user).strip() == str(correct).strip())
+            # If decimals specified, round both to that many decimals
+            if decimals is not None and decimals > 0:
+                uf_rounded = round(uf, decimals)
+                cf_rounded = round(cf, decimals)
+                return uf_rounded == cf_rounded
+            # Else use a small absolute tolerance
+            tol = 1e-3
+            return abs(uf - cf) <= tol
         
         results = {
             "overall": {"correct": 0, "incorrect": 0, "unattempted": 0, "score": 0},
@@ -550,13 +586,20 @@ class JEEScoring:
             
             if q_id in answers:
                 user_answer = answers[q_id]
-                if user_answer == correct_ans:
+                is_correct = False
+                if question.get("type") == "NUMERICAL":
+                    fmt = question.get("answer_format") or question.get("answer_range")
+                    is_correct = _numeric_equal(user_answer, correct_ans, fmt)
+                else:
+                    is_correct = (str(user_answer).strip().upper() == str(correct_ans).strip().upper())
+                
+                if is_correct:
                     # Correct answer
                     results["overall"]["correct"] += 1
                     results["subject_wise"][subject]["correct"] += 1
                     results["difficulty_wise"][difficulty]["correct"] += 1
                     
-                    score_points = question["marks"]
+                    score_points = question.get("marks", 4)
                     results["overall"]["score"] += score_points
                     results["subject_wise"][subject]["score"] += score_points
                 else:
@@ -564,7 +607,7 @@ class JEEScoring:
                     results["overall"]["incorrect"] += 1
                     results["subject_wise"][subject]["incorrect"] += 1
                     
-                    negative_points = question.get("negative_marks", -1)
+                    negative_points = question.get("negative_marks", -1 if question.get("type") == "MCQ" else 0)
                     results["overall"]["score"] += negative_points
                     results["subject_wise"][subject]["score"] += negative_points
             else:
@@ -574,7 +617,7 @@ class JEEScoring:
         
         # Calculate percentile (mock calculation)
         total_possible = len(questions) * 4
-        percentage = (results["overall"]["score"] / total_possible) * 100
+        percentage = (results["overall"]["score"] / total_possible) * 100 if total_possible else 0
         results["percentile"] = max(0, min(100, percentage + random.uniform(-5, 5)))
         results["rank"] = random.randint(1000, 50000)  # Mock rank
         

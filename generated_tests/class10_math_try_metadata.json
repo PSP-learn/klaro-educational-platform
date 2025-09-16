@@ -1,0 +1,269 @@
+{
+  "title": "Mathematics Test - quadratic equations, polynomials, trigonometry",
+  "subject": "Mathematics",
+  "topics": [
+    "quadratic equations",
+    "polynomials",
+    "trigonometry"
+  ],
+  "questions": [
+    {
+      "question_text": "Outline the procedure for triangle.",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "trigonometry",
+      "subtopic": "triangle",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of triangle with proper mathematical reasoning",
+      "explanation": "Refer to Chap\u20138 (11th Nov.), page 3",
+      "source_content": "INTRODUCTION TO TRIGONOMETRY 115 Note that the position of sides change when you consider angle C in place of A (see Fig. 8.5). You have studied the concept of \u2018ratio\u2019 in your earlier classes. We now define certain ratios involving the sides of a right triangle, and call them trigonometric ratios. T...",
+      "source_book": "Chap\u20138 (11th Nov.)",
+      "source_page": 3,
+      "points": 3,
+      "keywords": [
+        "triangle",
+        "sine",
+        "tangent",
+        "ratios",
+        "hypotenuse"
+      ],
+      "formula_used": "A = side opposite to angle A BC hypotenuse AC \uf03d cosine of \uf0d0 A = side adjacent to angle A AB hypotenuse AC \uf03d tangent of \uf0d0 A = side opposite to angle A BC side adjacent to angle A AB \uf03d cosecant of \uf0d0 A = 1 hypotenuse AC sine of A side opposite to angle A BC \uf03d \uf03d \uf0d0 secant of \uf0d0 A = 1 hypotenuse AC cosine of A side adjacent to angle A AB \uf03d \uf03d \uf0d0 cotangent of \uf0d0 A = 1 side adjacent to angle A AB tangent of A side opposite to angle A BC \uf03d \uf03d \uf0d0 The ratios defined above are abbreviated as sin A, cos A, tan A, cosec A, sec A and cot A respectively"
+    },
+    {
+      "question_text": "Solve: Check whether \u20132 and 2 are zeroes of the polynomial x + 2",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "polynomial",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of polynomial with proper mathematical reasoning",
+      "explanation": "Refer to D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd, page 6",
+      "source_content": "30 MATHEMATICS Solution : (i) p(x) = 5x2 \u2013 3x + 7 The value of the polynomial p(x) at x = 1 is given by p(1) = 5(1)2 \u2013 3(1) + 7 = 5 \u2013 3 + 7 = 9 (ii) q(y) = 3y3 \u2013 4y + 11 The value of the polynomial q(y) at y = 2 is given by q(2) = 3(2)3 \u2013 4(2) + 11 = 24 \u2013 8 + 11 = 16 + 11 (iii) p(t) = 4t4 + 5t3 \u2013 t2...",
+      "source_book": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd",
+      "source_page": 6,
+      "points": 3,
+      "keywords": [
+        "polynomial",
+        "equation"
+      ],
+      "formula_used": "x = 1 is given by p(1) = 5(1)2 \u2013 3(1) + 7 = 5 \u2013 3 + 7 = 9 (ii) q(y) = 3y3 \u2013 4y + 11 The value of the polynomial q(y) at y = 2 is given by q(2) = 3(2)3 \u2013 4(2) + 11 = 24 \u2013 8 + 11 = 16 + 11 (iii) p(t) = 4t4 + 5t3 \u2013 t2 + 6 The value of the polynomial p(t) at t = a is given by p(a) = 4a4 + 5a3 \u2013 a2 + 6 Now, consider the polynomial p(x) = x \u2013 1"
+    },
+    {
+      "question_text": "The mathematical expression for equation is:",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "equation",
+      "options": [
+        "An answer that confuses equation with another term",
+        "An incorrect but plausible answer about equation",
+        "The correct answer related to equation",
+        "A concept from a different mathematical area"
+      ],
+      "correct_answer": "C",
+      "explanation": "Based on content from Chap\u20134 (8th Nov.) fian, page 2",
+      "source_content": "QUADRATIC EQUATIONS 39 Sridharacharya (C.E. 1025) derived a formula, now known as the quadratic formula, (as quoted by Bhaskara II) for solving a quadratic equation by the method of completing the squ...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 2,
+      "points": 1,
+      "keywords": [
+        "variable",
+        "roots",
+        "equation",
+        "equations",
+        "EQUATIONS"
+      ],
+      "formula_used": "c = 0, where a, b, c are real numbers, a \uf0b9 0"
+    },
+    {
+      "question_text": "To find roots, we use the formula:",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "roots",
+      "options": [
+        "The correct answer related to roots",
+        "A concept from a different mathematical area",
+        "An incorrect but plausible answer about roots",
+        "An answer that confuses roots with another term"
+      ],
+      "correct_answer": "A",
+      "explanation": "Based on content from Chap\u20134 (8th Nov.) fian, page 5",
+      "source_content": "42 MATHEMATICS (ii) The product of two consecutive positive integers is 306. We need to find the integers. (iii) Rohan\u2019s mother is 26 years older than him. The product of their ages (in years) 3 years...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 5,
+      "points": 1,
+      "keywords": [
+        "roots",
+        "equation",
+        "quadratic",
+        "polynomial",
+        "Quadratic"
+      ],
+      "formula_used": "c = 0, a \uf0b9 0 if a \uf0612 + b\uf061 + c = 0"
+    },
+    {
+      "question_text": "To find coordinate, we use the formula:",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "coordinate_geometry",
+      "subtopic": "coordinate",
+      "options": [
+        "The correct answer related to coordinate",
+        "An incorrect but plausible answer about coordinate",
+        "A concept from a different mathematical area",
+        "An answer that confuses coordinate with another term"
+      ],
+      "correct_answer": "A",
+      "explanation": "Based on content from Chap-2 (8th Nov.), page 5",
+      "source_content": "14 MATHEMATICS Case (i) : Here, the graph cuts x-axis at two distinct points A and A\uf0a2. The x-coordinates of A and A\uf0a2 are the two zeroes of the quadratic polynomial ax2 + bx + c in this case (see Fig. ...",
+      "source_book": "Chap-2 (8th Nov.)",
+      "source_page": 5,
+      "points": 1,
+      "keywords": [
+        "graph",
+        "axis",
+        "coordinate",
+        "coordinates"
+      ],
+      "formula_used": "2025-26"
+    },
+    {
+      "question_text": "How do you approach geometry problems?",
+      "question_type": "short",
+      "difficulty": "medium",
+      "topic": "geometry",
+      "subtopic": "angle",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of angle with proper mathematical reasoning",
+      "explanation": "Refer to Chap\u20138 (11th Nov.), page 11",
+      "source_content": "INTRODUCTION TO TRIGONOMETRY 123 As you know, for finding the trigonometric ratios, we need to know the lengths of the sides of the triangle. So, let us suppose that AB = 2a. Then, BD = 1 BC = 2 a and AD2 = AB2 \u2013 BD2 = (2a)2 \u2013 (a)2 = 3a2, Therefore, AD = 3 a Now, we have : sin 30\u00b0 = BD 1 AB 2 2 a a ...",
+      "source_book": "Chap\u20138 (11th Nov.)",
+      "source_page": 11,
+      "points": 4,
+      "keywords": [
+        "angle",
+        "triangle"
+      ],
+      "formula_used": "B = 2a"
+    },
+    {
+      "question_text": "Which formula is used to calculate quadratic?",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "quadratic",
+      "options": [
+        "The correct answer related to quadratic",
+        "A concept from a different mathematical area",
+        "An incorrect but plausible answer about quadratic",
+        "An answer that confuses quadratic with another term"
+      ],
+      "correct_answer": "A",
+      "explanation": "Based on content from D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd, page 5",
+      "source_content": "POLYNOMIALS 29 EXERCISE 2.1 1. Which of the following expressions are polynomials in one variable and which are not? State reasons for your answer. (i) 4x2 \u2013 3x + 7 (ii) y2 + 2 (iii) 3 2 t t + (iv) y ...",
+      "source_book": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd",
+      "source_page": 5,
+      "points": 1,
+      "keywords": [
+        "linear",
+        "variable",
+        "coefficients",
+        "quadratic",
+        "POLYNOMIALS"
+      ],
+      "formula_used": "x = 1 is 4"
+    },
+    {
+      "question_text": "Which formula is used to calculate ratios?",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "trigonometry",
+      "subtopic": "ratios",
+      "options": [
+        "An incorrect but plausible answer about ratios",
+        "An answer that confuses ratios with another term",
+        "The correct answer related to ratios",
+        "A concept from a different mathematical area"
+      ],
+      "correct_answer": "C",
+      "explanation": "Based on content from Chap\u20138 (11th Nov.), page 12",
+      "source_content": "124 MATHEMATICS When \uf0d0 A is very close to 0\u00b0, BC gets very close to 0 and so the value of sin A = BC AC is very close to 0. Also, when \uf0d0 A is very close to 0\u00b0, AC is nearly the same as AB and so the v...",
+      "source_book": "Chap\u20138 (11th Nov.)",
+      "source_page": 12,
+      "points": 1,
+      "keywords": [
+        "ratios"
+      ],
+      "formula_used": "A = BC AC is very close to 0"
+    },
+    {
+      "question_text": "To find roots, we use the formula:",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "roots",
+      "options": [
+        "An answer that confuses roots with another term",
+        "A concept from a different mathematical area",
+        "An incorrect but plausible answer about roots",
+        "The correct answer related to roots"
+      ],
+      "correct_answer": "D",
+      "explanation": "Based on content from Chap\u20134 (8th Nov.) fian, page 2",
+      "source_content": "QUADRATIC EQUATIONS 39 Sridharacharya (C.E. 1025) derived a formula, now known as the quadratic formula, (as quoted by Bhaskara II) for solving a quadratic equation by the method of completing the squ...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 2,
+      "points": 1,
+      "keywords": [
+        "variable",
+        "roots",
+        "equation",
+        "equations",
+        "EQUATIONS"
+      ],
+      "formula_used": "c = 0, where a, b, c are real numbers, a \uf0b9 0"
+    },
+    {
+      "question_text": "To find equation, we use the formula:",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "equation",
+      "options": [
+        "An incorrect but plausible answer about equation",
+        "A concept from a different mathematical area",
+        "An answer that confuses equation with another term",
+        "The correct answer related to equation"
+      ],
+      "correct_answer": "D",
+      "explanation": "Based on content from Chap\u20134 (8th Nov.) fian, page 1",
+      "source_content": "38 MATHEMATICS 4 4.1 Introduction In Chapter 2, you have studied different types of polynomials. One type was the quadratic polynomial of the form ax2 + bx + c, a \uf0b9 0. When we equate this polynomial t...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 1,
+      "points": 1,
+      "keywords": [
+        "QUADRATIC",
+        "equation",
+        "equations",
+        "EQUATIONS",
+        "quadratic"
+      ],
+      "formula_used": "l = (2x + 1)"
+    }
+  ],
+  "total_questions": 10,
+  "total_points": 17,
+  "duration_minutes": 30,
+  "difficulty_distribution": {
+    "easy": 3,
+    "medium": 7
+  },
+  "topic_distribution": {
+    "trigonometry": 2,
+    "algebra": 6,
+    "coordinate_geometry": 1,
+    "geometry": 1
+  },
+  "created_at": "2025-09-07T21:08:38.644339"
+}

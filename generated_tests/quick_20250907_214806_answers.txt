@@ -1,0 +1,54 @@
+================================================================================
+📚 ANSWER KEY - Mathematics Test - quadratic equations, trigonometry
+================================================================================
+
+Q1. C
+     📖 Explanation: Based on content from D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_3\Ch_03_FINAL  02.01.PMD, page 1
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_3\Ch_03_FINAL  02.01.PMD, Page 1
+     📐 Formula: sin
+     💯 Points: 1
+
+Q2. A
+     📖 Explanation: Based on content from Chap–4 (8th Nov.) fian, page 1
+     📍 Source: Chap–4 (8th Nov.) fian, Page 1
+     📐 Formula: l = (2x + 1)
+     💯 Points: 1
+
+Q3. C
+     📖 Explanation: Based on content from Chap–4 (8th Nov.) fian, page 4
+     📍 Source: Chap–4 (8th Nov.) fian, Page 4
+     📐 Formula: c = 0
+     💯 Points: 1
+
+Q4. Answer should demonstrate understanding of ratios with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–8 (11th Nov.), page 12
+     📍 Source: Chap–8 (11th Nov.), Page 12
+     📐 Formula: A = BC AC is very close to 0
+     💯 Points: 3
+
+Q5. A
+     📖 Explanation: Based on content from Chap–4 (8th Nov.) fian, page 3
+     📍 Source: Chap–4 (8th Nov.) fian, Page 3
+     📐 Formula: t = (x – 5) (40 – x) = 40x – x2 – 200 + 5x = – x2 + 45x – 200 So, – x2 + 45x – 200 = 124 (Given that product = 124) i
+     💯 Points: 1
+
+Q6. Answer should demonstrate understanding of roots with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–4 (8th Nov.) fian, page 2
+     📍 Source: Chap–4 (8th Nov.) fian, Page 2
+     📐 Formula: c = 0, where a, b, c are real numbers, a  0
+     💯 Points: 4
+
+================================================================================
+📊 TEST STATISTICS
+================================================================================
+Total Questions: 6
+Total Points: 11
+
+Difficulty Distribution:
+  Easy: 4 questions
+  Medium: 2 questions
+
+Topic Distribution:
+  Geometry: 1 questions
+  Algebra: 4 questions
+  Trigonometry: 1 questions

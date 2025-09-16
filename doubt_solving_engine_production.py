@@ -615,9 +615,25 @@ Make this worthy of premium tutoring service.
         )
     
     async def _fallback_ocr(self, image_data: bytes) -> str:
-        """Fallback OCR using basic methods"""
-        # Placeholder for Tesseract or similar
-        return "OCR extraction failed. Please type your question."
+        """Fallback OCR using Tesseract (if available). Returns extracted text or a helpful message."""
+        try:
+            import pytesseract
+            from PIL import Image
+            import io
+            # Load image from bytes
+            img = Image.open(io.BytesIO(image_data))
+            text = pytesseract.image_to_string(img)
+            # Basic math-friendly normalization
+            if text:
+                s = text.replace("−", "-")
+                s = s.replace("×", "x")
+                s = s.replace("÷", "/")
+                s = s.replace("^", "^")
+                s = " ".join(s.split())
+                return s
+            return "OCR could not extract readable text. Please type your question."
+        except Exception:
+            return "OCR not available. Please type your question."
     
     async def _check_usage_limits(self, user_id: str, user_plan: str) -> Dict[str, Any]:
         """Check if user can ask more doubts this month"""

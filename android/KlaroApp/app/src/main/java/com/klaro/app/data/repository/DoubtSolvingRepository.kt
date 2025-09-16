@@ -1,5 +1,6 @@
 package com.klaro.app.data.repository
 
+import com.klaro.app.BuildConfig
 import com.klaro.app.data.api.KlaroApiService
 import com.klaro.app.data.models.*
 import kotlinx.coroutines.Dispatchers
@@ -111,13 +112,27 @@ class DoubtSolvingRepository @Inject constructor(
             )
         }
 
+        // Handwritten assets
+        fun absolutize(url: String?): String? {
+            if (url == null || url.isBlank()) return null
+            if (url.startsWith("http://") || url.startsWith("https://")) return url
+            val base = BuildConfig.BASE_API_URL.trimEnd('/')
+            val cleaned = if (url.startsWith("/api/")) url.removePrefix("/api/") else url.trimStart('/')
+            return "$base/$cleaned"
+        }
+        val handwrittenImagesRaw = (solutionMap["handwritten_images"] as? List<*>)?.mapNotNull { it as? String } ?: emptyList()
+        val handwrittenImages = handwrittenImagesRaw.mapNotNull { absolutize(it) }
+        val handwrittenPdfUrl = absolutize(solutionMap["handwritten_pdf_url"] as? String)
+
         return DoubtSolution(
             question = (solutionMap["question"] as? String) ?: question,
             answer = answer,
             steps = steps,
             metadata = metadata,
             mobileFormat = mobileFormat,
-            whatsappFormat = whatsappFormat
+            whatsappFormat = whatsappFormat,
+            handwrittenImages = if (handwrittenImages.isEmpty()) null else handwrittenImages,
+            handwrittenPdfUrl = handwrittenPdfUrl
         )
     }
     
@@ -132,13 +147,40 @@ class DoubtSolvingRepository @Inject constructor(
         context: String? = null
     ): Result<DoubtSolution> = withContext(Dispatchers.IO) {
         try {
-            // Call production Supabase-auth endpoint using form field 'question'
-            val response = apiService.solveDoubtAuth(question)
-            if (response.isSuccessful) {
-                val mapped = mapSolutionFromBody(response.body(), question, subject)
-                if (mapped != null) return@withContext Result.success(mapped)
+            // Step 1: Try production Supabase-auth endpoint using form field 'question'
+            val authResp = apiService.solveDoubtAuth(question)
+            if (authResp.isSuccessful) {
+                val primary = mapSolutionFromBody(authResp.body(), question, subject)
+                if (primary != null) {
+                    val hasHandwriting = !primary.handwrittenImages.isNullOrEmpty() || !primary.handwrittenPdfUrl.isNullOrBlank()
+                    if (!hasHandwriting) {
+                        // Step 1b: Best-effort call to enhanced endpoint just to fetch handwriting assets
+                        val enhancedReq = DoubtRequest(
+                            question = question,
+                            subject = subject,
+                            userId = userId,
+                            userPlan = userPlan,
+                            context = context
+                        )
+                        val enhancedResp = apiService.solveDoubt(enhancedReq)
+                        if (enhancedResp.isSuccessful) {
+                            val enhanced = mapSolutionFromBody(enhancedResp.body(), question, subject)
+                            if (enhanced != null && (!enhanced.handwrittenImages.isNullOrEmpty() || !enhanced.handwrittenPdfUrl.isNullOrBlank())) {
+                                return@withContext Result.success(
+                                    primary.copy(
+                                        handwrittenImages = enhanced.handwrittenImages ?: primary.handwrittenImages,
+                                        handwrittenPdfUrl = enhanced.handwrittenPdfUrl ?: primary.handwrittenPdfUrl
+                                    )
+                                )
+                            }
+                        }
+                    }
+                    // Either handwriting already present or enhanced call didn't provide extras
+                    return@withContext Result.success(primary)
+                }
             }
-            // Fallback: legacy enhanced endpoint
+
+            // Step 2: Fallback to legacy enhanced endpoint (works without auth) which also renders handwriting
             val legacyReq = DoubtRequest(
                 question = question,
                 subject = subject,

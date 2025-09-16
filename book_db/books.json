@@ -1,254 +1,479 @@
 {
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf",
-    "title": "Introduction to Machine Learning",
-    "author": "Jane Smith",
-    "page_count": 1,
-    "file_size": 1874,
-    "last_modified": "2025-08-30T00:14:12.001921",
-    "chunks_count": 1
-  },
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf",
-    "title": "Business Strategy in Digital Age",
-    "author": "Sarah Johnson",
-    "page_count": 1,
-    "file_size": 1834,
-    "last_modified": "2025-08-30T00:14:12.002980",
-    "chunks_count": 1
-  },
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/programming/John_Doe/Python_Programming_Guide.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpkpigugac/organized_books/programming/John_Doe/Python_Programming_Guide.pdf",
-    "title": "Python Programming Guide",
-    "author": "John Doe",
-    "page_count": 1,
-    "file_size": 1843,
-    "last_modified": "2025-08-30T00:14:12.002476",
-    "chunks_count": 1
-  },
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf",
-    "title": "Introduction to Machine Learning",
-    "author": "Jane Smith",
-    "page_count": 1,
-    "file_size": 1874,
-    "last_modified": "2025-08-30T00:16:14.473926",
-    "chunks_count": 1
-  },
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf",
-    "title": "Business Strategy in Digital Age",
-    "author": "Sarah Johnson",
-    "page_count": 1,
-    "file_size": 1834,
-    "last_modified": "2025-08-30T00:16:14.474970",
-    "chunks_count": 1
-  },
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/programming/John_Doe/Python_Programming_Guide.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmpel27sot4/organized_books/programming/John_Doe/Python_Programming_Guide.pdf",
-    "title": "Python Programming Guide",
-    "author": "John Doe",
-    "page_count": 1,
-    "file_size": 1843,
-    "last_modified": "2025-08-30T00:16:14.474468",
-    "chunks_count": 1
-  },
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/data_science/Jane_Smith/Introduction_to_Machine_Learning.pdf",
-    "title": "Introduction to Machine Learning",
-    "author": "Jane Smith",
-    "page_count": 1,
-    "file_size": 1874,
-    "last_modified": "2025-08-30T00:49:24.169632",
-    "chunks_count": 1
-  },
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/business/Sarah_Johnson/Business_Strategy_in_Digital_Age.pdf",
-    "title": "Business Strategy in Digital Age",
-    "author": "Sarah Johnson",
-    "page_count": 1,
-    "file_size": 1834,
-    "last_modified": "2025-08-30T00:49:24.170677",
-    "chunks_count": 1
-  },
-  "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/programming/John_Doe/Python_Programming_Guide.pdf": {
-    "file_path": "/var/folders/6m/cgsm4r7j4b1884r7bkclx15r0000gn/T/tmp2kvat90b/organized_books/programming/John_Doe/Python_Programming_Guide.pdf",
-    "title": "Python Programming Guide",
-    "author": "John Doe",
-    "page_count": 1,
-    "file_size": 1843,
-    "last_modified": "2025-08-30T00:49:24.170178",
-    "chunks_count": 1
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh103.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh103.pdf",
-    "title": "Chap-3 (8th Nov.)",
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch07_permutations_and_combinations.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch07_permutations_and_combinations.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_8\\Binomial Theorem FINAL.PMD",
     "author": "admin",
-    "page_count": 14,
-    "file_size": 1125871,
-    "last_modified": "2025-08-29T23:45:05.091054",
+    "page_count": 9,
+    "file_size": 759108,
+    "last_modified": "2025-08-29T04:58:38.354419",
+    "chunks_count": 9
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch09_sequences_and_series.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch09_sequences_and_series.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_9\\Chapter_9 Straight Lines.PMD",
+    "author": "admin",
+    "page_count": 25,
+    "file_size": 1940388,
+    "last_modified": "2025-08-29T04:58:38.355995",
+    "chunks_count": 28
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch03_trigonometric_functions.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch03_trigonometric_functions.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_3\\Ch_03_FINAL  02.01.PMD",
+    "author": "admin",
+    "page_count": 33,
+    "file_size": 2509629,
+    "last_modified": "2025-08-29T04:58:38.358071",
+    "chunks_count": 34
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch06_linear_inequalities.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch06_linear_inequalities.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_7\\Permutation and Combinations.PMD",
+    "author": "admin",
+    "page_count": 26,
+    "file_size": 1880368,
+    "last_modified": "2025-08-29T04:58:38.359610",
+    "chunks_count": 26
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch04_mathematical_induction.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch04_mathematical_induction.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_4\\Ch_04 FINAL _04.01.PMD",
+    "author": "admin",
+    "page_count": 13,
+    "file_size": 1032614,
+    "last_modified": "2025-08-29T04:58:38.360487",
     "chunks_count": 14
   },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh102.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh102.pdf",
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch02_relations_and_functions.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch02_relations_and_functions.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_2\\Ch__2FINAL -04.01.PMD",
+    "author": "admin",
+    "page_count": 19,
+    "file_size": 1521180,
+    "last_modified": "2025-08-29T04:58:38.361894",
+    "chunks_count": 20
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch12_introduction_to_three_dimensional_geometry.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch12_introduction_to_three_dimensional_geometry.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_12\\Limit and Derivatives.PMD",
+    "author": "admin",
+    "page_count": 40,
+    "file_size": 2897878,
+    "last_modified": "2025-08-29T04:58:38.364222",
+    "chunks_count": 42
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch11_conic_sections.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch11_conic_sections.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_11\\Chapter-11.PMD",
+    "author": "admin",
+    "page_count": 9,
+    "file_size": 728909,
+    "last_modified": "2025-08-29T04:58:38.364999",
+    "chunks_count": 9
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch13_limits_and_derivatives.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch13_limits_and_derivatives.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_13\\Statistical.PMD",
+    "author": "admin",
+    "page_count": 32,
+    "file_size": 2323604,
+    "last_modified": "2025-08-29T04:58:38.366979",
+    "chunks_count": 32
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch08_binomial_theorem.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch08_binomial_theorem.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_8\\Sequence & Series.PMD",
+    "author": "admin",
+    "page_count": 16,
+    "file_size": 1193011,
+    "last_modified": "2025-08-29T04:58:38.368197",
+    "chunks_count": 18
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch05_complex_numbers_and_quadratic_equations.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch05_complex_numbers_and_quadratic_equations.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_5\\Linear Ineaqualities.PMD",
+    "author": "admin",
+    "page_count": 11,
+    "file_size": 834607,
+    "last_modified": "2025-08-29T04:58:38.369260",
+    "chunks_count": 12
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch14_statistics.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch14_statistics.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_16\\Probability.PMD",
+    "author": "admin",
+    "page_count": 25,
+    "file_size": 1802355,
+    "last_modified": "2025-08-29T04:58:38.370856",
+    "chunks_count": 27
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch01_sets.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch01_sets.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_1\\FINAL Ch_1 02.01.06.pmd",
+    "author": "admin",
+    "page_count": 23,
+    "file_size": 1696137,
+    "last_modified": "2025-08-29T04:58:38.372280",
+    "chunks_count": 36
+  },
+  "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch10_straight_lines.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_11/ncert_math_class11_ch10_straight_lines.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_10\\Conic Section.PMD",
+    "author": "admin",
+    "page_count": 32,
+    "file_size": 2518472,
+    "last_modified": "2025-08-29T04:58:38.374413",
+    "chunks_count": 32
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch02_polynomials.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch02_polynomials.pdf",
     "title": "Chap-2 (8th Nov.)",
     "author": "admin",
     "page_count": 14,
     "file_size": 1100070,
-    "last_modified": "2025-08-29T23:45:05.089666",
+    "last_modified": "2025-08-29T04:58:38.376505",
     "chunks_count": 15
   },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh114.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh114.pdf",
-    "title": "Chap\u201314 (14th Nov.)",
-    "author": "admin",
-    "page_count": 16,
-    "file_size": 1198331,
-    "last_modified": "2025-08-29T23:45:05.093494",
-    "chunks_count": 17
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh101.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh101.pdf",
-    "title": "Chap-1 (8th Nov.)",
-    "author": "admin",
-    "page_count": 9,
-    "file_size": 923235,
-    "last_modified": "2025-08-29T23:45:05.092074",
-    "chunks_count": 10
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh105.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh105.pdf",
-    "title": "Chap-5 (8th Nov.)",
-    "author": "admin",
-    "page_count": 24,
-    "file_size": 1726859,
-    "last_modified": "2025-08-29T23:45:05.078865",
-    "chunks_count": 27
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh111.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh111.pdf",
-    "title": "Chap-11 (11th Nov.)",
-    "author": "admin",
-    "page_count": 7,
-    "file_size": 643663,
-    "last_modified": "2025-08-29T23:45:05.077121",
-    "chunks_count": 7
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh110.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh110.pdf",
-    "title": "Chap\u201310 (11th Nov.)",
-    "author": "admin",
-    "page_count": 10,
-    "file_size": 764838,
-    "last_modified": "2025-08-29T23:45:05.076145",
-    "chunks_count": 11
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh104.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh104.pdf",
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch04_quadratic_equations.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch04_quadratic_equations.pdf",
     "title": "Chap\u20134 (8th Nov.) fian",
     "author": "admin",
     "page_count": 11,
     "file_size": 886774,
-    "last_modified": "2025-08-29T23:45:05.075118",
+    "last_modified": "2025-08-29T04:58:38.378175",
     "chunks_count": 12
   },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh112.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh112.pdf",
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch11_constructions.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch11_constructions.pdf",
+    "title": "Chap-11 (11th Nov.)",
+    "author": "admin",
+    "page_count": 7,
+    "file_size": 643663,
+    "last_modified": "2025-08-29T04:58:38.378872",
+    "chunks_count": 7
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch12_areas_related_to_circles.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch12_areas_related_to_circles.pdf",
     "title": "Chap-12 (14th Nov.)",
     "author": "admin",
     "page_count": 10,
     "file_size": 1003336,
-    "last_modified": "2025-08-29T23:45:05.088407",
+    "last_modified": "2025-08-29T04:58:38.379722",
     "chunks_count": 10
   },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh106.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh106.pdf",
-    "title": "Chap\u20136 (10th Nov.)",
-    "author": "admin",
-    "page_count": 26,
-    "file_size": 2129422,
-    "last_modified": "2025-08-29T23:45:05.087357",
-    "chunks_count": 26
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh107.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh107.pdf",
-    "title": "Chap\u20137 (10th Nov.)",
-    "author": "admin",
-    "page_count": 14,
-    "file_size": 1459849,
-    "last_modified": "2025-08-29T23:45:05.084019",
-    "chunks_count": 14
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh113.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh113.pdf",
-    "title": "Chap-13 (14th Nov.)",
-    "author": "admin",
-    "page_count": 31,
-    "file_size": 2163240,
-    "last_modified": "2025-08-29T23:45:05.081361",
-    "chunks_count": 31
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1a2.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1a2.pdf",
-    "title": "Appendix-2 (15th Nov.)",
-    "author": "admin",
-    "page_count": 11,
-    "file_size": 867350,
-    "last_modified": "2025-08-29T23:45:05.072655",
-    "chunks_count": 11
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1a1.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1a1.pdf",
-    "title": "Appendix-1 (15th Nov.)",
-    "author": "admin",
-    "page_count": 21,
-    "file_size": 1435110,
-    "last_modified": "2025-08-29T23:45:05.074166",
-    "chunks_count": 21
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1an.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1an.pdf",
-    "title": "Answers.pmd",
-    "author": "admin",
-    "page_count": 13,
-    "file_size": 946266,
-    "last_modified": "2025-08-29T23:45:05.071628",
-    "chunks_count": 14
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh109.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh109.pdf",
-    "title": "Chap\u20139 (11th Nov.)",
-    "author": "admin",
-    "page_count": 11,
-    "file_size": 1183045,
-    "last_modified": "2025-08-29T23:45:05.067668",
-    "chunks_count": 11
-  },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh108.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh108.pdf",
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch08_introduction_to_trigonometry.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch08_introduction_to_trigonometry.pdf",
     "title": "Chap\u20138 (11th Nov.)",
     "author": "admin",
     "page_count": 20,
     "file_size": 1598569,
-    "last_modified": "2025-08-29T23:45:05.063719",
+    "last_modified": "2025-08-29T04:58:38.381174",
     "chunks_count": 20
   },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1ps.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Textbook_jemh1ps.pdf",
-    "title": "Prelims.pmd",
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch13_surface_areas_and_volumes.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch13_surface_areas_and_volumes.pdf",
+    "title": "Chap-13 (14th Nov.)",
+    "author": "admin",
+    "page_count": 31,
+    "file_size": 2163240,
+    "last_modified": "2025-08-29T04:58:38.383303",
+    "chunks_count": 31
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch01_real_numbers.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch01_real_numbers.pdf",
+    "title": "Chap-1 (8th Nov.)",
+    "author": "admin",
+    "page_count": 9,
+    "file_size": 923235,
+    "last_modified": "2025-08-29T04:58:38.384234",
+    "chunks_count": 10
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch06_triangles.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch06_triangles.pdf",
+    "title": "Chap\u20136 (10th Nov.)",
+    "author": "admin",
+    "page_count": 26,
+    "file_size": 2129422,
+    "last_modified": "2025-08-29T04:58:38.386052",
+    "chunks_count": 26
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch05_arithmetic_progressions.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch05_arithmetic_progressions.pdf",
+    "title": "Chap-5 (8th Nov.)",
+    "author": "admin",
+    "page_count": 24,
+    "file_size": 1726859,
+    "last_modified": "2025-08-29T04:58:38.387549",
+    "chunks_count": 27
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch07_coordinate_geometry.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch07_coordinate_geometry.pdf",
+    "title": "Chap\u20137 (10th Nov.)",
     "author": "admin",
     "page_count": 14,
-    "file_size": 1253874,
-    "last_modified": "2025-08-29T23:45:05.065731",
+    "file_size": 1459849,
+    "last_modified": "2025-08-29T04:58:38.388903",
     "chunks_count": 14
   },
-  "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Exemplar_Complete_2023.pdf": {
-    "file_path": "textbooks/ncert/mathematics/class_10/NCERT_Mathematics_Class_10_Exemplar_Complete_2023.pdf",
-    "title": "NCERT Mathematics Class 10 Exemplar Complete 2023",
-    "author": "",
-    "page_count": 196,
-    "file_size": 1651870,
-    "last_modified": "2025-08-29T23:41:58.802280",
-    "chunks_count": 200
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch10_circles.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch10_circles.pdf",
+    "title": "Chap\u201310 (11th Nov.)",
+    "author": "admin",
+    "page_count": 10,
+    "file_size": 764838,
+    "last_modified": "2025-08-29T04:58:38.389720",
+    "chunks_count": 11
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch09_some_applications_of_trigonometry.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch09_some_applications_of_trigonometry.pdf",
+    "title": "Chap\u20139 (11th Nov.)",
+    "author": "admin",
+    "page_count": 11,
+    "file_size": 1183045,
+    "last_modified": "2025-08-29T04:58:38.390944",
+    "chunks_count": 11
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch03_pair_of_linear_equations_in_two_variables.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch03_pair_of_linear_equations_in_two_variables.pdf",
+    "title": "Chap-3 (8th Nov.)",
+    "author": "admin",
+    "page_count": 14,
+    "file_size": 1125871,
+    "last_modified": "2025-08-29T04:58:38.392208",
+    "chunks_count": 14
+  },
+  "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch14_statistics.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_10/ncert_math_class10_ch14_statistics.pdf",
+    "title": "Chap\u201314 (14th Nov.)",
+    "author": "admin",
+    "page_count": 16,
+    "file_size": 1198331,
+    "last_modified": "2025-08-29T04:58:38.394004",
+    "chunks_count": 17
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch04_linear_equations_in_two_variables.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch04_linear_equations_in_two_variables.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-4\\Chapter\u20134.pmd",
+    "author": "admin",
+    "page_count": 5,
+    "file_size": 426035,
+    "last_modified": "2025-08-29T04:58:38.394973",
+    "chunks_count": 8
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch08_quadrilaterals.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch08_quadrilaterals.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-8\\Chapter\u20138.pmd",
+    "author": "admin",
+    "page_count": 12,
+    "file_size": 935158,
+    "last_modified": "2025-08-29T04:58:38.395888",
+    "chunks_count": 12
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch06_lines_and_angles.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch06_lines_and_angles.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-6\\Chapter-6.pmd",
+    "author": "admin",
+    "page_count": 14,
+    "file_size": 1086699,
+    "last_modified": "2025-08-29T04:58:38.397087",
+    "chunks_count": 14
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch07_triangles.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch07_triangles.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-7\\Chapter-7.pmd",
+    "author": "admin",
+    "page_count": 21,
+    "file_size": 1581602,
+    "last_modified": "2025-08-29T04:58:38.398416",
+    "chunks_count": 21
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch01_number_systems.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch01_number_systems.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-1\\Chapter-1.pmd",
+    "author": "admin",
+    "page_count": 24,
+    "file_size": 1792274,
+    "last_modified": "2025-08-29T04:58:38.399909",
+    "chunks_count": 24
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch03_coordinate_geometry.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch03_coordinate_geometry.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-3\\Chapter-3.pmd",
+    "author": "admin",
+    "page_count": 12,
+    "file_size": 1061694,
+    "last_modified": "2025-08-29T04:58:38.401016",
+    "chunks_count": 12
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch09_areas_of_parallelograms_and_triangles.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch09_areas_of_parallelograms_and_triangles.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-9\\Chapter\u20139.PMD",
+    "author": "admin",
+    "page_count": 15,
+    "file_size": 1129035,
+    "last_modified": "2025-08-29T04:58:38.402324",
+    "chunks_count": 15
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch05_introduction_to_euclids_geometry.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch05_introduction_to_euclids_geometry.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-5\\Chapter-5.pmd",
+    "author": "admin",
+    "page_count": 9,
+    "file_size": 695375,
+    "last_modified": "2025-08-29T04:58:38.403462",
+    "chunks_count": 11
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch10_circles.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch10_circles.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-10\\Chapter-10.pmd",
+    "author": "admin",
+    "page_count": 6,
+    "file_size": 580986,
+    "last_modified": "2025-08-29T04:58:38.404161",
+    "chunks_count": 6
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch02_polynomials.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch02_polynomials.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-2\\Chapter-2.pmd",
+    "author": "admin",
+    "page_count": 18,
+    "file_size": 1275484,
+    "last_modified": "2025-08-29T04:58:38.405432",
+    "chunks_count": 21
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch12_herons_formula.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch12_herons_formula.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-12\\Chapter-12.PMD",
+    "author": "admin",
+    "page_count": 16,
+    "file_size": 1294616,
+    "last_modified": "2025-08-29T04:58:38.407264",
+    "chunks_count": 16
+  },
+  "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch11_constructions.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_09/ncert_math_class09_ch11_constructions.pdf",
+    "title": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\0962-Mathematics\\1 Source Files\\Chapter-11\\Chapter-11.pmd",
+    "author": "admin",
+    "page_count": 14,
+    "file_size": 1470124,
+    "last_modified": "2025-08-29T04:58:38.408655",
+    "chunks_count": 14
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch03_matrices.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch03_matrices.pdf",
+    "title": "D:\\Textbooks\\Rationalised Books\\12079-Mathematics Part-I\\1 Source Files\\1_Chapters\\Chapter-3\\Matrices ch_3 31.10.06.pmd",
+    "author": "admin",
+    "page_count": 42,
+    "file_size": 3388091,
+    "last_modified": "2025-08-29T04:58:38.411842",
+    "chunks_count": 50
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch10_vector_algebra.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch10_vector_algebra.pdf",
+    "title": "Vectoalgebra.pmd",
+    "author": "Administrator",
+    "page_count": 39,
+    "file_size": 4380430,
+    "last_modified": "2025-08-29T04:58:38.414805",
+    "chunks_count": 40
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch09_differential_equations.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch09_differential_equations.pdf",
+    "title": "Differential Equations.pmd",
+    "author": "Administrator",
+    "page_count": 38,
+    "file_size": 2750659,
+    "last_modified": "2025-08-29T04:58:38.417062",
+    "chunks_count": 39
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch12_linear_programming.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch12_linear_programming.pdf",
+    "title": "Chapter 12 Linear Programming.pmd",
+    "author": "Administrator",
+    "page_count": 12,
+    "file_size": 973155,
+    "last_modified": "2025-08-29T04:58:38.417912",
+    "chunks_count": 12
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch02_inverse_trigonometric_functions.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch02_inverse_trigonometric_functions.pdf",
+    "title": "D:\\Textbooks\\Rationalised Books\\12079-Mathematics Part-I\\1 Source Files\\1_Chapters\\Chapter-2\\Inverse Trigonometric Functions ch_2 31.12.08.pmd",
+    "author": "admin",
+    "page_count": 16,
+    "file_size": 1394648,
+    "last_modified": "2025-08-29T04:58:38.419359",
+    "chunks_count": 17
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch07_integrals.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch07_integrals.pdf",
+    "title": "Integral ch_7.pmd",
+    "author": "Administrator",
+    "page_count": 67,
+    "file_size": 4998363,
+    "last_modified": "2025-08-29T04:58:38.423145",
+    "chunks_count": 71
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch08_applications_of_integrals.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch08_applications_of_integrals.pdf",
+    "title": "Chapter 8  Application of the Integral.pmd",
+    "author": "Administrator",
+    "page_count": 8,
+    "file_size": 806667,
+    "last_modified": "2025-08-29T04:58:38.423965",
+    "chunks_count": 8
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch06_applications_of_derivatives.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch06_applications_of_derivatives.pdf",
+    "title": "D:\\Textbooks\\Rationalised Books\\12079-Mathematics Part-I\\1 Source Files\\1_Chapters\\Chapter-6\\Application of Derivatives.pmd",
+    "author": "admin",
+    "page_count": 40,
+    "file_size": 3230308,
+    "last_modified": "2025-08-29T04:58:38.426338",
+    "chunks_count": 45
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch05_continuity_and_differentiability.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch05_continuity_and_differentiability.pdf",
+    "title": "D:\\Textbooks\\Rationalised Books\\12079-Mathematics Part-I\\1 Source Files\\1_Chapters\\Chapter-5\\Continuity and Differentiability 31.12.08.pmd",
+    "author": "admin",
+    "page_count": 43,
+    "file_size": 3167253,
+    "last_modified": "2025-08-29T04:58:38.429346",
+    "chunks_count": 44
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch11_three_dimensional_geometry.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch11_three_dimensional_geometry.pdf",
+    "title": "ncert math class12 ch11 three dimensional geometry",
+    "author": "Administrator",
+    "page_count": 17,
+    "file_size": 1461833,
+    "last_modified": "2025-08-29T04:58:38.430707",
+    "chunks_count": 19
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch13_probability.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch13_probability.pdf",
+    "title": "Probability.pmd",
+    "author": "Administrator",
+    "page_count": 33,
+    "file_size": 2301260,
+    "last_modified": "2025-08-29T04:58:38.432784",
+    "chunks_count": 34
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch01_relations_and_functions.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch01_relations_and_functions.pdf",
+    "title": "D:\\Textbooks\\Rationalised Books\\12079-Mathematics Part-I\\1 Source Files\\1_Chapters\\Chapter-1\\Relations and Functions 12.01.09.pmd",
+    "author": "admin",
+    "page_count": 17,
+    "file_size": 1371232,
+    "last_modified": "2025-08-29T04:58:38.434129",
+    "chunks_count": 26
+  },
+  "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch04_determinants.pdf": {
+    "file_path": "data/textbooks/ncert/mathematics/class_12/ncert_math_class12_ch04_determinants.pdf",
+    "title": "D:\\Textbooks\\Rationalised Books\\12079-Mathematics Part-I\\1 Source Files\\1_Chapters\\Chapter-4\\Determinants 31.12.08.pmd",
+    "author": "admin",
+    "page_count": 28,
+    "file_size": 2011311,
+    "last_modified": "2025-08-29T04:58:38.435903",
+    "chunks_count": 28
   }
 }

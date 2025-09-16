@@ -71,23 +71,7 @@ object NetworkModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
 
-        // Temporary dev-only DNS pinning to bypass local DNS resolution issues
-        if (BuildConfig.DEBUG) {
-            val host = try { URI(BuildConfig.BASE_API_URL).host ?: "" } catch (e: Exception) { "" }
-            if (host.equals("klaro-educational-platform-production.up.railway.app", ignoreCase = true)) {
-                val pinnedIp = "66.33.22.241"
-                val debugDns = object : Dns {
-                    override fun lookup(hostname: String): List<InetAddress> {
-                        return if (hostname.equals(host, ignoreCase = true)) {
-                            listOf(InetAddress.getByName(pinnedIp))
-                        } else {
-                            Dns.SYSTEM.lookup(hostname)
-                        }
-                    }
-                }
-                builder.dns(debugDns)
-            }
-        }
+        // Debug DNS pinning disabled to avoid stale IPs. Using system DNS.
 
         return builder.build()
     }

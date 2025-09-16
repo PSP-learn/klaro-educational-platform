@@ -1,0 +1,69 @@
+================================================================================
+📝 Mathematics Test - quadratic equations, trigonometry
+================================================================================
+Subject: Mathematics
+Topics: quadratic equations, trigonometry
+Duration: 30 minutes
+Total Points: 11
+Total Questions: 6
+
+📋 INSTRUCTIONS:
+• Read all questions carefully before starting
+• Show all your work for mathematical calculations
+• For MCQs, choose the BEST answer
+• Write clearly and legibly
+• Manage your time effectively
+
+================================================================================
+
+Q1. What is the formula for triangles?
+     [Topic: Geometry, Difficulty: Easy, Points: 1]
+     A. An answer that confuses triangles with another term
+     B. An incorrect but plausible answer about triangles
+     C. The correct answer related to triangles
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
+
+Q2. What is the formula for QUADRATIC?
+     [Topic: Algebra, Difficulty: Easy, Points: 1]
+     A. The correct answer related to QUADRATIC
+     B. An incorrect but plausible answer about QUADRATIC
+     C. An answer that confuses QUADRATIC with another term
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
+
+Q3. Which formula is used to calculate equations?
+     [Topic: Algebra, Difficulty: Medium, Points: 1]
+     A. An answer that confuses equations with another term
+     B. A concept from a different mathematical area
+     C. The correct answer related to equations
+     D. An incorrect but plausible answer about equations
+
+     Answer:
+     __________________________________________________
+
+Q4. How do you approach trigonometry problems?
+     [Topic: Trigonometry, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q5. What is the formula for equation?
+     [Topic: Algebra, Difficulty: Easy, Points: 1]
+     A. The correct answer related to equation
+     B. A concept from a different mathematical area
+     C. An answer that confuses equation with another term
+     D. An incorrect but plausible answer about equation
+
+     Answer:
+     __________________________________________________
+
+Q6. Solve: , 2x2 + x – 300 = 0 is a quadratic equation
+     [Topic: Algebra, Difficulty: Medium, Points: 4]
+
+     Answer:
+     __________________________________________________

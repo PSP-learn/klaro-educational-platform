@@ -1,0 +1,29 @@
+% Answers LaTeX template
+\documentclass[12pt]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{lmodern}
+\pagestyle{headandfoot}
+\firstpageheader{ {{ header or subject }} }{\textbf{ ANSWER KEY - {{ title }} }}{}
+\runningheader{ {{ subject }} }{ ANSWER KEY }{Page \thepage}
+\runningheadrule
+
+\begin{document}
+\begin{center}
+{% if header %}\LARGE\textbf{ {{ header }} } \\[6pt]{% endif %}
+\Large\textbf{ ANSWER KEY - {{ title }} } \\\[4pt]
+\normalsize Subject: {{ subject }}
+\end{center}
+\vspace{0.6em}
+
+\begin{enumerate}[leftmargin=*]
+{% for q in questions %}
+  \item {{ q.answer }} \hfill \textit{(Marks: {{ q.marks }})}
+  {% if q.explanation %}\\ \textit{Explanation:} {{ q.explanation }} {% endif %}
+  
+{% endfor %}
+\end{enumerate}
+
+\end{document}
+

@@ -5,7 +5,6 @@ import com.klaro.app.data.models.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
-import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,28 +37,26 @@ class PdfGeneratorRepository @Inject constructor(
     }
     
     /**
-     * Create a custom quiz based on user selections
+     * Preview quiz blueprint and get totals/warnings
      */
-    suspend fun createQuiz(
-        topics: List<String>,
-        numQuestions: Int,
-        questionTypes: List<String>,
-        difficultyLevels: List<String>,
-        subject: String = "Mathematics",
-        title: String? = null,
-        source: String? = null
-    ): Result<QuizResponse> = withContext(Dispatchers.IO) {
+    suspend fun previewQuiz(request: QuizRequest): Result<PreviewResponse> = withContext(Dispatchers.IO) {
         try {
-            val request = QuizRequest(
-                topics = topics,
-                numQuestions = numQuestions,
-                questionTypes = questionTypes,
-                difficultyLevels = difficultyLevels,
-                subject = subject,
-                title = title,
-                source = source
-            )
-            
+            val response = apiService.previewQuiz(request)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Failed to preview: ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+    
+    /**
+     * Create a custom quiz based on user selections (advanced request)
+     */
+    suspend fun createQuiz(request: QuizRequest): Result<QuizResponse> = withContext(Dispatchers.IO) {
+        try {
             val response = apiService.createQuiz(request)
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
@@ -92,7 +89,7 @@ class PdfGeneratorRepository @Inject constructor(
     }
     
     /**
-     * Download quiz PDF
+     * Download quiz file (questions|answers|marking_scheme)
      */
     suspend fun downloadQuiz(
         quizId: String, 
@@ -103,7 +100,7 @@ class PdfGeneratorRepository @Inject constructor(
             if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {
-                Result.failure(Exception("Failed to download quiz: ${response.message()}"))
+                Result.failure(Exception("Failed to download ${fileType}: ${response.message()}"))
             }
         } catch (e: Exception) {
             Result.failure(e)

@@ -21,31 +21,18 @@ interface KlaroApiService {
     @GET("quiz/presets")
     suspend fun getQuizPresets(): Response<Map<String, QuizPreset>>
 
-    // Legacy JSON create (may be disabled in prod); kept for backward compat
+    // Preview blueprint and get totals/warnings
+    @POST("quiz/preview")
+    suspend fun previewQuiz(@Body request: QuizRequest): Response<PreviewResponse>
+
+    // Create quiz with advanced request
     @POST("quiz/create")
     suspend fun createQuiz(@Body request: QuizRequest): Response<QuizResponse>
-
-    // Authenticated generate (production): x-www-form-urlencoded
-    @FormUrlEncoded
-    @POST("quiz/generate")
-    suspend fun generateQuiz(
-        @Field("title") title: String,
-        @Field("topics") topics: String, // comma-separated: "topic1,topic2"
-        @Field("questions_count") questionsCount: Int = 10,
-        @Field("difficulty") difficulty: String = "mixed",
-        @Field("source") source: String? = null
-    ): Response<Map<String, Any>>
 
     @POST("quiz/preset/{presetName}")
     suspend fun createQuizFromPreset(@Path("presetName") presetName: String): Response<QuizResponse>
 
-    // New authenticated download path
-    @GET("quiz/download/{quizId}")
-    suspend fun downloadQuizAuth(
-        @Path("quizId") quizId: String
-    ): Response<ResponseBody>
-
-    // Old download path (kept for compatibility with older backend variants)
+    // Download specific file type (questions|answers|marking_scheme)
     @GET("quiz/{quizId}/download")
     suspend fun downloadQuiz(
         @Path("quizId") quizId: String,

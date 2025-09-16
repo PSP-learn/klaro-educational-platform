@@ -1,0 +1,56 @@
+================================================================================
+📚 ANSWER KEY - Mathematics Test - quadratic equations, factorization
+================================================================================
+
+Q1. C
+     📖 Explanation: Parametric generator (verified)
+     📍 Source: , Page 0
+     💯 Points: 1
+
+Q2. C
+     📖 Explanation: Parametric generator (verified)
+     📍 Source: , Page 0
+     💯 Points: 1
+
+Q3. C
+     📖 Explanation: Parametric generator (verified)
+     📍 Source: , Page 0
+     💯 Points: 1
+
+Q4. B
+     📖 Explanation: Parametric generator (verified)
+     📍 Source: , Page 0
+     💯 Points: 1
+
+Q5. C
+     📖 Explanation: Parametric generator (verified)
+     📍 Source: , Page 0
+     💯 Points: 1
+
+Q6. (x - -2)(x - -2)
+     📖 Explanation: Parametric generator (verified)
+     📍 Source: , Page 0
+     💯 Points: 3
+
+Q7. (x - 5)(x - 5)
+     📖 Explanation: Parametric generator (verified)
+     📍 Source: , Page 0
+     💯 Points: 3
+
+Q8. (x - -1)(x - 1)
+     📖 Explanation: Parametric generator (verified)
+     📍 Source: , Page 0
+     💯 Points: 3
+
+================================================================================
+📊 TEST STATISTICS
+================================================================================
+Total Questions: 8
+Total Points: 14
+
+Difficulty Distribution:
+  Medium: 5 questions
+  Easy: 3 questions
+
+Topic Distribution:
+  Algebra: 8 questions

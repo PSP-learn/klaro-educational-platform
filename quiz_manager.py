@@ -121,7 +121,7 @@ class QuizManager:
             print(f"   📊 Types: {', '.join(preset['types'])}")
             print(f"   ⚡ Difficulty: {', '.join(preset['difficulty'])}")
     
-    def create_from_preset(self, preset_name: str, output_prefix: str = None) -> Optional[Tuple[str, str]]:
+    def create_from_preset(self, preset_name: str, output_prefix: str = None, generate_pdf: bool = False) -> Optional[Tuple[str, str]]:
         """Create quiz from preset"""
         if preset_name not in self.presets:
             print(f"❌ Preset '{preset_name}' not found!")
@@ -139,15 +139,22 @@ class QuizManager:
                 num_questions=preset['questions'],
                 question_types=preset['types'],
                 difficulty_levels=preset['difficulty'],
-                subject="Mathematics"
+                subject="Mathematics",
+                mode='mixed',
+                render='auto'
             )
             
             output_prefix = output_prefix or f"preset_{preset_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             test_file, answer_file = self.generator.save_test(test_data, output_prefix)
             
-            print(f"\\n✅ Quiz created successfully!")
+            print(f"\n✅ Quiz created successfully!")
             print(f"📄 Questions: {test_file}")
             print(f"📚 Answers: {answer_file}")
+            
+            if generate_pdf:
+                qpdf, apdf = self.generator.save_test_pdf(test_data, output_prefix)
+                print(f"📄 PDF Questions: {qpdf}")
+                print(f"📚 PDF Answers: {apdf}")
             
             return test_file, answer_file
             
@@ -155,9 +162,9 @@ class QuizManager:
             print(f"❌ Failed to create quiz: {e}")
             return None
     
-    def create_custom_quiz(self):
+    def create_custom_quiz(self, generate_pdf: bool = False):
         """Interactive custom quiz creation"""
-        print("\\n🎨 Custom Quiz Creator")
+        print("\n🎨 Custom Quiz Creator")
         print("=" * 50)
         
         try:
@@ -166,10 +173,10 @@ class QuizManager:
             subject = input("Subject (default: Mathematics): ").strip() or "Mathematics"
             
             # Suggest topics based on database
-            print("\\nSuggested topics from your textbooks:")
+            print("\nSuggested topics from your textbooks:")
             self._suggest_topics_from_db()
             
-            topics_input = input("\\nEnter topics (comma-separated): ").strip()
+            topics_input = input("\nEnter topics (comma-separated): ").strip()
             if not topics_input:
                 print("❌ No topics specified!")
                 return None
@@ -177,12 +184,12 @@ class QuizManager:
             topics = [t.strip() for t in topics_input.split(",")]
             
             # Question configuration
-            print("\\n📋 Question Configuration:")
+            print("\n📋 Question Configuration:")
             print("Available types: mcq, short, long")
             types_input = input("Question types (default: mcq,short): ").strip() or "mcq,short"
             question_types = [t.strip() for t in types_input.split(",")]
             
-            print("\\nDifficulty levels: easy, medium, hard")
+            print("\nDifficulty levels: easy, medium, hard")
             diff_input = input("Difficulty levels (default: easy,medium): ").strip() or "easy,medium"
             difficulty_levels = [d.strip() for d in diff_input.split(",")]
             
@@ -190,13 +197,17 @@ class QuizManager:
             duration = int(input("Duration in minutes (default: auto-calculate): ").strip() or str(num_questions * 3))
             
             # Generate quiz
-            print(f"\\n🔄 Generating custom quiz...")
+            print(f"\n🔄 Generating custom quiz...")
             test_data = self.generator.create_test(
                 topics=topics,
                 num_questions=num_questions,
                 question_types=question_types,
                 difficulty_levels=difficulty_levels,
-                subject=subject
+                subject=subject,
+                mode=args.mode if hasattr(args, 'mode') else 'mixed',
+                scope_filter=args.scope if hasattr(args, 'scope') else None,
+                render=args.render if hasattr(args, 'render') else 'auto',
+                books_dir=args.books_dir if hasattr(args, 'books_dir') else None
             )
             
             # Save quiz
@@ -204,9 +215,14 @@ class QuizManager:
             output_prefix = f"{safe_title}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             test_file, answer_file = self.generator.save_test(test_data, output_prefix)
             
-            print(f"\\n🎉 Custom quiz created!")
+            print(f"\n🎉 Custom quiz created!")
             print(f"📄 Questions: {test_file}")
             print(f"📚 Answers: {answer_file}")
+            
+            if generate_pdf:
+                qpdf, apdf = self.generator.save_test_pdf(test_data, output_prefix)
+                print(f"📄 PDF Questions: {qpdf}")
+                print(f"📚 PDF Answers: {apdf}")
             
             return test_file, answer_file
             
@@ -287,6 +303,11 @@ def main():
     parser.add_argument('--recent', '-r', action='store_true', help='Show recent quizzes')
     parser.add_argument('--output', '-o', type=str, help='Output filename prefix')
     parser.add_argument('--questions', '-q', type=int, default=10, help='Number of questions (for quick mode)')
+    parser.add_argument('--pdf', action='store_true', help='Also generate PDF outputs')
+    parser.add_argument('--mode', type=str, default='mixed', choices=['mixed','source'], help='Question generation mode')
+    parser.add_argument('--scope', type=str, default=None, help='Restrict to files whose path contains this substring (e.g., class_10)')
+    parser.add_argument('--render', type=str, default='auto', choices=['auto','image','text'], help='Rendering for source mode questions')
+    parser.add_argument('--books-dir', type=str, default=None, help='Base directory to locate source PDFs for image rendering')
     
     args = parser.parse_args()
     
@@ -302,11 +323,11 @@ def main():
         return
     
     if args.preset:
-        manager.create_from_preset(args.preset, args.output)
+        manager.create_from_preset(args.preset, args.output, generate_pdf=args.pdf)
         return
     
     if args.custom:
-        manager.create_custom_quiz()
+        manager.create_custom_quiz(generate_pdf=args.pdf)
         return
     
     if args.topics:
@@ -323,7 +344,12 @@ def main():
             output_prefix = args.output or f"quick_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             test_file, answer_file = manager.generator.save_test(test_data, output_prefix)
             
-            print(f"\\n✅ Quick quiz created!")
+            if args.pdf:
+                qpdf, apdf = manager.generator.save_test_pdf(test_data, output_prefix)
+                print(f"📄 PDF Questions: {qpdf}")
+                print(f"📚 PDF Answers: {apdf}")
+            
+            print(f"\n✅ Quick quiz created!")
             print(f"📄 Questions: {test_file}")
             print(f"📚 Answers: {answer_file}")
             

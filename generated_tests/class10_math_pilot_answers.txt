@@ -1,0 +1,79 @@
+================================================================================
+📚 ANSWER KEY - Mathematics Test - quadratic equations, polynomials, trigonometry
+================================================================================
+
+Q1. B
+     📖 Explanation: Based on content from Chap-2 (8th Nov.), page 13
+     📍 Source: Chap-2 (8th Nov.), Page 13
+     📐 Formula: a = 3, b = – 5, c = –11, d = – 3
+     💯 Points: 1
+
+Q2. Answer should demonstrate understanding of sine with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–8 (11th Nov.), page 3
+     📍 Source: Chap–8 (11th Nov.), Page 3
+     📐 Formula: A = side opposite to angle A BC hypotenuse AC  cosine of  A = side adjacent to angle A AB hypotenuse AC  tangent of  A = side opposite to angle A BC side adjacent to angle A AB  cosecant of  A = 1 hypotenuse AC sine of A side opposite to angle A BC    secant of  A = 1 hypotenuse AC cosine of A side adjacent to angle A AB    cotangent of  A = 1 side adjacent to angle A AB tangent of A side opposite to angle A BC    The ratios defined above are abbreviated as sin A, cos A, tan A, cosec A, sec A and cot A respectively
+     💯 Points: 3
+
+Q3. Answer should demonstrate understanding of linear with proper mathematical reasoning
+     📖 Explanation: Refer to D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_4\Ch_04 FINAL _04.01.PMD, page 1
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_4\Ch_04 FINAL _04.01.PMD, Page 1
+     📐 Formula: c = 0, where D = b2 – 4ac < 0, which is not possible in the system of real numbers
+     💯 Points: 4
+
+Q4. B
+     📖 Explanation: Based on content from Chap–8 (11th Nov.), page 6
+     📍 Source: Chap–8 (11th Nov.), Page 6
+     📐 Formula: A = 4 3 , find the other trigonometric ratios of the angle A
+     💯 Points: 1
+
+Q5. B
+     📖 Explanation: Based on content from Chap–8 (11th Nov.), page 10
+     📍 Source: Chap–8 (11th Nov.), Page 10
+     📐 Formula: A =  C = 45° (see Fig
+     💯 Points: 1
+
+Q6. Answer should demonstrate understanding of origin with proper mathematical reasoning
+     📖 Explanation: Refer to D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_10\Conic Section.PMD, page 11
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_10\Conic Section.PMD, Page 11
+     📐 Formula: x = – 2
+     💯 Points: 4
+
+Q7. Answer should demonstrate understanding of polynomials with proper mathematical reasoning
+     📖 Explanation: Refer to Chap-2 (8th Nov.), page 1
+     📍 Source: Chap-2 (8th Nov.), Page 1
+     📐 Formula: 3 + 1
+     💯 Points: 4
+
+Q8. Answer should demonstrate understanding of quadratic with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–4 (8th Nov.) fian, page 8
+     📍 Source: Chap–4 (8th Nov.) fian, Page 8
+     📐 Formula: c = 0, then x = 0 2 b a   , i
+     💯 Points: 3
+
+Q9. B
+     📖 Explanation: Based on content from Chap-2 (8th Nov.), page 1
+     📍 Source: Chap-2 (8th Nov.), Page 1
+     📐 Formula: 3 + 1
+     💯 Points: 1
+
+Q10. Answer should demonstrate understanding of triangles with proper mathematical reasoning
+     📖 Explanation: Refer to D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_3\Ch_03_FINAL  02.01.PMD, page 1
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_3\Ch_03_FINAL  02.01.PMD, Page 1
+     📐 Formula: sin
+     💯 Points: 4
+
+================================================================================
+📊 TEST STATISTICS
+================================================================================
+Total Questions: 10
+Total Points: 26
+
+Difficulty Distribution:
+  Easy: 5 questions
+  Medium: 5 questions
+
+Topic Distribution:
+  Algebra: 5 questions
+  Trigonometry: 3 questions
+  Coordinate_Geometry: 1 questions
+  Geometry: 1 questions

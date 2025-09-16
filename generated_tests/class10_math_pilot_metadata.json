@@ -1,0 +1,260 @@
+{
+  "title": "Mathematics Test - quadratic equations, polynomials, trigonometry",
+  "subject": "Mathematics",
+  "topics": [
+    "quadratic equations",
+    "polynomials",
+    "trigonometry"
+  ],
+  "questions": [
+    {
+      "question_text": "To find polynomial, we use the formula:",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "polynomial",
+      "options": [
+        "An incorrect but plausible answer about polynomial",
+        "The correct answer related to polynomial",
+        "An answer that confuses polynomial with another term",
+        "A concept from a different mathematical area"
+      ],
+      "correct_answer": "B",
+      "explanation": "Based on content from Chap-2 (8th Nov.), page 13",
+      "source_content": "22 MATHEMATICS \uf061 + \uf062 + \uf067 = \u2013b a , \uf061\uf062 \uf061\uf062 \uf061\uf062 \uf061\uf062 \uf061\uf062 + \uf062\uf067 \uf062\uf067 \uf062\uf067 \uf062\uf067 \uf062\uf067 + \uf067\uf061 \uf067\uf061 \uf067\uf061 \uf067\uf061 \uf067\uf061 = c a , \uf061\uf020\uf062\uf020\uf067 \uf061\uf020\uf062\uf020\uf067 \uf061\uf020\uf062\uf020\uf067 \uf061\uf020\uf062\uf020\uf067 \uf061\uf020\uf062\uf020\uf067 = \u2013d a . Let us consider an example. Example 5* : Verify that 3, \u20131, 1 3 \uf02d are ...",
+      "source_book": "Chap-2 (8th Nov.)",
+      "source_page": 13,
+      "points": 1,
+      "keywords": [
+        "coefficients",
+        "polynomial"
+      ],
+      "formula_used": "a = 3, b = \u2013 5, c = \u201311, d = \u2013 3"
+    },
+    {
+      "question_text": "Outline the procedure for sine.",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "trigonometry",
+      "subtopic": "sine",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of sine with proper mathematical reasoning",
+      "explanation": "Refer to Chap\u20138 (11th Nov.), page 3",
+      "source_content": "INTRODUCTION TO TRIGONOMETRY 115 Note that the position of sides change when you consider angle C in place of A (see Fig. 8.5). You have studied the concept of \u2018ratio\u2019 in your earlier classes. We now define certain ratios involving the sides of a right triangle, and call them trigonometric ratios. T...",
+      "source_book": "Chap\u20138 (11th Nov.)",
+      "source_page": 3,
+      "points": 3,
+      "keywords": [
+        "opposite",
+        "sine",
+        "adjacent",
+        "cotangent",
+        "ratio"
+      ],
+      "formula_used": "A = side opposite to angle A BC hypotenuse AC \uf03d cosine of \uf0d0 A = side adjacent to angle A AB hypotenuse AC \uf03d tangent of \uf0d0 A = side opposite to angle A BC side adjacent to angle A AB \uf03d cosecant of \uf0d0 A = 1 hypotenuse AC sine of A side opposite to angle A BC \uf03d \uf03d \uf0d0 secant of \uf0d0 A = 1 hypotenuse AC cosine of A side adjacent to angle A AB \uf03d \uf03d \uf0d0 cotangent of \uf0d0 A = 1 side adjacent to angle A AB tangent of A side opposite to angle A BC \uf03d \uf03d \uf0d0 The ratios defined above are abbreviated as sin A, cos A, tan A, cosec A, sec A and cot A respectively"
+    },
+    {
+      "question_text": "Solve: , 2 + i3, (\u2013 1) + 3 i , 1 4 11 i \u2212 \uf8eb \uf8f6 + \uf8ec \uf8f7 \uf8ed \uf8f8 are complex numbers",
+      "question_type": "short",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "linear",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of linear with proper mathematical reasoning",
+      "explanation": "Refer to D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_4\\Ch_04 FINAL _04.01.PMD, page 1",
+      "source_content": "76 MATHEMATICS Chapter COMPLEX NUMBERS AND QUADRATIC EQUATIONS W. R. Hamilton (1805-1865) vMathematics is the Queen of Sciences and Arithmetic is the Queen of Mathematics. \u2013 GAUSS v 4.1 Introduction In earlier classes, we have studied linear equations in one and two variables and quadratic equations...",
+      "source_book": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_4\\Ch_04 FINAL _04.01.PMD",
+      "source_page": 1,
+      "points": 4,
+      "keywords": [
+        "equation",
+        "quadratic",
+        "variables",
+        "equations",
+        "linear"
+      ],
+      "formula_used": "c = 0, where D = b2 \u2013 4ac < 0, which is not possible in the system of real numbers"
+    },
+    {
+      "question_text": "What is the formula for angles?",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "trigonometry",
+      "subtopic": "angles",
+      "options": [
+        "An answer that confuses angles with another term",
+        "The correct answer related to angles",
+        "A concept from a different mathematical area",
+        "An incorrect but plausible answer about angles"
+      ],
+      "correct_answer": "B",
+      "explanation": "Based on content from Chap\u20138 (11th Nov.), page 6",
+      "source_content": "118 MATHEMATICS Remark : Since the hypotenuse is the longest side in a right triangle, the value of sin A or cos A is always less than 1 (or, in particular, equal to 1). Let us consider some examples....",
+      "source_book": "Chap\u20138 (11th Nov.)",
+      "source_page": 6,
+      "points": 1,
+      "keywords": [
+        "angles",
+        "hypotenuse",
+        "triangles",
+        "ratios",
+        "triangle"
+      ],
+      "formula_used": "A = 4 3 , find the other trigonometric ratios of the angle A"
+    },
+    {
+      "question_text": "The mathematical expression for ratios is:",
+      "question_type": "mcq",
+      "difficulty": "easy",
+      "topic": "trigonometry",
+      "subtopic": "ratios",
+      "options": [
+        "An answer that confuses ratios with another term",
+        "The correct answer related to ratios",
+        "A concept from a different mathematical area",
+        "An incorrect but plausible answer about ratios"
+      ],
+      "correct_answer": "B",
+      "explanation": "Based on content from Chap\u20138 (11th Nov.), page 10",
+      "source_content": "122 MATHEMATICS Trigonometric Ratios of 45\u00b0 In \uf044 ABC, right-angled at B, if one angle is 45\u00b0, then the other angle is also 45\u00b0, i.e., \uf0d0 A = \uf0d0 C = 45\u00b0 (see Fig. 8.14). So, BC = AB (Why?) Now, Suppose B...",
+      "source_book": "Chap\u20138 (11th Nov.)",
+      "source_page": 10,
+      "points": 1,
+      "keywords": [
+        "opposite",
+        "toangle",
+        "adjacent",
+        "hypotenuse",
+        "ratios"
+      ],
+      "formula_used": "A = \uf0d0 C = 45\u00b0 (see Fig"
+    },
+    {
+      "question_text": "Solve: Find the equation of the parabola with focus (2,0) and directrix x = \u2013 2",
+      "question_type": "short",
+      "difficulty": "medium",
+      "topic": "coordinate_geometry",
+      "subtopic": "origin",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of origin with proper mathematical reasoning",
+      "explanation": "Refer to D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_10\\Conic Section.PMD, page 11",
+      "source_content": "186 MATHEMATICS Example 6 Find the equation of the parabola with focus (2,0) and directrix x = \u2013 2. Solution Since the focus (2,0) lies on the x-axis, the x-axis itself is the axis of the parabola. Hence the equation of the parabola is of the form either y2 = 4ax or y2 = \u2013 4ax. Since the directrix i...",
+      "source_book": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_10\\Conic Section.PMD",
+      "source_page": 11,
+      "points": 4,
+      "keywords": [
+        "axis",
+        "origin",
+        "coordinates"
+      ],
+      "formula_used": "x = \u2013 2"
+    },
+    {
+      "question_text": "Solve: , 4x + 2 is a polynomial in the variable x of degree 1, 2y2 \u2013 3y + 4 is a polynomial in the variable y of degree 2, 5x3 \u2013 4x2 + x \u2013 2 is a polynomial in the variable x of degree 3 and 7u6 \u2013 4 2 3 4 8 2u u u \uf02b \uf02b \uf02d is a polynomial in the variable u of degree 6",
+      "question_type": "short",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "polynomials",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of polynomials with proper mathematical reasoning",
+      "explanation": "Refer to Chap-2 (8th Nov.), page 1",
+      "source_content": "10 MATHEMATICS 2 2.1 Introduction In Class IX, you have studied polynomials in one variable and their degrees. Recall that if p(x) is a polynomial in x, the highest power of x in p(x) is called the degree of the polynomial p(x). For example, 4x + 2 is a polynomial in the variable x of degree 1, 2y2 ...",
+      "source_book": "Chap-2 (8th Nov.)",
+      "source_page": 1,
+      "points": 4,
+      "keywords": [
+        "quadratic",
+        "linear",
+        "polynomial",
+        "variable",
+        "polynomials"
+      ],
+      "formula_used": "3 + 1"
+    },
+    {
+      "question_text": "Solve: s",
+      "question_type": "short",
+      "difficulty": "easy",
+      "topic": "algebra",
+      "subtopic": "quadratic",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of quadratic with proper mathematical reasoning",
+      "explanation": "Refer to Chap\u20134 (8th Nov.) fian, page 8",
+      "source_content": "QUADRATIC EQUATIONS 45 If b2 \u2013 4ac = 0, then x = 0 2 b a \uf02d \uf0b1 , i.e., or \u2013 2 2 b b x a a \uf03d\uf02d \uf0d7 So, the roots of the equation ax2 + bx + c = 0 are both 2 b a \uf02d\uf0d7 Therefore, we say that the quadratic equation ax2 + bx + c = 0 has two equal real roots in this case. If b2 \u2013 4ac < 0, then there is no real n...",
+      "source_book": "Chap\u20134 (8th Nov.) fian",
+      "source_page": 8,
+      "points": 3,
+      "keywords": [
+        "equation",
+        "quadratic",
+        "discriminant",
+        "EQUATIONS",
+        "roots"
+      ],
+      "formula_used": "c = 0, then x = 0 2 b a \uf02d \uf0b1 , i"
+    },
+    {
+      "question_text": "The mathematical expression for quadratic is:",
+      "question_type": "mcq",
+      "difficulty": "medium",
+      "topic": "algebra",
+      "subtopic": "quadratic",
+      "options": [
+        "A concept from a different mathematical area",
+        "The correct answer related to quadratic",
+        "An answer that confuses quadratic with another term",
+        "An incorrect but plausible answer about quadratic"
+      ],
+      "correct_answer": "B",
+      "explanation": "Based on content from Chap-2 (8th Nov.), page 1",
+      "source_content": "10 MATHEMATICS 2 2.1 Introduction In Class IX, you have studied polynomials in one variable and their degrees. Recall that if p(x) is a polynomial in x, the highest power of x in p(x) is called the de...",
+      "source_book": "Chap-2 (8th Nov.)",
+      "source_page": 1,
+      "points": 1,
+      "keywords": [
+        "quadratic",
+        "linear",
+        "polynomial",
+        "variable",
+        "polynomials"
+      ],
+      "formula_used": "3 + 1"
+    },
+    {
+      "question_text": "What steps are involved in solving triangles?",
+      "question_type": "short",
+      "difficulty": "medium",
+      "topic": "geometry",
+      "subtopic": "triangles",
+      "options": null,
+      "correct_answer": "Answer should demonstrate understanding of triangles with proper mathematical reasoning",
+      "explanation": "Refer to D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_3\\Ch_03_FINAL  02.01.PMD, page 1",
+      "source_content": "vA mathematician knows how to solve a problem, he can not solve it. \u2013 MILNE v 3.1 Introduction The word \u2018trigonometry\u2019 is derived from the Greek words \u2018trigon\u2019 and \u2018metron\u2019 and it means \u2018measuring the sides of a triangle\u2019. The subject was originally developed to solve geometric problems involving tr...",
+      "source_book": "D:\\Textbooks\\Rationalised Textbooks 2022-23\\11076 \u2014 Mathematics\\1 Source Files\\CH_3\\Ch_03_FINAL  02.01.PMD",
+      "source_page": 1,
+      "points": 4,
+      "keywords": [
+        "angles",
+        "triangles",
+        "Angle",
+        "areas",
+        "Angles"
+      ],
+      "formula_used": "sin"
+    }
+  ],
+  "total_questions": 10,
+  "total_points": 26,
+  "duration_minutes": 30,
+  "difficulty_distribution": {
+    "easy": 5,
+    "medium": 5
+  },
+  "topic_distribution": {
+    "algebra": 5,
+    "trigonometry": 3,
+    "coordinate_geometry": 1,
+    "geometry": 1
+  },
+  "created_at": "2025-09-07T21:04:34.176439"
+}

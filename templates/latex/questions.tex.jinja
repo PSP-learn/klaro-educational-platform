@@ -1,0 +1,38 @@
+% Questions LaTeX template (exam class)
+\documentclass[12pt]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{lmodern}
+\pagestyle{headandfoot}
+\firstpageheader{ {{ header or subject }} }{\textbf{ {{ title }} }}{Total Marks: {{ total_points }}}
+\runningheader{ {{ subject }} }{ {{ title }} }{Page \thepage}
+\runningheadrule
+
+\begin{document}
+\begin{center}
+{% if header %}\LARGE\textbf{ {{ header }} } \\[6pt]{% endif %}
+\Large\textbf{ {{ title }} } \\\[4pt]
+\normalsize Subject: {{ subject }} \hspace{1cm} Total Marks: {{ total_points }}
+\end{center}
+\vspace{0.6em}
+\textbf{Instructions:}
+\begin{itemize}[leftmargin=*]
+{% for inst in instructions %}  \item {{ inst }}
+{% endfor %}\end{itemize}
+
+\begin{questions}
+{% for q in questions %}
+  \question[{{ q.marks }}] {{ q.text }}
+  {% if q.options and q.options|length > 0 %}
+  \begin{choices}
+    {% for opt in q.options %} \choice {{ opt }}
+    {% endfor %}
+  \end{choices}
+  {% endif %}
+  \vspace{0.6em}
+{% endfor %}
+\end{questions}
+
+\end{document}
+

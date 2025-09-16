@@ -1,0 +1,79 @@
+================================================================================
+📚 ANSWER KEY - Mathematics Test - quadratic equations, polynomials, trigonometry
+================================================================================
+
+Q1. Answer should demonstrate understanding of roots with proper mathematical reasoning
+     📖 Explanation: Refer to Chap–4 (8th Nov.) fian, page 5
+     📍 Source: Chap–4 (8th Nov.) fian, Page 5
+     📐 Formula: c = 0, a  0 if a 2 + b + c = 0
+     💯 Points: 3
+
+Q2. Answer should demonstrate understanding of equation with proper mathematical reasoning
+     📖 Explanation: Refer to Chap-2 (8th Nov.), page 4
+     📍 Source: Chap-2 (8th Nov.), Page 4
+     📐 Formula: y = x2 – 3x – 4 6 0 – 4 – 6 – 6 – 4 0 6 If we locate the points listed above on a graph paper and draw the graph, it will actually look like the one given in Fig
+     💯 Points: 3
+
+Q3. Answer should demonstrate understanding of axis with proper mathematical reasoning
+     📖 Explanation: Refer to Chap-2 (8th Nov.), page 5
+     📍 Source: Chap-2 (8th Nov.), Page 5
+     📐 Formula: 2025-26
+     💯 Points: 3
+
+Q4. C
+     📖 Explanation: Based on content from D:\Textbooks\Rationalised Textbooks 2022-23\0962-Mathematics\1 Source Files\Chapter-2\Chapter-2.pmd, page 7
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\0962-Mathematics\1 Source Files\Chapter-2\Chapter-2.pmd, Page 7
+     📐 Formula: x = 1 – 2 So, 1 – 2 is a zero of the polynomial 2x + 1
+     💯 Points: 1
+
+Q5. D
+     📖 Explanation: Based on content from Chap–8 (11th Nov.), page 9
+     📍 Source: Chap–8 (11th Nov.), Page 9
+     📐 Formula: B = 24 cm, BC = 7 cm
+     💯 Points: 1
+
+Q6. C
+     📖 Explanation: Based on content from Chap–9 (11th Nov.), page 4
+     📍 Source: Chap–9 (11th Nov.), Page 4
+     📐 Formula: m = 3
+     💯 Points: 1
+
+Q7. C
+     📖 Explanation: Based on content from Chap–4 (8th Nov.) fian, page 8
+     📍 Source: Chap–4 (8th Nov.) fian, Page 8
+     📐 Formula: c = 0, then x = 0 2 b a   , i
+     💯 Points: 1
+
+Q8. Answer should demonstrate understanding of POLYNOMIALS with proper mathematical reasoning
+     📖 Explanation: Refer to D:\Textbooks\Rationalised Textbooks 2022-23\0962-Mathematics\1 Source Files\Chapter-2\Chapter-2.pmd, page 7
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\0962-Mathematics\1 Source Files\Chapter-2\Chapter-2.pmd, Page 7
+     📐 Formula: x = 1 – 2 So, 1 – 2 is a zero of the polynomial 2x + 1
+     💯 Points: 4
+
+Q9. D
+     📖 Explanation: Based on content from D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_10\Conic Section.PMD, page 11
+     📍 Source: D:\Textbooks\Rationalised Textbooks 2022-23\11076 — Mathematics\1 Source Files\CH_10\Conic Section.PMD, Page 11
+     📐 Formula: x = – 2
+     💯 Points: 1
+
+Q10. B
+     📖 Explanation: Based on content from Chap-2 (8th Nov.), page 1
+     📍 Source: Chap-2 (8th Nov.), Page 1
+     📐 Formula: 3 + 1
+     💯 Points: 1
+
+================================================================================
+📊 TEST STATISTICS
+================================================================================
+Total Questions: 10
+Total Points: 19
+
+Difficulty Distribution:
+  Easy: 8 questions
+  Medium: 2 questions
+
+Topic Distribution:
+  Algebra: 6 questions
+  Coordinate_Geometry: 2 questions
+  Geometry: 1 questions
+  Trigonometry: 1 questions

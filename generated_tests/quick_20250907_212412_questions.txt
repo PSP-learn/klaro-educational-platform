@@ -1,0 +1,101 @@
+================================================================================
+📝 Mathematics Test - quadratic equations, polynomials, trigonometry
+================================================================================
+Subject: Mathematics
+Topics: quadratic equations, polynomials, trigonometry
+Duration: 30 minutes
+Total Points: 19
+Total Questions: 10
+
+📋 INSTRUCTIONS:
+• Read all questions carefully before starting
+• Show all your work for mathematical calculations
+• For MCQs, choose the BEST answer
+• Write clearly and legibly
+• Manage your time effectively
+
+================================================================================
+
+Q1. Solve: Find the roots of the equation 2x2 – 5x + 3 = 0, by factorisation
+     [Topic: Algebra, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q2. What steps are involved in solving equation?
+     [Topic: Algebra, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q3. What steps are involved in solving axis?
+     [Topic: Coordinate_Geometry, Difficulty: Easy, Points: 3]
+
+     Answer:
+     __________________________________________________
+
+Q4. The mathematical expression for linear is:
+     [Topic: Algebra, Difficulty: Easy, Points: 1]
+     A. An answer that confuses linear with another term
+     B. A concept from a different mathematical area
+     C. The correct answer related to linear
+     D. An incorrect but plausible answer about linear
+
+     Answer:
+     __________________________________________________
+
+Q5. What is the formula for angles?
+     [Topic: Geometry, Difficulty: Easy, Points: 1]
+     A. A concept from a different mathematical area
+     B. An incorrect but plausible answer about angles
+     C. An answer that confuses angles with another term
+     D. The correct answer related to angles
+
+     Answer:
+     __________________________________________________
+
+Q6. What is the formula for triangle?
+     [Topic: Trigonometry, Difficulty: Medium, Points: 1]
+     A. An answer that confuses triangle with another term
+     B. A concept from a different mathematical area
+     C. The correct answer related to triangle
+     D. An incorrect but plausible answer about triangle
+
+     Answer:
+     __________________________________________________
+
+Q7. What is the formula for EQUATIONS?
+     [Topic: Algebra, Difficulty: Easy, Points: 1]
+     A. An answer that confuses EQUATIONS with another term
+     B. An incorrect but plausible answer about EQUATIONS
+     C. The correct answer related to EQUATIONS
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
+
+Q8. Solve: may have given you some idea
+     [Topic: Algebra, Difficulty: Medium, Points: 4]
+
+     Answer:
+     __________________________________________________
+
+Q9. Which formula is used to calculate coordinates?
+     [Topic: Coordinate_Geometry, Difficulty: Easy, Points: 1]
+     A. A concept from a different mathematical area
+     B. An answer that confuses coordinates with another term
+     C. An incorrect but plausible answer about coordinates
+     D. The correct answer related to coordinates
+
+     Answer:
+     __________________________________________________
+
+Q10. The mathematical expression for polynomials is:
+     [Topic: Algebra, Difficulty: Easy, Points: 1]
+     A. An incorrect but plausible answer about polynomials
+     B. The correct answer related to polynomials
+     C. An answer that confuses polynomials with another term
+     D. A concept from a different mathematical area
+
+     Answer:
+     __________________________________________________
