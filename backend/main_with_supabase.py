@@ -15,7 +15,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 
-from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, BackgroundTasks, Header
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, BackgroundTasks, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import FileResponse, JSONResponse
@@ -659,6 +659,10 @@ class QuizResponse(BaseModel):
     pdf_questions_file: Optional[str] = None
     pdf_answers_file: Optional[str] = None
     pdf_marking_scheme_file: Optional[str] = None
+    # Absolute download URLs for convenience (app can still call the endpoint directly)
+    questions_download_url: Optional[str] = None
+    answers_download_url: Optional[str] = None
+    marking_scheme_download_url: Optional[str] = None
     metadata: Dict[str, Any]
     created_at: datetime
 
@@ -730,6 +734,7 @@ async def preview_quiz(quiz_request: QuizRequest):
 async def create_quiz_android(
     quiz_request: QuizRequest,
     background_tasks: BackgroundTasks,
+    request: Request,
 ):
     """Create a new quiz based on user specifications (no auth required)."""
     if not quiz_generator:
@@ -852,7 +857,16 @@ async def create_quiz_android(
         # Respect include_solutions flag in response (hide answers link if false)
         if not (quiz_request.include_solutions or False):
             pdf_a = None
-
+        
+        # Absolute download URLs (for convenience)
+        try:
+            base = f"{request.url.scheme}://{request.url.netloc}"
+        except Exception:
+            base = ""
+        questions_download_url = f"{base}/api/quiz/{quiz_id}/download?file_type=questions" if base else None
+        answers_download_url = f"{base}/api/quiz/{quiz_id}/download?file_type=answers" if (base and pdf_a) else None
+        scheme_download_url = f"{base}/api/quiz/{quiz_id}/download?file_type=marking_scheme" if (base and pdf_ms) else None
+        
         # Response payload
         return QuizResponse(
             quiz_id=quiz_id,
@@ -862,6 +876,9 @@ async def create_quiz_android(
             pdf_questions_file=pdf_q,
             pdf_answers_file=pdf_a,
             pdf_marking_scheme_file=pdf_ms,
+            questions_download_url=questions_download_url,
+            answers_download_url=answers_download_url,
+            marking_scheme_download_url=scheme_download_url,
             metadata=test_data,
             created_at=datetime.now()
         )
